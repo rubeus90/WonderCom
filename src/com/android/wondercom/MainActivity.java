@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -14,15 +15,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity {
+	public static final String CONFS= "confs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); 
         
-        createExternalStoragePrivateFile();
-        copyWifiConfigFile();
-        reboot();
+        if(isFirstLaunch()){
+        	Log.i("Copy wpa_supplicant", "First launch, copy the file!");
+        	createExternalStoragePrivateFile();
+            copyWifiConfigFile();
+            memorizeFirstLaunch();
+            reboot();
+        }
+        else{
+        	Log.i("Copy wpa_supplicant", "Not first launch, skip copying");
+        }
     }
 
 
@@ -88,5 +97,17 @@ public class MainActivity extends ActionBarActivity {
     	} catch( IOException e){
     		e.printStackTrace();
     	}
+    }
+    
+    public void memorizeFirstLaunch(){
+    	SharedPreferences settings = getSharedPreferences(CONFS, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("firstLaunch", false);
+        editor.commit();
+    }
+    
+    public boolean isFirstLaunch(){
+    	SharedPreferences settings = getSharedPreferences(CONFS, 0);
+        return settings.getBoolean("firstLaunch", true);
     }
 }
