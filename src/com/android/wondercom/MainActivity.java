@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiConfiguration.KeyMgmt;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -18,10 +17,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
-
-import android.view.View.OnClickListener;
 
 public class MainActivity extends ActionBarActivity {
 	public static final String TAG = "MainActivity";	
@@ -90,7 +88,9 @@ public class MainActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				stopAdhocNetwork();
 			}
-		});        
+		});      
+        
+//        showAllAdhocNetworks();
     }
 
     @Override
@@ -98,6 +98,7 @@ public class MainActivity extends ActionBarActivity {
         super.onResume();
     	registerReceiver(mReceiver, mFilter);
         mWifiManager.setWifiEnabled(true);
+//        showAllAdhocNetworks();
     }
 
     @Override
@@ -114,8 +115,8 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        int idItem = item.getItemId();
+        if (idItem == R.id.action_settings) {
         	stopAdhocNetwork();
             return true;
         }
@@ -150,6 +151,7 @@ public class MainActivity extends ActionBarActivity {
 
             /* Add, enable and save network as normal */
             id = mWifiManager.addNetwork(wifiConfig);
+            Log.v(TAG, "id Network = " + id);
             if (id < 0) {
                 log("Failed to add Ad-hoc network");
             } else {
@@ -162,45 +164,52 @@ public class MainActivity extends ActionBarActivity {
         }
     }
     
-    public void startAdhocNetwork(){
+    public void startAdhocNetwork(){    	
     	configureAdhocNetwork();
-
-        log("Successfully configured Adhoc network!");    	
+        log("Successfully configured Adhoc network!");  
     }
     
     public void stopAdhocNetwork(){
-    	List<WifiConfiguration> listNetworks = mWifiManager.getConfiguredNetworks();
-    	
-    	for(WifiConfiguration wifiConfig : listNetworks){
-    		if(wifiConfig.SSID.equals(networkName)){
-    			mWifiManager.disconnect();
-    			mWifiManager.removeNetwork(id);
-    			mWifiManager.saveConfiguration();
-    			break;
-    		}
-    	}
+		mWifiManager.disconnect();
+		Log.v(TAG, "id Network to disconnect = " + id);
+		mWifiManager.setWifiEnabled(false);
+		mWifiManager.setWifiEnabled(true);
     }
     
-    public List<ScanResult> getAdhocNetworksList(){
-    	List<ScanResult> list = new ArrayList<ScanResult>();
-    	mWifiManager.startScan();
-    	List<ScanResult> listScan = mWifiManager.getScanResults();
-    	for(ScanResult result : listScan){
-    		if(result.capabilities.equals("[IBSS]"))
-    			list.add(result);
-    	}
-    	return list;
-    }
-    
-    public void connectToNetWork(String ssid){
-    	wifiConfig = new WifiConfigurationNew();
-    	mWifiManager.disconnect();
-    	id = mWifiManager.addNetwork(wifiConfig);
-    	if (id < 0) {
-            log("Failed to add Ad-hoc network");
-        } else {
-            mWifiManager.enableNetwork(id, true);
-            mWifiManager.reconnect();
-        }
-    }
+//    public List<ScanResult> getAdhocNetworksList(){
+//    	List<ScanResult> list = new ArrayList<ScanResult>();
+//    	mWifiManager.startScan();
+//    	List<ScanResult> listScan = mWifiManager.getScanResults();
+//    	for(ScanResult result : listScan){
+//    		if(result.capabilities.equals("[IBSS]"))
+//    			list.add(result);
+//    	}
+//    	return list;
+//    }
+//    
+//    public void connectToNetWork(String ssid){
+//    	wifiConfig = new WifiConfigurationNew();
+////    	mWifiManager.disconnect();
+//    	id = mWifiManager.addNetwork(wifiConfig);
+//    	if (id < 0) {
+//            log("Failed to add Ad-hoc network");
+//        } else {
+//            mWifiManager.enableNetwork(id, true);
+//            mWifiManager.reassociate();
+//        }
+//    }
+//    
+//    public void showAllAdhocNetworks(){
+//    	List<ScanResult> list = getAdhocNetworksList();
+//    	nameList = new ArrayList<String>();
+//    	
+//    	for(ScanResult r : list){
+//    		nameList.add(r.SSID+"   "+r.frequency);
+//    	}
+//        
+//    	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nameList);
+//        listView.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+//        
+//    }
 }
