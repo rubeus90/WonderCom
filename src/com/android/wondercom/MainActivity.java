@@ -40,6 +40,7 @@ public class MainActivity extends ActionBarActivity {
         
         Button start = (Button) findViewById(R.id.start);
         Button stop = (Button) findViewById(R.id.stop);
+        Button send = (Button) findViewById(R.id.sendMessage);
         
         mWifiManager = (WifiManager) getSystemService(WIFI_SERVICE);        
 
@@ -88,7 +89,15 @@ public class MainActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				stopAdhocNetwork();
 			}
-		});      
+		});   
+        
+        send.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				new SendMessageTask(MainActivity.this).execute("172.16.164.251", "hello");
+			}
+		});
         
 //        showAllAdhocNetworks();
     }

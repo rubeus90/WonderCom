@@ -20,6 +20,15 @@
         android:layout_toRightOf="@id/start"
         android:layout_margin="30dp"
         android:text="Stop" />    
+        
+    <Button
+        android:id="@+id/sendMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/start"
+        android:layout_toRightOf="@id/stop"
+        android:layout_margin="30dp"
+        android:text="Send" />    
 
 </RelativeLayout>
 
