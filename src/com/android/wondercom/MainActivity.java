@@ -1,14 +1,10 @@
 package com.android.wondercom;
 
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration.KeyMgmt;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -95,11 +91,12 @@ public class MainActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(View v) {
-				new SendMessageTask(MainActivity.this).execute("172.16.164.251", "hello");
+				new SendMessageTask(MainActivity.this).execute(new String[]{"172.16.164.251", "hello"});
 			}
 		});
         
-//        showAllAdhocNetworks();
+        /* Start Message service*/
+        startService(new Intent(this, MessageService.class));
     }
 
     @Override
@@ -107,7 +104,6 @@ public class MainActivity extends ActionBarActivity {
         super.onResume();
     	registerReceiver(mReceiver, mFilter);
         mWifiManager.setWifiEnabled(true);
-//        showAllAdhocNetworks();
     }
 
     @Override
