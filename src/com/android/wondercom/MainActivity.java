@@ -1,7 +1,11 @@
 package com.android.wondercom;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.content.IntentFilter;
+import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.Bundle;
@@ -9,14 +13,18 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity{
 	public static final String TAG = "MainActivity";	
 	private WifiP2pManager mManager;
 	private Channel mChannel;
 	private WifiDirectBroadcastReceiver mReceiver;
 	private IntentFilter mIntentFilter;
+	private ArrayAdapter<String> mAdapter;
+	private List<String> peersName;
+	private List<WifiP2pDevice> peers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +40,34 @@ public class MainActivity extends ActionBarActivity {
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+        
+        //Initialise the list of peers and peers's names
+        peersName = new ArrayList<String>();
+        peers = new ArrayList<WifiP2pDevice>();
+        
+        //Initialise the list view which contains peer list
+        ListView listView = (ListView) findViewById(R.id.listView);        
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, peersName);
+        listView.setAdapter(mAdapter);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         registerReceiver(mReceiver, mIntentFilter);
+        
+		mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
+					
+			@Override
+			public void onSuccess() {
+				Log.v(TAG, "Discovery process succeeded");
+			}
+			
+			@Override
+			public void onFailure(int reason) {
+				Log.v(TAG, "Discovery process failed");
+			}
+		});
     }
 
     @Override
@@ -60,9 +90,16 @@ public class MainActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    
-    private void log(String msg) {
-        Log.d(TAG, msg);
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
+
+	public ArrayAdapter<String> getmAdapter() {
+		return mAdapter;
+	}
+
+	public List<String> getPeersName() {
+		return peersName;
+	}
+
+	public List<WifiP2pDevice> getPeers() {
+		return peers;
+	}
 }
