@@ -83,6 +83,7 @@ public class MainActivity extends ActionBarActivity{
 			}
 		});
         
+        //Disconnect from the wifi direct group when long click on the connected device
         listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
