@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.IntentFilter;
+import android.net.wifi.WpsInfo;
+import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
@@ -13,8 +15,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity{
 	public static final String TAG = "MainActivity";	
@@ -49,6 +55,32 @@ public class MainActivity extends ActionBarActivity{
         ListView listView = (ListView) findViewById(R.id.listView);        
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, peersName);
         listView.setAdapter(mAdapter);
+        
+        //Connect to the device when we click on the list
+        listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
+				WifiP2pDevice device = peers.get(position);
+				WifiP2pConfig config = new WifiP2pConfig();
+				config.deviceAddress = device.deviceAddress;
+				config.wps.setup = WpsInfo.PBC;
+				
+				mManager.connect(mChannel, config, new WifiP2pManager.ActionListener(){
+
+					@Override
+					public void onFailure(int arg0) {
+						Toast.makeText(MainActivity.this, "Connect failed, please retry", Toast.LENGTH_SHORT).show();
+					}
+
+					@Override
+					public void onSuccess() {
+						Toast.makeText(MainActivity.this, "Waiting for peer accept", Toast.LENGTH_SHORT).show();
+					}
+					
+				});
+			}
+		});
     }
 
     @Override
