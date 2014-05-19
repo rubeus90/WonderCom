@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -79,6 +80,16 @@ public class MainActivity extends ActionBarActivity{
 					}
 					
 				});
+			}
+		});
+        
+        listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+				mManager.removeGroup(mChannel, null);
+				Toast.makeText(MainActivity.this, "Disconnected", Toast.LENGTH_SHORT).show();
+				return true;
 			}
 		});
     }
