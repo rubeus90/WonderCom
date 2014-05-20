@@ -1,7 +1,10 @@
 package com.android.wondercom;
 
 import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.List;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,14 +20,23 @@ import android.widget.Toast;
 public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 	private WifiP2pManager mManager;
 	private Channel mChannel;
-	private MainActivity mActivity;
+	private Activity mActivity;
+	private List<String> peersName = new ArrayList<String>();
+	private List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
+	private boolean isGroupeOwner = false;
+	private InetAddress ownerAddr;
 	
-	public WifiDirectBroadcastReceiver(WifiP2pManager manager, Channel channel, MainActivity activity){
+	public WifiDirectBroadcastReceiver(WifiP2pManager manager, Channel channel, Activity activity){
 		super();
 		mManager = manager;
 		mChannel = channel;
 		mActivity = activity;
 	}
+	
+	public List<String> getPeersName() { return peersName; }
+	public List<WifiP2pDevice> getPeers() { return peers; }
+	public boolean isGroupeOwner() { return isGroupeOwner; }
+	public InetAddress getOwnerAddr() { return ownerAddr; }
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -44,7 +56,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 		}
 		
 		/**********************************
-		 Available peer list has changedd 
+		 Available peer list has changed
 		**********************************/
 		else if(action.equals(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION)){ 
 			if(mManager != null){
@@ -52,12 +64,12 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 					
 					@Override
 					public void onPeersAvailable(WifiP2pDeviceList peerList) {
-						mActivity.getPeersName().clear();
+						peersName.clear();
 						for(WifiP2pDevice device : peerList.getDeviceList()){
-							mActivity.getPeersName().add(device.deviceName);
-							mActivity.getPeers().add(device);
+							peersName.add(device.deviceName);
+							peers.add(device);
 						}
-						mActivity.getmAdapter().notifyDataSetChanged();
+						MainActivity.mAdapter.notifyDataSetChanged();
 					}
 				});
 			}
@@ -84,13 +96,13 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 					@Override
 					public void onConnectionInfoAvailable(WifiP2pInfo info) {
 						InetAddress groupOwnerAddress = info.groupOwnerAddress;
-						mActivity.setOwnerAddr(groupOwnerAddress);
+						ownerAddr= groupOwnerAddress;
 						
 						/******************************************************************
 						 The GO : create a server thread and accept incoming connections 
 						******************************************************************/
 						if (info.groupFormed && info.isGroupOwner) { 
-							mActivity.setGroupeOwner(true);
+							isGroupeOwner = true;
 							Toast.makeText(mActivity, "I'm the group owner  " + groupOwnerAddress.getHostAddress(), Toast.LENGTH_SHORT).show();
 							ServerInit server = new ServerInit();
 							server.start();
@@ -100,7 +112,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 						 The client : create a client thread that connects to the group owner 
 						******************************************************************/
 						else if (info.groupFormed) { 
-							mActivity.setGroupeOwner(false);
+							isGroupeOwner = false;
 							Toast.makeText(mActivity, "I'm the client", Toast.LENGTH_SHORT).show();
 							ClientInit client = new ClientInit(groupOwnerAddress);
 							try {

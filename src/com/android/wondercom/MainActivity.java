@@ -1,10 +1,7 @@
 package com.android.wondercom;
 
-import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
@@ -26,19 +23,29 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+/*
+ * This activity is the launcher activity. It shows a list of available peers.
+ * When the user choose one, the connection will be established.
+ * Once the connection established, the ChatActivity is launched.
+ */
 public class MainActivity extends ActionBarActivity{
 	public static final String TAG = "MainActivity";	
 	private WifiP2pManager mManager;
 	private Channel mChannel;
 	private WifiDirectBroadcastReceiver mReceiver;
 	private IntentFilter mIntentFilter;
-	private ArrayAdapter<String> mAdapter;
-	private List<String> peersName;
-	private List<WifiP2pDevice> peers;
-	private boolean isGroupeOwner = false;
-	private InetAddress ownerAddr;
+	public static ArrayAdapter<String> mAdapter; //peer list adapter
+	private Button goToChat;
 
-    @Override
+	//Getters and Setters
+    public WifiP2pManager getmManager() { return mManager; }
+	public Channel getmChannel() { return mChannel; }
+	public WifiDirectBroadcastReceiver getmReceiver() { return mReceiver; }
+	public IntentFilter getmIntentFilter() { return mIntentFilter; }
+	public Button getGoToChat() { return goToChat; }	
+	
+	
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); 
@@ -53,13 +60,9 @@ public class MainActivity extends ActionBarActivity{
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
         
-        //Initialise the list of peers and peers's names
-        peersName = new ArrayList<String>();
-        peers = new ArrayList<WifiP2pDevice>();
-        
         //Initialise the list view which contains peer list
         ListView listView = (ListView) findViewById(R.id.listView);        
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, peersName);
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mReceiver.getPeersName());
         listView.setAdapter(mAdapter);
         
         //Connect to the device when we click on the list
@@ -67,7 +70,7 @@ public class MainActivity extends ActionBarActivity{
 
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
-				WifiP2pDevice device = peers.get(position);
+				WifiP2pDevice device = mReceiver.getPeers().get(position);
 				WifiP2pConfig config = new WifiP2pConfig();
 				config.deviceAddress = device.deviceAddress;
 				config.wps.setup = WpsInfo.PBC;
@@ -75,15 +78,14 @@ public class MainActivity extends ActionBarActivity{
 				mManager.connect(mChannel, config, new WifiP2pManager.ActionListener(){
 
 					@Override
-					public void onFailure(int arg0) {
-						Toast.makeText(MainActivity.this, "Connect failed, please retry", Toast.LENGTH_SHORT).show();
-					}
-
-					@Override
 					public void onSuccess() {
 						Toast.makeText(MainActivity.this, "Waiting for peer accept", Toast.LENGTH_SHORT).show();
 					}
 					
+					@Override
+					public void onFailure(int arg0) {
+						Toast.makeText(MainActivity.this, "Connect failed, please retry", Toast.LENGTH_SHORT).show();						
+					}
 				});
 			}
 		});
@@ -97,20 +99,15 @@ public class MainActivity extends ActionBarActivity{
 				Toast.makeText(MainActivity.this, "Disconnected", Toast.LENGTH_SHORT).show();
 				return true;
 			}
-		});
+		});  
         
-        //Send a message
-        Button button = (Button) findViewById(R.id.sendMessage);
-        button.setOnClickListener(new OnClickListener() {
+        //Button Go to Chat
+        goToChat = (Button) findViewById(R.id.goToChat);
+        goToChat.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
-				if(isGroupeOwner){
-					new ReceiveMessageServer(MainActivity.this).execute();
-				}
-				else{
-					new SendMessageClient(MainActivity.this, ownerAddr).execute("Hello world");
-				}
+				goToChat();				
 			}
 		});
     }
@@ -139,6 +136,12 @@ public class MainActivity extends ActionBarActivity{
         super.onPause();
         unregisterReceiver(mReceiver);
     }
+    
+    @Override
+    public void onDestroy(){
+    	super.onDestroy();
+    	mManager.removeGroup(mChannel, null);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -153,15 +156,10 @@ public class MainActivity extends ActionBarActivity{
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }	
+    
+    public void goToChat(){
+    	Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+		startActivity(intent);
     }
-
-	public ArrayAdapter<String> getmAdapter() { return mAdapter; }
-
-	public List<String> getPeersName() { return peersName; }
-
-	public List<WifiP2pDevice> getPeers() { return peers; }
-
-	public void setGroupeOwner(boolean isGroupeOwner) { this.isGroupeOwner = isGroupeOwner; }
-
-	public void setOwnerAddr(InetAddress ownerAddr) { this.ownerAddr = ownerAddr; }
 }
