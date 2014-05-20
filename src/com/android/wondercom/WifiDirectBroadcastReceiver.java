@@ -84,9 +84,11 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 					@Override
 					public void onConnectionInfoAvailable(WifiP2pInfo info) {
 						InetAddress groupOwnerAddress = info.groupOwnerAddress;
+						mActivity.setOwnerAddr(groupOwnerAddress);
 						
 						// The GO : create a server thread and accept incoming connections 
 						if (info.groupFormed && info.isGroupOwner) { 
+							mActivity.setGroupeOwner(true);
 							Toast.makeText(mActivity, "I'm the group owner  " + groupOwnerAddress.getHostAddress(), Toast.LENGTH_SHORT).show();
 							ServerInit server = new ServerInit();
 							server.start();
@@ -94,6 +96,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 						
 						// The client : create a client thread that connects to the group owner 
 						else if (info.groupFormed) { 
+							mActivity.setGroupeOwner(false);
 							Toast.makeText(mActivity, "I'm the client", Toast.LENGTH_SHORT).show();
 							ClientInit client = new ClientInit(groupOwnerAddress);
 							try {

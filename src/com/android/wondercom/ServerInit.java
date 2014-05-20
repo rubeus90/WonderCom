@@ -19,11 +19,13 @@ public class ServerInit extends Thread{
 		clients.clear();
 	    
 		try {
+			@SuppressWarnings("resource")
 			ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
 			// Collect client ip's
 		    while(true) {
 		       Socket clientSocket = serverSocket.accept();
 		       clients.add(clientSocket.getInetAddress());
+		       clientSocket.close();
 		    }
 		} catch (IOException e) {
 			e.printStackTrace();

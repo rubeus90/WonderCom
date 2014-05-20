@@ -1,7 +1,9 @@
 package com.android.wondercom;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
+
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.WpsInfo;
@@ -15,10 +17,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,6 +35,8 @@ public class MainActivity extends ActionBarActivity{
 	private ArrayAdapter<String> mAdapter;
 	private List<String> peersName;
 	private List<WifiP2pDevice> peers;
+	private boolean isGroupeOwner = false;
+	private InetAddress ownerAddr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +98,21 @@ public class MainActivity extends ActionBarActivity{
 				return true;
 			}
 		});
+        
+        //Send a message
+        Button button = (Button) findViewById(R.id.sendMessage);
+        button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				if(isGroupeOwner){
+					new ReceiveMessageServer(MainActivity.this).execute();
+				}
+				else{
+					new SendMessageClient(MainActivity.this, ownerAddr).execute("Hello world");
+				}
+			}
+		});
     }
 
     @Override
@@ -134,15 +155,13 @@ public class MainActivity extends ActionBarActivity{
         return super.onOptionsItemSelected(item);
     }
 
-	public ArrayAdapter<String> getmAdapter() {
-		return mAdapter;
-	}
+	public ArrayAdapter<String> getmAdapter() { return mAdapter; }
 
-	public List<String> getPeersName() {
-		return peersName;
-	}
+	public List<String> getPeersName() { return peersName; }
 
-	public List<WifiP2pDevice> getPeers() {
-		return peers;
-	}
+	public List<WifiP2pDevice> getPeers() { return peers; }
+
+	public void setGroupeOwner(boolean isGroupeOwner) { this.isGroupeOwner = isGroupeOwner; }
+
+	public void setOwnerAddr(InetAddress ownerAddr) { this.ownerAddr = ownerAddr; }
 }
