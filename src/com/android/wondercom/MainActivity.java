@@ -2,7 +2,6 @@ package com.android.wondercom;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.WpsInfo;
