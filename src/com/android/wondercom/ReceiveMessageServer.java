@@ -10,38 +10,51 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-public class ReceiveMessageServer extends AsyncTask<Void, Void, String>{
+public class ReceiveMessageServer extends AsyncTask<Void, String, Void>{
 	private static final int SERVER_PORT = 4445;
 	private Context mContext;
+	private ServerSocket serverSocket;
 
 	public ReceiveMessageServer(Context context){
 		mContext = context;
 	}
 	
 	@Override
-	protected String doInBackground(Void... params) {
+	protected Void doInBackground(Void... params) {
 		System.out.println("coucou");
 		String message="";
-		ServerSocket serverSocket;
 		try {
 			serverSocket = new ServerSocket(SERVER_PORT);
-			Socket clientSocket = serverSocket.accept();
-			System.out.println("je passe");
-			BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			message = br.readLine();
-			serverSocket.close();
-			clientSocket.close();
+			while(true){
+				Socket clientSocket = serverSocket.accept();
+				System.out.println("je passe");
+				BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+				message = br.readLine();
+				clientSocket.close();
+				publishProgress(message);
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
         
-		return message;
+		return null;
 	}
 
 	@Override
-	protected void onPostExecute(String result) {
-		super.onPostExecute(result);
-		Toast.makeText(mContext, result, Toast.LENGTH_SHORT).show();
+	protected void onCancelled() {
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		super.onCancelled();
 	}
 
+	@Override
+	protected void onProgressUpdate(String... values) {
+		super.onProgressUpdate(values);
+		Toast.makeText(mContext, values[0], Toast.LENGTH_SHORT).show();
+	}
+	
 }
