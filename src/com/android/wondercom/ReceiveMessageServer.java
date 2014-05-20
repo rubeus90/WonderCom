@@ -55,6 +55,8 @@ public class ReceiveMessageServer extends AsyncTask<Void, String, Void>{
 	protected void onProgressUpdate(String... values) {
 		super.onProgressUpdate(values);
 		Toast.makeText(mContext, values[0], Toast.LENGTH_SHORT).show();
+		((ChatActivity) mContext).getMessages().add(values[0]);
+		((ChatActivity) mContext).getChatAdapter().notifyDataSetChanged();
 	}
 	
 }

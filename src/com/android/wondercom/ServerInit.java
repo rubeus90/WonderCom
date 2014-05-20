@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class ServerInit extends Thread{
 	private static final int SERVER_PORT = 4444;
-	private ArrayList<InetAddress> clients;
+	public static ArrayList<InetAddress> clients;
 	
 	public ServerInit(){
 		clients = new ArrayList<InetAddress>();
