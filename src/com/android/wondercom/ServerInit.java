@@ -25,6 +25,7 @@ public class ServerInit extends Thread{
 		    while(true) {
 		       Socket clientSocket = serverSocket.accept();
 		       clients.add(clientSocket.getInetAddress());
+		       System.out.println(clientSocket.getInetAddress().getHostAddress());
 		       clientSocket.close();
 		    }
 		} catch (IOException e) {

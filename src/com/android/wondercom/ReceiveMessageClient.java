@@ -6,17 +6,16 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 public class ReceiveMessageClient extends AsyncTask<Void, String, Void> {
 	private static final int SERVER_PORT = 4446;
-	private Context mContext;
+	private ChatActivity mActivity;
 	private ServerSocket socket;
 
-	public ReceiveMessageClient(Context context){
-		mContext = context;
+	public ReceiveMessageClient(ChatActivity activity){
+		mActivity = activity;
 	}
 	
 	@Override
@@ -52,10 +51,9 @@ public class ReceiveMessageClient extends AsyncTask<Void, String, Void> {
 	@Override
 	protected void onProgressUpdate(String... values) {
 		super.onProgressUpdate(values);
-		Toast.makeText(mContext, values[0], Toast.LENGTH_SHORT).show();
-		ChatActivity activity = (ChatActivity) mContext;
-		activity.getMessages().add(values[0]);
-		activity.getChatAdapter().notifyDataSetChanged();
-		activity.getListView().setSelection(activity.getMessages().size() - 1);
+		Toast.makeText(mActivity, values[0], Toast.LENGTH_SHORT).show();
+		mActivity.getMessages().add(values[0]);
+		mActivity.getChatAdapter().notifyDataSetChanged();
+		mActivity.getListView().setSelection(mActivity.getMessages().size() - 1);
 	}
 }

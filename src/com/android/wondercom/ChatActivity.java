@@ -114,7 +114,7 @@ public class ChatActivity extends Activity {
     @Override
     public void onDestroy(){
     	super.onDestroy();
-    	mManager.removeGroup(mChannel, null);
+//    	mManager.removeGroup(mChannel, null);
     }
 	
 	

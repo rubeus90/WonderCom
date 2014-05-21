@@ -119,10 +119,10 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 							isGroupeOwner = true;
 							Toast.makeText(mActivity, "I'm the group owner  " + groupOwnerAddress.getHostAddress(), Toast.LENGTH_SHORT).show();
 							
-							if(server==null){
-								server = new ServerInit();
-								server.start();
-							}							
+//							if(server==null){
+//								server = new ServerInit();
+//								server.start();
+//							}							
 						}
 						
 						/******************************************************************
@@ -132,15 +132,15 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 							isGroupeOwner = false;
 							Toast.makeText(mActivity, "I'm the client", Toast.LENGTH_SHORT).show();
 							
-							if(client==null){
-								client = new ClientInit(groupOwnerAddress);
-								try {
-									Thread.sleep(1000);
-								} catch (InterruptedException e) {
-									e.printStackTrace();
-								}
-								client.start();
-							}							
+//							if(client==null){
+//								client = new ClientInit(groupOwnerAddress);
+//								try {
+//									Thread.sleep(1000);
+//								} catch (InterruptedException e) {
+//									e.printStackTrace();
+//								}
+//								client.start();
+//							}							
 						}		
 						else{
 							Toast.makeText(mActivity, "Error: The group is not formed", Toast.LENGTH_SHORT).show();

@@ -98,8 +98,21 @@ public class MainActivity extends ActionBarActivity{
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				mManager.removeGroup(mChannel, null);
-				Toast.makeText(MainActivity.this, "Disconnected", Toast.LENGTH_SHORT).show();
+//				mManager.removeGroup(mChannel, null);
+//				Toast.makeText(MainActivity.this, "Disconnected", Toast.LENGTH_SHORT).show();
+				if(mReceiver.isGroupeOwner()){
+					ServerInit server = new ServerInit();
+					server.start();
+				}
+				else{
+					ClientInit client = new ClientInit(mReceiver.getOwnerAddr());
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					client.start();
+				}
 				return true;
 			}
 		});  
@@ -143,7 +156,7 @@ public class MainActivity extends ActionBarActivity{
     @Override
     public void onDestroy(){
     	super.onDestroy();
-    	mManager.removeGroup(mChannel, null);
+//    	mManager.removeGroup(mChannel, null);
     }
 
     @Override
