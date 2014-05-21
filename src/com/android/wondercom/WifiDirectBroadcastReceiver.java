@@ -17,6 +17,9 @@ import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.net.wifi.p2p.WifiP2pManager.ConnectionInfoListener;
 import android.widget.Toast;
 
+/*
+ * This class implements the Singleton pattern
+ */
 public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 	private WifiP2pManager mManager;
 	private Channel mChannel;
@@ -25,18 +28,29 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 	private List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
 	private boolean isGroupeOwner = false;
 	private InetAddress ownerAddr;
+	private ServerInit server;
+	private ClientInit client;
 	
-	public WifiDirectBroadcastReceiver(WifiP2pManager manager, Channel channel, Activity activity){
+	private static WifiDirectBroadcastReceiver instance;
+	
+	private WifiDirectBroadcastReceiver(){
 		super();
-		mManager = manager;
-		mChannel = channel;
-		mActivity = activity;
+	}
+	
+	public static WifiDirectBroadcastReceiver createInstance(){
+		if(instance == null){
+			instance = new WifiDirectBroadcastReceiver();
+		}
+		return instance;
 	}
 	
 	public List<String> getPeersName() { return peersName; }
 	public List<WifiP2pDevice> getPeers() { return peers; }
 	public boolean isGroupeOwner() { return isGroupeOwner; }
 	public InetAddress getOwnerAddr() { return ownerAddr; }
+	public void setmManager(WifiP2pManager mManager) { this.mManager = mManager; }
+	public void setmChannel(Channel mChannel) { this.mChannel = mChannel; }
+	public void setmActivity(Activity mActivity) { this.mActivity = mActivity; }
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -104,8 +118,11 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 						if (info.groupFormed && info.isGroupOwner) { 
 							isGroupeOwner = true;
 							Toast.makeText(mActivity, "I'm the group owner  " + groupOwnerAddress.getHostAddress(), Toast.LENGTH_SHORT).show();
-							ServerInit server = new ServerInit();
-							server.start();
+							
+							if(server==null){
+								server = new ServerInit();
+								server.start();
+							}							
 						}
 						
 						/******************************************************************
@@ -114,13 +131,16 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 						else if (info.groupFormed) { 
 							isGroupeOwner = false;
 							Toast.makeText(mActivity, "I'm the client", Toast.LENGTH_SHORT).show();
-							ClientInit client = new ClientInit(groupOwnerAddress);
-							try {
-								Thread.sleep(1000);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-							client.start();
+							
+							if(client==null){
+								client = new ClientInit(groupOwnerAddress);
+								try {
+									Thread.sleep(1000);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+								client.start();
+							}							
 						}		
 						else{
 							Toast.makeText(mActivity, "Error: The group is not formed", Toast.LENGTH_SHORT).show();

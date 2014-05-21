@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +40,8 @@ public class ChatActivity extends Activity {
 		
 		mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mManager.initialize(this, getMainLooper(), null);
-        mReceiver = new WifiDirectBroadcastReceiver(mManager, mChannel, this);
+        mReceiver = WifiDirectBroadcastReceiver.createInstance();
+        mReceiver.setmActivity(this);
         
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
@@ -47,7 +49,17 @@ public class ChatActivity extends Activity {
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
 		
+        Log.v(TAG, "Start the AsyncTask for the server to receive messages");
+        //Start the AsyncTask for the server to receive messages
+        if(mReceiver.isGroupeOwner()){
+        	new ReceiveMessageServer(ChatActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
+        }
+        else{
+        	new ReceiveMessageClient(ChatActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
+        }
+        
 		//Send a message
+        Log.v(TAG, "Send message");
         Button button = (Button) findViewById(R.id.sendMessage);
         edit = (EditText) findViewById(R.id.editMessage);
         button.setOnClickListener(new OnClickListener() {
@@ -55,10 +67,13 @@ public class ChatActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				if(mReceiver.isGroupeOwner()){
-					new ReceiveMessageServer(ChatActivity.this).execute();
+					Log.v(TAG, "SendMessageServer start");
+					new SendMessageServer(ChatActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, edit.getText().toString());
+					edit.setText("");
 				}
 				else{
-					new SendMessageClient(ChatActivity.this, mReceiver.getOwnerAddr()).execute(edit.getText().toString());
+					Log.v(TAG, "SendMessageClient start");
+					new SendMessageClient(ChatActivity.this, mReceiver.getOwnerAddr()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, edit.getText().toString());
 					edit.setText("");
 				}
 			}

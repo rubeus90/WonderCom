@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class ServerInit extends Thread{
 	private static final int SERVER_PORT = 4444;
 	public static ArrayList<InetAddress> clients;
+	private ServerSocket serverSocket;
 	
 	public ServerInit(){
 		clients = new ArrayList<InetAddress>();
@@ -19,14 +20,23 @@ public class ServerInit extends Thread{
 		clients.clear();
 	    
 		try {
-			@SuppressWarnings("resource")
-			ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
+			serverSocket = new ServerSocket(SERVER_PORT);
 			// Collect client ip's
 		    while(true) {
 		       Socket clientSocket = serverSocket.accept();
 		       clients.add(clientSocket.getInetAddress());
 		       clientSocket.close();
 		    }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void interrupt() {
+		super.interrupt();
+		try {
+			serverSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

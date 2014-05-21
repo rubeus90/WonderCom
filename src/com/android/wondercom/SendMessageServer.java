@@ -5,21 +5,20 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-public class SendMessageClient extends AsyncTask<String, Void, String>{
-	private static final String TAG = "SendMessageClient";
+public class SendMessageServer extends AsyncTask<String, Void, String>{
+	private static final String TAG = "SendMessageServer";
 	private Context mContext;
-	private static final int SERVER_PORT = 4445;
-	private InetAddress mServerAddr;
+	private static final int SERVER_PORT = 4446;
 	
-	public SendMessageClient(Context context, InetAddress serverAddr){
+	public SendMessageServer(Context context){
 		mContext = context;
-		mServerAddr = serverAddr;
 	}
 	
 	@Override
@@ -29,13 +28,18 @@ public class SendMessageClient extends AsyncTask<String, Void, String>{
 		try {
 			socket.setReuseAddress(true);
 			socket.bind(null);
-			socket.connect(new InetSocketAddress(mServerAddr, SERVER_PORT));
-			Log.v(TAG, "doInBackground: connect succeeded");
 			
-			PrintWriter pw = new PrintWriter(socket.getOutputStream(),true);
-			pw.write(msg[0]+"\n"); 
-		    pw.flush(); 
-		    Log.v(TAG, "doInBackground: connect succeeded");
+			ArrayList<InetAddress> listClients = ServerInit.clients;
+			for(InetAddress addr : listClients){
+				socket.connect(new InetSocketAddress(addr, SERVER_PORT));
+				Log.v(TAG, "doInBackground: connect to "+ addr.getHostAddress() +" succeeded");
+				
+				PrintWriter pw = new PrintWriter(socket.getOutputStream(),true);
+				pw.write(msg[0]+"\n"); 
+			    pw.flush(); 
+			    Log.v(TAG, "doInBackground: write to "+ addr.getHostAddress() +" succeeded");
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally{
@@ -58,7 +62,9 @@ public class SendMessageClient extends AsyncTask<String, Void, String>{
 		Log.v(TAG, "onPostExecute");
 		super.onPostExecute(result);
 		Toast.makeText(mContext, "Message sent", Toast.LENGTH_SHORT).show();
-//		((ChatActivity) mContext).getMessages().add(result);
-//		((ChatActivity) mContext).getChatAdapter().notifyDataSetChanged();
+		((ChatActivity) mContext).getMessages().add(result);
+		((ChatActivity) mContext).getChatAdapter().notifyDataSetChanged();
 	}
+	
+
 }

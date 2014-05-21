@@ -10,12 +10,12 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-public class ReceiveMessageServer extends AsyncTask<Void, String, Void>{
-	private static final int SERVER_PORT = 4445;
+public class ReceiveMessageClient extends AsyncTask<Void, String, Void> {
+	private static final int SERVER_PORT = 4446;
 	private Context mContext;
-	private ServerSocket serverSocket;
+	private ServerSocket socket;
 
-	public ReceiveMessageServer(Context context){
+	public ReceiveMessageClient(Context context){
 		mContext = context;
 	}
 	
@@ -23,12 +23,12 @@ public class ReceiveMessageServer extends AsyncTask<Void, String, Void>{
 	protected Void doInBackground(Void... params) {
 		String message="";
 		try {
-			serverSocket = new ServerSocket(SERVER_PORT);
+			socket = new ServerSocket(SERVER_PORT);
 			while(true){
-				Socket clientSocket = serverSocket.accept();
-				BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+				Socket destinationSocket = socket.accept();
+				BufferedReader br = new BufferedReader(new InputStreamReader(destinationSocket.getInputStream()));
 				message = br.readLine();
-				clientSocket.close();
+				destinationSocket.close();
 				publishProgress(message);
 			}
 			
@@ -42,7 +42,7 @@ public class ReceiveMessageServer extends AsyncTask<Void, String, Void>{
 	@Override
 	protected void onCancelled() {
 		try {
-			serverSocket.close();
+			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -53,7 +53,7 @@ public class ReceiveMessageServer extends AsyncTask<Void, String, Void>{
 	protected void onProgressUpdate(String... values) {
 		super.onProgressUpdate(values);
 		Toast.makeText(mContext, values[0], Toast.LENGTH_SHORT).show();
-		new SendMessageServer(mContext).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
+		((ChatActivity) mContext).getMessages().add(values[0]);
+		((ChatActivity) mContext).getChatAdapter().notifyDataSetChanged();
 	}
-	
 }

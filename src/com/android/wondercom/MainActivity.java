@@ -52,7 +52,10 @@ public class MainActivity extends ActionBarActivity{
         
         mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mManager.initialize(this, getMainLooper(), null);
-        mReceiver = new WifiDirectBroadcastReceiver(mManager, mChannel, this);
+        mReceiver = WifiDirectBroadcastReceiver.createInstance();
+        mReceiver.setmManager(mManager);
+        mReceiver.setmChannel(mChannel);
+        mReceiver.setmActivity(this);
         
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
@@ -107,7 +110,7 @@ public class MainActivity extends ActionBarActivity{
 			
 			@Override
 			public void onClick(View arg0) {
-				goToChat();				
+				goToChat();		
 			}
 		});
     }
