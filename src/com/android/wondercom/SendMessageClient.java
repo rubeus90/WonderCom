@@ -58,7 +58,5 @@ public class SendMessageClient extends AsyncTask<String, Void, String>{
 		Log.v(TAG, "onPostExecute");
 		super.onPostExecute(result);
 		Toast.makeText(mContext, "Message sent", Toast.LENGTH_SHORT).show();
-//		((ChatActivity) mContext).getMessages().add(result);
-//		((ChatActivity) mContext).getChatAdapter().notifyDataSetChanged();
 	}
 }

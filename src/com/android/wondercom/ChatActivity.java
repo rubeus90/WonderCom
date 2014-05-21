@@ -27,12 +27,12 @@ public class ChatActivity extends Activity {
 	private EditText edit;
 	private ArrayAdapter<String> chatAdapter;
 	private List<String> messages;
+	private ListView listView;
 	
 	
 	public ArrayAdapter<String> getChatAdapter() { return chatAdapter; }
 	public List<String> getMessages() { return messages; }
-
-
+	public ListView getListView() { return listView; }
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,7 +80,7 @@ public class ChatActivity extends Activity {
 		});
         
         //Itilialise the adapter for the chat
-        ListView listView = (ListView) findViewById(R.id.messageList);
+        listView = (ListView) findViewById(R.id.messageList);
         messages = new ArrayList<String>();
         chatAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, messages);
         listView.setAdapter(chatAdapter);
