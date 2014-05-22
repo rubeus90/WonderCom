@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
@@ -30,9 +31,6 @@ public class ChatActivity extends Activity {
 	private ListView listView;
 	
 	
-	public ArrayAdapter<String> getChatAdapter() { return chatAdapter; }
-	public List<String> getMessages() { return messages; }
-	public ListView getListView() { return listView; }
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,13 +46,19 @@ public class ChatActivity extends Activity {
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
-		
-        Log.v(TAG, "Start the AsyncTask for the server to receive messages");
+        
+        //Itilialise the adapter for the chat
+        listView = (ListView) findViewById(R.id.messageList);
+        messages = new ArrayList<String>();
+        chatAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, messages);
+        listView.setAdapter(chatAdapter);
+        
         //Start the AsyncTask for the server to receive messages
-        if(mReceiver.isGroupeOwner()){
+        Log.v(TAG, "Start the AsyncTask for the server to receive messages");
+        if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_OWNER){
         	new ReceiveMessageServer(ChatActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
         }
-        else{
+        else if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_CLIENT){
         	new ReceiveMessageClient(ChatActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
         }
         
@@ -66,30 +70,24 @@ public class ChatActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				if(mReceiver.isGroupeOwner()){
+				if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_OWNER){
 					Log.v(TAG, "SendMessageServer start");
 					new SendMessageServer(ChatActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, edit.getText().toString());
 					edit.setText("");
 				}
-				else{
+				else if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_CLIENT){
 					Log.v(TAG, "SendMessageClient start");
 					new SendMessageClient(ChatActivity.this, mReceiver.getOwnerAddr()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, edit.getText().toString());
 					edit.setText("");
 				}
 			}
 		});
-        
-        //Itilialise the adapter for the chat
-        listView = (ListView) findViewById(R.id.messageList);
-        messages = new ArrayList<String>();
-        chatAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, messages);
-        listView.setAdapter(chatAdapter);
 	}
 	
 	@Override
     public void onResume() {
         super.onResume();
-        registerReceiver(mReceiver, mIntentFilter);
+        registerReceiver(mReceiver, mIntentFilter);        
         
 		mManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
 					
@@ -109,13 +107,21 @@ public class ChatActivity extends Activity {
     public void onPause() {
         super.onPause();
         unregisterReceiver(mReceiver);
-    }
+    }    
     
     @Override
-    public void onDestroy(){
-    	super.onDestroy();
-//    	mManager.removeGroup(mChannel, null);
+	public void onBackPressed() {
+		super.onBackPressed();
+//		Intent intent = new Intent(ChatActivity.this, MainActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        intent.putExtra("EXIT", true);
+//        startActivity(intent);
+		android.os.Process.killProcess(android.os.Process.myPid());
+	}
+
+	public void refreshList(String newMessage){
+    	messages.add(newMessage);
+    	chatAdapter.notifyDataSetChanged();
+    	listView.setSelection(messages.size() - 1);
     }
-	
-	
 }

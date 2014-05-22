@@ -14,8 +14,8 @@ import android.widget.Toast;
 public class SendMessageServer extends AsyncTask<String, Void, String>{
 	private static final String TAG = "SendMessageServer";
 	private ChatActivity mActivity;
-	private static final int SERVER_PORT = 4446;
-	
+	private static final int SERVER_PORT = 4446;	
+
 	public SendMessageServer(ChatActivity activity){
 		mActivity = activity;
 	}
@@ -30,7 +30,7 @@ public class SendMessageServer extends AsyncTask<String, Void, String>{
 				Socket socket = new Socket();
 				socket.setReuseAddress(true);
 				socket.bind(null);
-				System.out.println("New client " + addr.getHostAddress());
+				Log.v(TAG,"Connect to client: " + addr.getHostAddress());
 				socket.connect(new InetSocketAddress(addr, SERVER_PORT));
 				Log.v(TAG, "doInBackground: connect to "+ addr.getHostAddress() +" succeeded");
 				
@@ -54,9 +54,7 @@ public class SendMessageServer extends AsyncTask<String, Void, String>{
 		Log.v(TAG, "onPostExecute");
 		super.onPostExecute(result);
 		Toast.makeText(mActivity, "Message sent", Toast.LENGTH_SHORT).show();
-		mActivity.getMessages().add(result);
-		mActivity.getChatAdapter().notifyDataSetChanged();
-		mActivity.getListView().setSelection(mActivity.getMessages().size() - 1);
+		mActivity.refreshList(result);
 	}
 	
 

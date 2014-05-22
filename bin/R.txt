@@ -263,13 +263,13 @@ int id end 0x7f050013
 int id expand_activities_button 0x7f050026
 int id expanded_menu 0x7f05002c
 int id goToChat 0x7f050042
+int id goToSettings 0x7f050041
 int id home 0x7f050014
 int id homeAsUp 0x7f050005
 int id icon 0x7f05002a
 int id ifRoom 0x7f05000a
 int id image 0x7f050027
 int id listMode 0x7f050001
-int id listView 0x7f050041
 int id list_item 0x7f050029
 int id messageList 0x7f05003c
 int id middle 0x7f050012

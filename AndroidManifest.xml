@@ -37,9 +37,10 @@
         
         <activity
             android:name="com.android.wondercom.ChatActivity"
-            android:label="@string/title_activity_chat"
-            android:parentActivityName="com.android.wondercom.MainActivity" >
+            android:label="@string/title_activity_chat" >
         </activity>
     </application>
 
 </manifest>
+
+<!-- android:parentActivityName="com.android.wondercom.MainActivity" -->
