@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity{
 	public Channel getmChannel() { return mChannel; }
 	public WifiDirectBroadcastReceiver getmReceiver() { return mReceiver; }
 	public IntentFilter getmIntentFilter() { return mIntentFilter; }
-	
+	public Button getGoToChat(){ return goToChat; }
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +66,7 @@ public class MainActivity extends ActionBarActivity{
         
         //Button Go to Chat
         goToChat = (Button) findViewById(R.id.goToChat);
+        goToChat.setVisibility(View.GONE);
         goToChat.setOnClickListener(new OnClickListener() {
 			
 			@Override

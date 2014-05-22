@@ -15,6 +15,7 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.net.wifi.p2p.WifiP2pManager.ConnectionInfoListener;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 /*
@@ -64,6 +65,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 		**********************************/
 		if(action.equals(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION)){ 
 			Log.v(TAG, "WIFI_P2P_STATE_CHANGED_ACTION");
+			
 			//check if Wifi P2P is supported
 			int state = intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -1);
 			if(state == WifiP2pManager.WIFI_P2P_STATE_ENABLED){
@@ -78,20 +80,6 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 		**********************************/
 		else if(action.equals(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION)){ 
 			Log.v(TAG, "WIFI_P2P_PEERS_CHANGED_ACTION");
-//			if(mManager != null){
-//				mManager.requestPeers(mChannel, new WifiP2pManager.PeerListListener() {
-//					
-//					@Override
-//					public void onPeersAvailable(WifiP2pDeviceList peerList) {
-//						peersName.clear();
-//						for(WifiP2pDevice device : peerList.getDeviceList()){
-//							peersName.add(device.deviceName);
-//							peers.add(device);
-//						}
-//						MainActivity.mAdapter.notifyDataSetChanged();
-//					}
-//				});
-//			}
 		}
 		
 		/***************************************
@@ -107,6 +95,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 		******************************************************************/
 		else if(action.equals(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION)){
 			Log.v(TAG, "WIFI_P2P_CONNECTION_CHANGED_ACTION");
+			
 			if(mManager == null){
 				return;
 			}
@@ -123,29 +112,16 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 						 The GO : create a server thread and accept incoming connections 
 						******************************************************************/
 						if (info.groupFormed && info.isGroupOwner) { 
-							isGroupeOwner = IS_OWNER;
-							
-//							if(server==null){
-//								server = new ServerInit();
-//								server.start();
-//							}							
+							isGroupeOwner = IS_OWNER;	
+							activateButtonGoToChat("server");
 						}
 						
 						/******************************************************************
 						 The client : create a client thread that connects to the group owner 
 						******************************************************************/
 						else if (info.groupFormed) { 
-							isGroupeOwner = IS_CLIENT;
-							
-//							if(client==null){
-//								client = new ClientInit(groupOwnerAddress);
-//								try {
-//									Thread.sleep(1000);
-//								} catch (InterruptedException e) {
-//									e.printStackTrace();
-//								}
-//								client.start();
-//							}							
+							isGroupeOwner = IS_CLIENT;		
+							activateButtonGoToChat("client");
 						}		
 						else{
 							isGroupeOwner = GROUP_NOT_FORMED;
@@ -153,6 +129,13 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 					}
 				});				
 			}
+		}
+	}
+	
+	public void activateButtonGoToChat(String role){
+		if(mActivity.getClass() == MainActivity.class){
+			((MainActivity)mActivity).getGoToChat().setText("Start the chat "+role);
+			((MainActivity)mActivity).getGoToChat().setVisibility(View.VISIBLE);
 		}
 	}
 
