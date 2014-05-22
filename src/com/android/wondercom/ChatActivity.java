@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
@@ -112,10 +111,6 @@ public class ChatActivity extends Activity {
     @Override
 	public void onBackPressed() {
 		super.onBackPressed();
-//		Intent intent = new Intent(ChatActivity.this, MainActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        intent.putExtra("EXIT", true);
-//        startActivity(intent);
 		android.os.Process.killProcess(android.os.Process.myPid());
 	}
 

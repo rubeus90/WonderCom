@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.NetworkInfo;
 import android.net.wifi.p2p.WifiP2pDevice;
-import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
@@ -34,8 +33,6 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 	private List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
 	private int isGroupeOwner;
 	private InetAddress ownerAddr;
-	private ServerInit server;
-	private ClientInit client;
 	
 	private static WifiDirectBroadcastReceiver instance;
 	

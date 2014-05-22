@@ -26,7 +26,6 @@ public class MainActivity extends ActionBarActivity{
 	private Channel mChannel;
 	private WifiDirectBroadcastReceiver mReceiver;
 	private IntentFilter mIntentFilter;
-//	public static ArrayAdapter<String> mAdapter; //peer list adapter
 	private Button goToChat;
 	private Button goToSettings;
 
@@ -35,18 +34,12 @@ public class MainActivity extends ActionBarActivity{
 	public Channel getmChannel() { return mChannel; }
 	public WifiDirectBroadcastReceiver getmReceiver() { return mReceiver; }
 	public IntentFilter getmIntentFilter() { return mIntentFilter; }
-//	public Button getGoToChat() { return goToChat; }	
 	
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); 
-        
-//        if (getIntent().getBooleanExtra("EXIT", false)) {
-//            finish();
-//            return;
-//        }
         
         mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mManager.initialize(this, getMainLooper(), null);
@@ -60,62 +53,6 @@ public class MainActivity extends ActionBarActivity{
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
-        
-        
-        
-//        //Initialise the list view which contains peer list
-//        ListView listView = (ListView) findViewById(R.id.listView);        
-//        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mReceiver.getPeersName());
-//        listView.setAdapter(mAdapter);
-//        
-//        //Connect to the device when we click on the list
-//        listView.setOnItemClickListener(new OnItemClickListener() {
-//
-//			@Override
-//			public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
-//				WifiP2pDevice device = mReceiver.getPeers().get(position);
-//				WifiP2pConfig config = new WifiP2pConfig();
-//				config.deviceAddress = device.deviceAddress;
-//				config.wps.setup = WpsInfo.PBC;
-//				
-//				mManager.connect(mChannel, config, new WifiP2pManager.ActionListener(){
-//
-//					@Override
-//					public void onSuccess() {
-//						Toast.makeText(MainActivity.this, "Waiting for peer accept", Toast.LENGTH_SHORT).show();
-//					}
-//					
-//					@Override
-//					public void onFailure(int arg0) {
-//						Toast.makeText(MainActivity.this, "Connect failed, please retry", Toast.LENGTH_SHORT).show();						
-//					}
-//				});
-//			}
-//		});
-//        
-//        //Disconnect from the wifi direct group when long click on the connected device
-//        listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-//
-//			@Override
-//			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-////				mManager.removeGroup(mChannel, null);
-////				Toast.makeText(MainActivity.this, "Disconnected", Toast.LENGTH_SHORT).show();
-//				if(mReceiver.isGroupeOwner()){
-//					ServerInit server = new ServerInit();
-//					server.start();
-//				}
-//				else{
-//					ClientInit client = new ClientInit(mReceiver.getOwnerAddr());
-//					try {
-//						Thread.sleep(1000);
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
-//					client.start();
-//				}
-//				return true;
-//			}
-//		});  
         
         //Button Go to Settings
         goToSettings = (Button) findViewById(R.id.goToSettings);
@@ -206,8 +143,4 @@ public class MainActivity extends ActionBarActivity{
     	//Open Wifi direct settings
         startActivityForResult(new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS), 0);
     }
-    
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//    }
 }
