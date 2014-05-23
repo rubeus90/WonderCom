@@ -1,12 +1,12 @@
 package com.android.wondercom;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +20,7 @@ import android.widget.Toast;
  * When the user choose one, the connection will be established.
  * Once the connection established, the ChatActivity is launched.
  */
-public class MainActivity extends ActionBarActivity{
+public class MainActivity extends Activity{
 	public static final String TAG = "MainActivity";	
 	private WifiP2pManager mManager;
 	private Channel mChannel;

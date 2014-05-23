@@ -79,7 +79,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 		 Available peer list has changed
 		**********************************/
 		else if(action.equals(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION)){ 
-			Log.v(TAG, "WIFI_P2P_PEERS_CHANGED_ACTION");
+//			Log.v(TAG, "WIFI_P2P_PEERS_CHANGED_ACTION");
 		}
 		
 		/***************************************
