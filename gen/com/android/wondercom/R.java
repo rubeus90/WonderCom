@@ -1249,10 +1249,11 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
-        public static final int action_settings=0x7f0a000f;
+        public static final int action_settings=0x7f0a000e;
         public static final int app_name=0x7f0a000d;
-        public static final int hello_world=0x7f0a000e;
-        public static final int title_activity_chat=0x7f0a0010;
+        public static final int go_to_settings_button=0x7f0a0010;
+        public static final int send_button=0x7f0a0011;
+        public static final int title_activity_chat=0x7f0a000f;
     }
     public static final class style {
         /** 
@@ -1290,6 +1291,7 @@ containing a value of this type.
         /**  ActionBar title text 
          */
         public static final int MyActionBarTitleText=0x7f0b008f;
+        public static final int OverflowStyle=0x7f0b0090;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0b0063;

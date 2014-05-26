@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_centerInParent="true"
-        android:text="Go to Settings"/>
+        android:text="@string/go_to_settings_button"/>
         
     <Button         
         android:id="@+id/goToChat"
