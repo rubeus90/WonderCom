@@ -1,15 +1,15 @@
 package com.android.wondercom;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-public class ReceiveMessageServer extends AsyncTask<Void, String, Void>{
+public class ReceiveMessageServer extends AsyncTask<Void, Message, Void>{
 	private static final int SERVER_PORT = 4445;
 	private ChatActivity mActivity;
 	private ServerSocket serverSocket;
@@ -20,18 +20,22 @@ public class ReceiveMessageServer extends AsyncTask<Void, String, Void>{
 	
 	@Override
 	protected Void doInBackground(Void... params) {
-		String message="";
 		try {
 			serverSocket = new ServerSocket(SERVER_PORT);
 			while(true){
 				Socket clientSocket = serverSocket.accept();
-				BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-				message = br.readLine();
+				
+				InputStream inputStream = clientSocket.getInputStream();				
+				ObjectInputStream objectIS = new ObjectInputStream(inputStream);
+				Message message = (Message) objectIS.readObject();
+				
 				clientSocket.close();
 				publishProgress(message);
 			}
 			
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
         
@@ -49,9 +53,10 @@ public class ReceiveMessageServer extends AsyncTask<Void, String, Void>{
 	}
 
 	@Override
-	protected void onProgressUpdate(String... values) {
+	protected void onProgressUpdate(Message... values) {
 		super.onProgressUpdate(values);
-		Toast.makeText(mActivity, values[0], Toast.LENGTH_SHORT).show();
+		String text = values[0].getmText();
+		Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show();
 		new SendMessageServer(mActivity).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
 	}
 	

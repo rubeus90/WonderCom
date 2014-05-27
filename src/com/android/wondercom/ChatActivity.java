@@ -5,7 +5,9 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.AsyncTask;
@@ -20,6 +22,7 @@ import android.widget.ListView;
 
 public class ChatActivity extends Activity {
 	public static final String TAG = "ChatActivity";	
+	public static final int PICK_IMAGE = 1;
 	private WifiP2pManager mManager;
 	private Channel mChannel;
 	private WifiDirectBroadcastReceiver mReceiver;
@@ -28,6 +31,7 @@ public class ChatActivity extends Activity {
 	private ArrayAdapter<String> chatAdapter;
 	private List<String> messages;
 	private ListView listView;
+	private String imagePath = "";
 	
 	
 	@Override
@@ -69,16 +73,21 @@ public class ChatActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_OWNER){
-					Log.v(TAG, "SendMessageServer start");
-					new SendMessageServer(ChatActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, edit.getText().toString());
-					edit.setText("");
-				}
-				else if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_CLIENT){
-					Log.v(TAG, "SendMessageClient start");
-					new SendMessageClient(ChatActivity.this, mReceiver.getOwnerAddr()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, edit.getText().toString());
-					edit.setText("");
-				}
+				sendMessage(Message.TEXT_MESSAGE);
+			}
+		});
+        
+        //Pick an image
+        Log.v(TAG, "Pick an image");
+        Button pickImage = (Button) findViewById(R.id.pickImage);
+        pickImage.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(Intent.ACTION_PICK);
+				intent.setType("image/*");
+				intent.setAction(Intent.ACTION_GET_CONTENT);
+				startActivityForResult(intent, PICK_IMAGE);
 			}
 		});
 	}
@@ -119,4 +128,33 @@ public class ChatActivity extends Activity {
     	chatAdapter.notifyDataSetChanged();
     	listView.setSelection(messages.size() - 1);
     }
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		switch(requestCode){
+			case PICK_IMAGE:
+				if (resultCode == RESULT_OK && data.getData() != null) {
+					Uri uri = data.getData();
+					imagePath = uri.getPath();
+					sendMessage(Message.IMAGE_MESSAGE);
+				}
+		}
+	}
+	
+	public void sendMessage(int type){
+		Message mes = new Message(type, edit.getText().toString(), imagePath);
+		
+		if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_OWNER){
+			Log.v(TAG, "SendMessageServer start");
+			new SendMessageServer(ChatActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mes);
+		}
+		else if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_CLIENT){
+			Log.v(TAG, "SendMessageClient start");
+			new SendMessageClient(ChatActivity.this, mReceiver.getOwnerAddr()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mes);
+		}		
+		
+		edit.setText("");
+	}
 }

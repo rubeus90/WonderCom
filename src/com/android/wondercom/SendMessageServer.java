@@ -1,7 +1,8 @@
 package com.android.wondercom;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -11,7 +12,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-public class SendMessageServer extends AsyncTask<String, Void, String>{
+public class SendMessageServer extends AsyncTask<Message, Void, Message>{
 	private static final String TAG = "SendMessageServer";
 	private ChatActivity mActivity;
 	private static final int SERVER_PORT = 4446;	
@@ -21,7 +22,7 @@ public class SendMessageServer extends AsyncTask<String, Void, String>{
 	}
 	
 	@Override
-	protected String doInBackground(String... msg) {
+	protected Message doInBackground(Message... msg) {
 		Log.v(TAG, "doInBackground");
 		
 		try {			
@@ -34,9 +35,10 @@ public class SendMessageServer extends AsyncTask<String, Void, String>{
 				socket.connect(new InetSocketAddress(addr, SERVER_PORT));
 				Log.v(TAG, "doInBackground: connect to "+ addr.getHostAddress() +" succeeded");
 				
-				PrintWriter pw = new PrintWriter(socket.getOutputStream(),true);
-				pw.write(msg[0]+"\n"); 
-			    pw.flush(); 
+				OutputStream outputStream = socket.getOutputStream();
+				
+				new ObjectOutputStream(outputStream).writeObject(msg[0]);
+				
 			    Log.v(TAG, "doInBackground: write to "+ addr.getHostAddress() +" succeeded");
 			    socket.close();
 			}
@@ -50,12 +52,18 @@ public class SendMessageServer extends AsyncTask<String, Void, String>{
 	}
 
 	@Override
-	protected void onPostExecute(String result) {
+	protected void onPostExecute(Message result) {
 		Log.v(TAG, "onPostExecute");
 		super.onPostExecute(result);
 		Toast.makeText(mActivity, "Message sent", Toast.LENGTH_SHORT).show();
-		mActivity.refreshList(result);
+		
+		switch(result.getmType()){
+			case Message.TEXT_MESSAGE:
+				mActivity.refreshList(result.getmText());
+				break;
+			case Message.IMAGE_MESSAGE:
+				mActivity.refreshList("Image");
+				break;
+		}		
 	}
-	
-
 }

@@ -1,7 +1,8 @@
 package com.android.wondercom;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -11,7 +12,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-public class SendMessageClient extends AsyncTask<String, Void, String>{
+public class SendMessageClient extends AsyncTask<Message, Void, Void>{
 	private static final String TAG = "SendMessageClient";
 	private Context mContext;
 	private static final int SERVER_PORT = 4445;
@@ -23,7 +24,7 @@ public class SendMessageClient extends AsyncTask<String, Void, String>{
 	}
 	
 	@Override
-	protected String doInBackground(String... msg) {
+	protected Void doInBackground(Message... msg) {
 		Log.v(TAG, "doInBackground");
 		Socket socket = new Socket();
 		try {
@@ -32,10 +33,11 @@ public class SendMessageClient extends AsyncTask<String, Void, String>{
 			socket.connect(new InetSocketAddress(mServerAddr, SERVER_PORT));
 			Log.v(TAG, "doInBackground: connect succeeded");
 			
-			PrintWriter pw = new PrintWriter(socket.getOutputStream(),true);
-			pw.write(msg[0]+"\n"); 
-		    pw.flush(); 
-		    Log.v(TAG, "doInBackground: connect succeeded");
+			OutputStream outputStream = socket.getOutputStream();
+			
+			new ObjectOutputStream(outputStream).writeObject(msg[0]);
+			
+		    Log.v(TAG, "doInBackground: send message succeeded");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally{
@@ -50,11 +52,11 @@ public class SendMessageClient extends AsyncTask<String, Void, String>{
 		    }
 		}
 		
-		return msg[0];
+		return null;
 	}
 
 	@Override
-	protected void onPostExecute(String result) {
+	protected void onPostExecute(Void result) {
 		Log.v(TAG, "onPostExecute");
 		super.onPostExecute(result);
 		Toast.makeText(mContext, "Message sent", Toast.LENGTH_SHORT).show();
