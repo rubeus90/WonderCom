@@ -79,11 +79,6 @@ public class MainActivity extends Activity{
 				else if(mReceiver.isGroupeOwner() ==  WifiDirectBroadcastReceiver.IS_CLIENT){
 					Toast.makeText(MainActivity.this, "I'm the client", Toast.LENGTH_SHORT).show();
 					ClientInit client = new ClientInit(mReceiver.getOwnerAddr());
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
 					client.start();
 				}
 				else if(mReceiver.isGroupeOwner() ==  WifiDirectBroadcastReceiver.GROUP_NOT_FORMED){

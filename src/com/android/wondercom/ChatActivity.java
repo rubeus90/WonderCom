@@ -1,6 +1,7 @@
 package com.android.wondercom;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
@@ -11,11 +12,11 @@ import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -28,10 +29,11 @@ public class ChatActivity extends Activity {
 	private WifiDirectBroadcastReceiver mReceiver;
 	private IntentFilter mIntentFilter;
 	private EditText edit;
-	private ArrayAdapter<String> chatAdapter;
-	private List<String> messages;
 	private ListView listView;
-	private String imagePath = "";
+//	private String imagePath = "";
+	private List<HashMap<String, Object>> listMessage;
+	private ChatAdapter chatAdapter;
+	private Uri imageUri;
 	
 	
 	@Override
@@ -52,8 +54,8 @@ public class ChatActivity extends Activity {
         
         //Itilialise the adapter for the chat
         listView = (ListView) findViewById(R.id.messageList);
-        messages = new ArrayList<String>();
-        chatAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, messages);
+        listMessage = new ArrayList<HashMap<String, Object>>();
+        chatAdapter = new ChatAdapter(this, listMessage);
         listView.setAdapter(chatAdapter);
         
         //Start the AsyncTask for the server to receive messages
@@ -123,10 +125,22 @@ public class ChatActivity extends Activity {
 		android.os.Process.killProcess(android.os.Process.myPid());
 	}
 
-	public void refreshList(String newMessage){
-    	messages.add(newMessage);
+	public void refreshList(Message message){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("type", message.getmType());
+		map.put("chatName", message.getChatName());
+		
+		if(message.getmType() == Message.TEXT_MESSAGE){
+			map.put("text", message.getmText());
+		}		
+		else if(message.getmType() == Message.IMAGE_MESSAGE){
+			map.put("image", message.getmImage());
+		}
+		
+		listMessage.add(map);
     	chatAdapter.notifyDataSetChanged();
-    	listView.setSelection(messages.size() - 1);
+    	
+    	listView.setSelection(listMessage.size() - 1);
     }
 
 	@Override
@@ -136,15 +150,15 @@ public class ChatActivity extends Activity {
 		switch(requestCode){
 			case PICK_IMAGE:
 				if (resultCode == RESULT_OK && data.getData() != null) {
-					Uri uri = data.getData();
-					imagePath = uri.getPath();
+					imageUri = data.getData();
+//					imagePath = uri.getPath();
 					sendMessage(Message.IMAGE_MESSAGE);
 				}
 		}
 	}
 	
 	public void sendMessage(int type){
-		Message mes = new Message(type, edit.getText().toString(), imagePath);
+		Message mes = new Message(this, type, edit.getText().toString(), imageUri);
 		
 		if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_OWNER){
 			Log.v(TAG, "SendMessageServer start");

@@ -57,13 +57,13 @@ public class SendMessageServer extends AsyncTask<Message, Void, Message>{
 		super.onPostExecute(result);
 		Toast.makeText(mActivity, "Message sent", Toast.LENGTH_SHORT).show();
 		
-		switch(result.getmType()){
-			case Message.TEXT_MESSAGE:
-				mActivity.refreshList(result.getmText());
-				break;
-			case Message.IMAGE_MESSAGE:
-				mActivity.refreshList("Image");
-				break;
-		}		
+//		switch(result.getmType()){
+//			case Message.TEXT_MESSAGE:
+				mActivity.refreshList(result);
+//				break;
+//			case Message.IMAGE_MESSAGE:
+//				//TODO
+//				break;
+//		}		
 	}
 }

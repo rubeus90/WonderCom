@@ -8,7 +8,10 @@
         android:id="@+id/messageList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/writeZone"></ListView>
+        android:layout_above="@+id/writeZone"
+        android:fadeScrollbars="true"
+        android:divider="@null"
+        android:dividerHeight="0dp"></ListView>
     
     <LinearLayout
         android:id="@id/writeZone"
