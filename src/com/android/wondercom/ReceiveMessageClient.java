@@ -58,13 +58,7 @@ public class ReceiveMessageClient extends AsyncTask<Void, Message, Void> {
 		String text = values[0].getmText();
 		Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show();
 		
-//		switch(values[0].getmType()){
-//		case Message.TEXT_MESSAGE:
-			mActivity.refreshList(values[0]);
-//			break;
-//		case Message.IMAGE_MESSAGE:
-//			//TODO
-//			break;
-//		}	
+		mActivity.refreshList(values[0]);
+
 	}
 }

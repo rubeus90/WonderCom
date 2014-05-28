@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +32,6 @@ public class ChatActivity extends Activity {
 	private IntentFilter mIntentFilter;
 	private EditText edit;
 	private ListView listView;
-//	private String imagePath = "";
 	private List<HashMap<String, Object>> listMessage;
 	private ChatAdapter chatAdapter;
 	private Uri imageUri;
@@ -156,7 +153,6 @@ public class ChatActivity extends Activity {
 			case PICK_IMAGE:
 				if (resultCode == RESULT_OK && data.getData() != null) {
 					imageUri = data.getData();
-//					imagePath = uri.getPath();
 					sendMessage(Message.IMAGE_MESSAGE);
 				}
 		}

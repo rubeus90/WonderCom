@@ -6,7 +6,6 @@ import java.io.Serializable;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 
 @SuppressWarnings("serial")
 public class Message implements Serializable{
