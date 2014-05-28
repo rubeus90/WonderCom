@@ -1,38 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
     
-    <TextView 
-        android:id="@+id/chatName"
+    <RelativeLayout 
+        android:id="@+id/relativeLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:textStyle="bold"
-        android:maxLines="1" 
-    	android:maxLength="10"
-    	android:layout_marginTop="10dp"
-    	android:layout_marginRight="10dp"
-    	android:layout_marginLeft="5dp"
-    	android:layout_marginBottom="5dp"/>
+	   	android:layout_height="wrap_content"
+	   	android:background="@drawable/chat_bubble"
+	   	android:layout_alignParentLeft="true"
+	   	android:layout_margin="10dp">
+        
+        <TextView 
+	        android:id="@+id/chatName"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"        
+	        android:textStyle="bold"
+	        android:maxLines="1" 
+	    	android:maxLength="10"
+	    	android:textColor="@color/chat_text"
+	    	android:layout_centerHorizontal="true" />        
+	    
+	    <TextView 
+	        android:id="@+id/text"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/chatName" 
+	        android:textColor="@color/chat_text"
+	        android:layout_marginTop="10dp" />
+	    
+	    <com.android.wondercom.DynamicImageView
+	        android:id="@+id/image"
+	        android:layout_below="@id/text"
+	        android:layout_width="180dp"
+	        android:layout_height="wrap_content"
+	        android:scaleType="fitCenter"
+	        android:layout_marginTop="10dp" />
     
-    <TextView 
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/chatName"
-        android:layout_alignTop="@id/chatName"
-        android:background="@drawable/chat_bubble"
-        android:layout_marginRight="5dp" />
+    </RelativeLayout>   
     
-    <com.android.wondercom.DynamicImageView
-        android:id="@+id/image"
-        android:layout_below="@id/text"
-        android:layout_toRightOf="@id/chatName"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp" />
+    <View
+        android:id="@+id/underline"
+		android:layout_height="0.5dp"
+		android:layout_width="wrap_content"
+		android:layout_alignLeft="@id/relativeLayout"
+		android:layout_alignRight="@id/relativeLayout"
+		android:background="@color/chat_text"
+		android:layout_marginTop="38dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp" />
 
 </RelativeLayout>

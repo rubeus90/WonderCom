@@ -181,6 +181,7 @@ public class ChatActivity extends Activity {
 		edit.setText("");
 	}
 	
+	//Decode the image stream from the URI returned by the activity Image Picker
 	public Bitmap getBitmapFromURL(Uri uri) {
 		InputStream input;
 	    Bitmap bmp;

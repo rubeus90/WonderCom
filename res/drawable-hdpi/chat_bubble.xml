@@ -17,9 +17,9 @@
     <!-- If you want to add some padding -->
     <padding
         android:left="8dp"
-        android:top="5dp"
+        android:top="8dp"
         android:right="8dp"
-        android:bottom="5dp"    >
+        android:bottom="8dp"    >
     </padding>
  
     <!-- Here is the corner radius -->
