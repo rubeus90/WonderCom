@@ -1,35 +1,43 @@
-package com.android.wondercom;
+package com.android.wondercom.AsyncTasks;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import com.android.wondercom.ChatActivity;
+import com.android.wondercom.Entities.Message;
 
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-public class ReceiveMessageClient extends AsyncTask<Void, Message, Void> {
-	private static final int SERVER_PORT = 4446;
+public class ReceiveMessageServer extends AsyncTask<Void, Message, Void>{
+	private static final int SERVER_PORT = 4445;
 	private ChatActivity mActivity;
-	private ServerSocket socket;
+	private ServerSocket serverSocket;
 
-	public ReceiveMessageClient(ChatActivity activity){
+	public ReceiveMessageServer(ChatActivity activity){
 		mActivity = activity;
 	}
 	
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			socket = new ServerSocket(SERVER_PORT);
+			serverSocket = new ServerSocket(SERVER_PORT);
 			while(true){
-				Socket destinationSocket = socket.accept();
+				Socket clientSocket = serverSocket.accept();				
 				
-				InputStream inputStream = destinationSocket.getInputStream();				
+				InputStream inputStream = clientSocket.getInputStream();				
 				ObjectInputStream objectIS = new ObjectInputStream(inputStream);
 				Message message = (Message) objectIS.readObject();
 				
-				destinationSocket.close();
+				//Add the InetAdress of the sender to the message
+				InetAddress senderAddr = clientSocket.getInetAddress();
+				message.setSenderAddress(senderAddr);
+				
+				clientSocket.close();
 				publishProgress(message);
 			}
 			
@@ -45,7 +53,7 @@ public class ReceiveMessageClient extends AsyncTask<Void, Message, Void> {
 	@Override
 	protected void onCancelled() {
 		try {
-			socket.close();
+			serverSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -57,8 +65,7 @@ public class ReceiveMessageClient extends AsyncTask<Void, Message, Void> {
 		super.onProgressUpdate(values);
 		String text = values[0].getmText();
 		Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show();
-		
-		mActivity.refreshList(values[0]);
-
+		new SendMessageServer(mActivity).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
 	}
+	
 }

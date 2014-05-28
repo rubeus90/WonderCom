@@ -3,6 +3,16 @@ package com.android.wondercom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import com.android.wondercom.AsyncTasks.ReceiveMessageClient;
+import com.android.wondercom.AsyncTasks.ReceiveMessageServer;
+import com.android.wondercom.AsyncTasks.SendMessageClient;
+import com.android.wondercom.AsyncTasks.SendMessageServer;
+import com.android.wondercom.CustomAdapters.ChatAdapter;
+import com.android.wondercom.Entities.Image;
+import com.android.wondercom.Entities.Message;
+import com.android.wondercom.Receivers.WifiDirectBroadcastReceiver;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

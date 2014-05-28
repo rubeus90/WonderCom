@@ -1,4 +1,4 @@
-package com.android.wondercom;
+package com.android.wondercom.Entities;
 
 import java.io.IOException;
 import java.io.InputStream;

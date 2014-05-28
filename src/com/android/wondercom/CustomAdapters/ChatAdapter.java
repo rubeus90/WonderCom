@@ -1,4 +1,4 @@
-package com.android.wondercom;
+package com.android.wondercom.CustomAdapters;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android.wondercom.R;
+import com.android.wondercom.Entities.Message;
 
 public class ChatAdapter extends BaseAdapter {
 	private List<HashMap<String,Object>> listMessage;

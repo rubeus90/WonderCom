@@ -1,4 +1,4 @@
-package com.android.wondercom;
+package com.android.wondercom.Entities;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

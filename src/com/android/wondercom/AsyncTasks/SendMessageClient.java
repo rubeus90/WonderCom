@@ -1,4 +1,4 @@
-package com.android.wondercom;
+package com.android.wondercom.AsyncTasks;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -6,6 +6,9 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+
+import com.android.wondercom.ChatActivity;
+import com.android.wondercom.Entities.Message;
 
 import android.os.AsyncTask;
 import android.util.Log;

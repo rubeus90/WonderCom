@@ -1,8 +1,10 @@
-package com.android.wondercom;
+package com.android.wondercom.Receivers;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.android.wondercom.MainActivity;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;

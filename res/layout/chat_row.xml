@@ -29,7 +29,7 @@
 	        android:textColor="@color/chat_text"
 	        android:layout_marginTop="10dp" />
 	    
-	    <com.android.wondercom.DynamicImageView
+	    <com.android.wondercom.CustomViews.DynamicImageView
 	        android:id="@+id/image"
 	        android:layout_below="@id/text"
 	        android:layout_width="180dp"

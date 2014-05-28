@@ -1,5 +1,9 @@
 package com.android.wondercom;
 
+import com.android.wondercom.InitThreads.ClientInit;
+import com.android.wondercom.InitThreads.ServerInit;
+import com.android.wondercom.Receivers.WifiDirectBroadcastReceiver;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

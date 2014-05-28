@@ -1,4 +1,4 @@
-package com.android.wondercom;
+package com.android.wondercom.InitThreads;
 
 import java.io.IOException;
 import java.net.InetAddress;
