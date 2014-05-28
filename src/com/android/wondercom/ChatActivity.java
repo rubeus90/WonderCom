@@ -1,17 +1,12 @@
 package com.android.wondercom;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
@@ -127,6 +122,7 @@ public class ChatActivity extends Activity {
 		android.os.Process.killProcess(android.os.Process.myPid());
 	}
     
+    //Return the Uri of the picked image
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -163,9 +159,9 @@ public class ChatActivity extends Activity {
 		Message mes = new Message(type, edit.getText().toString(), null);
 		
 		if(type == Message.IMAGE_MESSAGE){
-			Bitmap bitmap = getBitmapFromURL(imageUri);
+			Image image = new Image(this, imageUri);
 			Log.v(TAG, "Bitmap from url ok");
-			mes.setByteArray(mes.bitmapToByteArray(bitmap));
+			mes.setByteArray(mes.bitmapToByteArray(image.getBitmapFromUri()));
 			Log.v(TAG, "Set byte array to image ok");
 		}
 		
@@ -179,19 +175,5 @@ public class ChatActivity extends Activity {
 		}		
 		
 		edit.setText("");
-	}
-	
-	//Decode the image stream from the URI returned by the activity Image Picker
-	public Bitmap getBitmapFromURL(Uri uri) {
-		InputStream input;
-	    Bitmap bmp;
-	    try {
-	        input = this.getContentResolver().openInputStream(uri);
-	        bmp = BitmapFactory.decodeStream(input);
-	        return bmp;
-	    } catch (FileNotFoundException e) {
-	    	e.getStackTrace();
-	    	return null;
-	    }
 	}
 }
