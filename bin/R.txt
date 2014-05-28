@@ -250,11 +250,12 @@ int id action_context_bar 0x7f05001d
 int id action_menu_divider 0x7f050016
 int id action_menu_presenter 0x7f050017
 int id action_mode_close_button 0x7f050024
-int id action_settings 0x7f050046
+int id action_settings 0x7f050047
 int id activity_chooser_view_content 0x7f050025
 int id always 0x7f05000b
 int id beginning 0x7f050011
 int id chatName 0x7f050044
+int id chatNameImage 0x7f050046
 int id checkbox 0x7f05002d
 int id collapseActionView 0x7f05000d
 int id container 0x7f050041
@@ -337,8 +338,8 @@ int layout abc_search_view 0x7f030016
 int layout abc_simple_decor 0x7f030017
 int layout activity_chat 0x7f030018
 int layout activity_main 0x7f030019
-int layout chat_row_image 0x7f03001a
-int layout chat_row_text 0x7f03001b
+int layout chat_row 0x7f03001a
+int layout chat_row_image 0x7f03001b
 int layout support_simple_spinner_dropdown_item 0x7f03001c
 int menu main 0x7f0c0000
 int string abc_action_bar_home_description 0x7f0a0001

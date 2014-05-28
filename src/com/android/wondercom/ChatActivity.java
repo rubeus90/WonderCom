@@ -1,5 +1,7 @@
 package com.android.wondercom;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +10,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
@@ -134,7 +138,8 @@ public class ChatActivity extends Activity {
 			map.put("text", message.getmText());
 		}		
 		else if(message.getmType() == Message.IMAGE_MESSAGE){
-			map.put("image", message.getmImage());
+			map.put("image", message.byteArrayToBitmap(message.getByteArray()));
+			Log.v(TAG, "Set image to listMessage ok ");
 		}
 		
 		listMessage.add(map);
@@ -158,7 +163,14 @@ public class ChatActivity extends Activity {
 	}
 	
 	public void sendMessage(int type){
-		Message mes = new Message(this, type, edit.getText().toString(), imageUri);
+		Message mes = new Message(type, edit.getText().toString());
+		
+		if(type == Message.IMAGE_MESSAGE){
+			Bitmap bitmap = getBitmapFromURL(imageUri);
+			Log.v(TAG, "Bitmap from url ok");
+			mes.setByteArray(mes.bitmapToByteArray(bitmap));
+			Log.v(TAG, "Set byte array to image ok");
+		}
 		
 		if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_OWNER){
 			Log.v(TAG, "SendMessageServer start");
@@ -170,5 +182,18 @@ public class ChatActivity extends Activity {
 		}		
 		
 		edit.setText("");
+	}
+	
+	public Bitmap getBitmapFromURL(Uri uri) {
+		InputStream input;
+	    Bitmap bmp;
+	    try {
+	        input = this.getContentResolver().openInputStream(uri);
+	        bmp = BitmapFactory.decodeStream(input);
+	        return bmp;
+	    } catch (FileNotFoundException e) {
+	    	e.getStackTrace();
+	    	return null;
+	    }
 	}
 }

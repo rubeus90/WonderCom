@@ -24,5 +24,12 @@
         android:layout_alignTop="@id/chatName"
         android:background="@drawable/chat_bubble"
         android:layout_marginRight="5dp" />
+    
+    <ImageView 
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text"
+        android:layout_toRightOf="@id/chatName"/>
 
 </RelativeLayout>

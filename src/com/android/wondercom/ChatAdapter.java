@@ -45,17 +45,20 @@ public class ChatAdapter extends BaseAdapter {
 		if(view == null){
 			CacheView cache = new CacheView();            
             
-			if(type == Message.TEXT_MESSAGE){
-				view = inflater.inflate(R.layout.chat_row_text, null);
+//			if(type == Message.TEXT_MESSAGE){
+				System.out.println("coucou text message");
+				view = inflater.inflate(R.layout.chat_row, null);
 				cache.chatName = (TextView) view.findViewById(R.id.chatName);
 	            cache.text = (TextView) view.findViewById(R.id.text);
+	            cache.image = (ImageView) view.findViewById(R.id.image);
 	            
-			}
-			else if(type == Message.IMAGE_MESSAGE){
-				view = inflater.inflate(R.layout.chat_row_image, null);
-				cache.chatName = (TextView) view.findViewById(R.id.chatName);
-				cache.image = (ImageView) view.findViewById(R.id.image);
-			}
+//			}
+//			else if(type == Message.IMAGE_MESSAGE){
+//				System.out.println("coucoucou image message");
+//				view = inflater.inflate(R.layout.chat_row_image, null);
+//				cache.chatName = (TextView) view.findViewById(R.id.chatNameImage);
+//				cache.image = (ImageView) view.findViewById(R.id.image);
+//			}
 			view.setTag(cache);
 		}
 		
@@ -64,9 +67,13 @@ public class ChatAdapter extends BaseAdapter {
         cache.chatName.setText((String)listMessage.get(position).get("chatName"));
         
         if(type == Message.TEXT_MESSAGE){        	
+        	cache.image.setVisibility(View.GONE);
+        	cache.text.setVisibility(View.VISIBLE);
             cache.text.setText((String)listMessage.get(position).get("text"));
 		}
 		else if(type == Message.IMAGE_MESSAGE){
+			cache.text.setVisibility(View.GONE);
+			cache.image.setVisibility(View.VISIBLE);
 			cache.image.setImageBitmap((Bitmap) listMessage.get(position).get("image"));
 		}       
         
