@@ -3,6 +3,7 @@ package com.android.wondercom;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -23,11 +24,15 @@ public class ReceiveMessageServer extends AsyncTask<Void, Message, Void>{
 		try {
 			serverSocket = new ServerSocket(SERVER_PORT);
 			while(true){
-				Socket clientSocket = serverSocket.accept();
+				Socket clientSocket = serverSocket.accept();				
 				
 				InputStream inputStream = clientSocket.getInputStream();				
 				ObjectInputStream objectIS = new ObjectInputStream(inputStream);
 				Message message = (Message) objectIS.readObject();
+				
+				//Add the InetAdress of the sender to the message
+				InetAddress senderAddr = clientSocket.getInetAddress();
+				message.setSenderAddress(senderAddr);
 				
 				clientSocket.close();
 				publishProgress(message);

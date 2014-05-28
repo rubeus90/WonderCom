@@ -3,6 +3,7 @@ package com.android.wondercom;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.InetAddress;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,7 @@ public class Message implements Serializable{
 	private String mText;
 	private String chatName = "Pseudo";
 	private byte[] byteArray;
+	private InetAddress senderAddress;
 	
 	public int getmType() { return mType; }
 	public void setmType(int mType) { this.mType = mType; }
@@ -26,11 +28,14 @@ public class Message implements Serializable{
 	public void setChatName(String chatName) { this.chatName = chatName; }
 	public byte[] getByteArray() { return byteArray; }
 	public void setByteArray(byte[] byteArray) { this.byteArray = byteArray; }
+	public InetAddress getSenderAddress() { return senderAddress; }
+	public void setSenderAddress(InetAddress senderAddress) { this.senderAddress = senderAddress; }
 	
 	
-	public Message(int type, String text){
+	public Message(int type, String text, InetAddress sender){
 		mType = type;
 		mText = text;	
+		senderAddress = sender;
 	}
 	
 	public byte[] bitmapToByteArray(Bitmap bitmap){

@@ -7,24 +7,23 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-public class SendMessageClient extends AsyncTask<Message, Void, Void>{
+public class SendMessageClient extends AsyncTask<Message, Void, Message>{
 	private static final String TAG = "SendMessageClient";
-	private Context mContext;
+	private ChatActivity mActivity;
 	private static final int SERVER_PORT = 4445;
 	private InetAddress mServerAddr;
 	
-	public SendMessageClient(Context context, InetAddress serverAddr){
-		mContext = context;
+	public SendMessageClient(ChatActivity activity, InetAddress serverAddr){
+		mActivity = activity;
 		mServerAddr = serverAddr;
 	}
 	
 	@Override
-	protected Void doInBackground(Message... msg) {
+	protected Message doInBackground(Message... msg) {
 		Log.v(TAG, "doInBackground");
 		Socket socket = new Socket();
 		try {
@@ -52,13 +51,14 @@ public class SendMessageClient extends AsyncTask<Message, Void, Void>{
 		    }
 		}
 		
-		return null;
+		return msg[0];
 	}
 
 	@Override
-	protected void onPostExecute(Void result) {
+	protected void onPostExecute(Message result) {
 		Log.v(TAG, "onPostExecute");
 		super.onPostExecute(result);
-		Toast.makeText(mContext, "Message sent", Toast.LENGTH_SHORT).show();
+		Toast.makeText(mActivity, "Message sent", Toast.LENGTH_SHORT).show();
+		mActivity.refreshList(result);
 	}
 }

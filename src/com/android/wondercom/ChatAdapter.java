@@ -45,20 +45,11 @@ public class ChatAdapter extends BaseAdapter {
 		if(view == null){
 			CacheView cache = new CacheView();            
             
-//			if(type == Message.TEXT_MESSAGE){
-				System.out.println("coucou text message");
-				view = inflater.inflate(R.layout.chat_row, null);
-				cache.chatName = (TextView) view.findViewById(R.id.chatName);
-	            cache.text = (TextView) view.findViewById(R.id.text);
-	            cache.image = (ImageView) view.findViewById(R.id.image);
+			view = inflater.inflate(R.layout.chat_row, null);
+			cache.chatName = (TextView) view.findViewById(R.id.chatName);
+            cache.text = (TextView) view.findViewById(R.id.text);
+            cache.image = (ImageView) view.findViewById(R.id.image);
 	            
-//			}
-//			else if(type == Message.IMAGE_MESSAGE){
-//				System.out.println("coucoucou image message");
-//				view = inflater.inflate(R.layout.chat_row_image, null);
-//				cache.chatName = (TextView) view.findViewById(R.id.chatNameImage);
-//				cache.image = (ImageView) view.findViewById(R.id.image);
-//			}
 			view.setTag(cache);
 		}
 		

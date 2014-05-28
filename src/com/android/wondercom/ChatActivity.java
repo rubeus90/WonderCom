@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -125,6 +126,19 @@ public class ChatActivity extends Activity {
 		super.onBackPressed();
 		android.os.Process.killProcess(android.os.Process.myPid());
 	}
+    
+    @Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		switch(requestCode){
+			case PICK_IMAGE:
+				if (resultCode == RESULT_OK && data.getData() != null) {
+					imageUri = data.getData();
+					sendMessage(Message.IMAGE_MESSAGE);
+				}
+		}
+	}
 
 	public void refreshList(Message message){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -143,23 +157,10 @@ public class ChatActivity extends Activity {
     	chatAdapter.notifyDataSetChanged();
     	
     	listView.setSelection(listMessage.size() - 1);
-    }
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		
-		switch(requestCode){
-			case PICK_IMAGE:
-				if (resultCode == RESULT_OK && data.getData() != null) {
-					imageUri = data.getData();
-					sendMessage(Message.IMAGE_MESSAGE);
-				}
-		}
-	}
+    }	
 	
 	public void sendMessage(int type){
-		Message mes = new Message(type, edit.getText().toString());
+		Message mes = new Message(type, edit.getText().toString(), null);
 		
 		if(type == Message.IMAGE_MESSAGE){
 			Bitmap bitmap = getBitmapFromURL(imageUri);

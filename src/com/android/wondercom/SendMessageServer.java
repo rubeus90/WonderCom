@@ -28,6 +28,11 @@ public class SendMessageServer extends AsyncTask<Message, Void, Message>{
 		try {			
 			ArrayList<InetAddress> listClients = ServerInit.clients;
 			for(InetAddress addr : listClients){
+				
+				if(msg[0].getSenderAddress()!=null && addr.getHostAddress().equals(msg[0].getSenderAddress().getHostAddress())){
+					return msg[0];
+				}			
+				
 				Socket socket = new Socket();
 				socket.setReuseAddress(true);
 				socket.bind(null);
