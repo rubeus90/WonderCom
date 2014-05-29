@@ -115,7 +115,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 						******************************************************************/
 						if (info.groupFormed && info.isGroupOwner) { 
 							isGroupeOwner = IS_OWNER;	
-							activateButtonGoToChat("server");
+							activateGoToChat("server");
 						}
 						
 						/******************************************************************
@@ -123,7 +123,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 						******************************************************************/
 						else if (info.groupFormed) { 
 							isGroupeOwner = IS_CLIENT;		
-							activateButtonGoToChat("client");
+							activateGoToChat("client");
 						}		
 						else{
 							isGroupeOwner = GROUP_NOT_FORMED;
@@ -134,10 +134,13 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 		}
 	}
 	
-	public void activateButtonGoToChat(String role){
+	public void activateGoToChat(String role){
 		if(mActivity.getClass() == MainActivity.class){
 			((MainActivity)mActivity).getGoToChat().setText("Start the chat "+role);
 			((MainActivity)mActivity).getGoToChat().setVisibility(View.VISIBLE);
+			((MainActivity)mActivity).getSetChatName().setVisibility(View.VISIBLE);
+			((MainActivity)mActivity).getSetChatNameLabel().setVisibility(View.VISIBLE);
+			((MainActivity)mActivity).getGoToSettings().setVisibility(View.GONE);
 		}
 	}
 

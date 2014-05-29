@@ -6,5 +6,6 @@
     <string name="title_activity_chat">Chatroom</string>
     <string name="go_to_settings_button">Go to Settings</string>
     <string name="send_button">Send</string>
+    <string name="set_chat_name">Please choose your chat name</string>
 
 </resources>

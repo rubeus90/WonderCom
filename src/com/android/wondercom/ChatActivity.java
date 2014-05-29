@@ -166,7 +166,7 @@ public class ChatActivity extends Activity {
     }	
 	
 	public void sendMessage(int type){
-		Message mes = new Message(type, edit.getText().toString(), null);
+		Message mes = new Message(type, edit.getText().toString(), null, MainActivity.chatName);
 		
 		if(type == Message.IMAGE_MESSAGE){
 			Image image = new Image(this, imageUri);

@@ -16,7 +16,7 @@ public class Message implements Serializable{
 	
 	private int mType;
 	private String mText;
-	private String chatName = "Pseudo";
+	private String chatName;
 	private byte[] byteArray;
 	private InetAddress senderAddress;
 	
@@ -32,10 +32,11 @@ public class Message implements Serializable{
 	public void setSenderAddress(InetAddress senderAddress) { this.senderAddress = senderAddress; }
 	
 	
-	public Message(int type, String text, InetAddress sender){
+	public Message(int type, String text, InetAddress sender, String name){
 		mType = type;
 		mText = text;	
 		senderAddress = sender;
+		chatName = name;
 	}
 	
 	public byte[] bitmapToByteArray(Bitmap bitmap){

@@ -17,11 +17,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /*
- * This activity is the launcher activity. It shows a list of available peers.
- * When the user choose one, the connection will be established.
+ * This activity is the launcher activity. 
  * Once the connection established, the ChatActivity is launched.
  */
 public class MainActivity extends Activity{
@@ -32,6 +33,9 @@ public class MainActivity extends Activity{
 	private IntentFilter mIntentFilter;
 	private Button goToChat;
 	private Button goToSettings;
+	private TextView setChatNameLabel;
+	private EditText setChatName;
+	public static String chatName;
 
 	//Getters and Setters
     public WifiP2pManager getmManager() { return mManager; }
@@ -39,59 +43,33 @@ public class MainActivity extends Activity{
 	public WifiDirectBroadcastReceiver getmReceiver() { return mReceiver; }
 	public IntentFilter getmIntentFilter() { return mIntentFilter; }
 	public Button getGoToChat(){ return goToChat; }
+	public TextView getSetChatNameLabel() { return setChatNameLabel; }
+	public Button getGoToSettings() { return goToSettings; }
+	public EditText getSetChatName() { return setChatName; }
+	
+	
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); 
         
-        mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
-        mChannel = mManager.initialize(this, getMainLooper(), null);
-        mReceiver = WifiDirectBroadcastReceiver.createInstance();
-        mReceiver.setmManager(mManager);
-        mReceiver.setmChannel(mChannel);
-        mReceiver.setmActivity(this);
-        
-        mIntentFilter = new IntentFilter();
-        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+        //Init the Channel, Intent filter and Broadcast receiver
+        init();
         
         //Button Go to Settings
         goToSettings = (Button) findViewById(R.id.goToSettings);
-        goToSettings.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				goToSettings();
-			}
-		});
+        goToSettings();
+        
         
         //Button Go to Chat
         goToChat = (Button) findViewById(R.id.goToChat);
         goToChat.setVisibility(View.GONE);
-        goToChat.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				if(mReceiver.isGroupeOwner() ==  WifiDirectBroadcastReceiver.IS_OWNER){
-					Toast.makeText(MainActivity.this, "I'm the group owner  " + mReceiver.getOwnerAddr().getHostAddress(), Toast.LENGTH_SHORT).show();
-					ServerInit server = new ServerInit();
-					server.start();
-				}
-				else if(mReceiver.isGroupeOwner() ==  WifiDirectBroadcastReceiver.IS_CLIENT){
-					Toast.makeText(MainActivity.this, "I'm the client", Toast.LENGTH_SHORT).show();
-					ClientInit client = new ClientInit(mReceiver.getOwnerAddr());
-					client.start();
-				}
-				else if(mReceiver.isGroupeOwner() ==  WifiDirectBroadcastReceiver.GROUP_NOT_FORMED){
-					Toast.makeText(MainActivity.this, "Error: The group is not formed", Toast.LENGTH_SHORT).show();
-				}
-				
-				goToChat();		
-			}
-		});
+        goToChat();
+        
+        //Set the chat name
+        setChatName = (EditText) findViewById(R.id.setChatName);
+        setChatNameLabel = (TextView) findViewById(R.id.setChatNameLabel);
     }
 
     @Override
@@ -134,13 +112,64 @@ public class MainActivity extends Activity{
         return super.onOptionsItemSelected(item);
     }	
     
-    public void goToChat(){
-    	Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
-		startActivity(intent);
+    public void init(){
+    	mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
+        mChannel = mManager.initialize(this, getMainLooper(), null);
+        mReceiver = WifiDirectBroadcastReceiver.createInstance();
+        mReceiver.setmManager(mManager);
+        mReceiver.setmChannel(mChannel);
+        mReceiver.setmActivity(this);
+        
+        mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
+        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
+        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
+        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
     }
     
-    public void goToSettings(){
-    	//Open Wifi direct settings
-        startActivityForResult(new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS), 0);
+    public void goToChat(){
+    	goToChat.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				if(!setChatName.getText().toString().equals("")){
+					//Set the chat name
+					chatName = setChatName.getText().toString();
+					
+					//Start the init process
+					if(mReceiver.isGroupeOwner() ==  WifiDirectBroadcastReceiver.IS_OWNER){
+						Toast.makeText(MainActivity.this, "I'm the group owner  " + mReceiver.getOwnerAddr().getHostAddress(), Toast.LENGTH_SHORT).show();
+						ServerInit server = new ServerInit();
+						server.start();
+					}
+					else if(mReceiver.isGroupeOwner() ==  WifiDirectBroadcastReceiver.IS_CLIENT){
+						Toast.makeText(MainActivity.this, "I'm the client", Toast.LENGTH_SHORT).show();
+						ClientInit client = new ClientInit(mReceiver.getOwnerAddr());
+						client.start();
+					}
+					else if(mReceiver.isGroupeOwner() ==  WifiDirectBroadcastReceiver.GROUP_NOT_FORMED){
+						Toast.makeText(MainActivity.this, "Error: The group is not formed", Toast.LENGTH_SHORT).show();
+					}
+					
+					//Open the ChatActivity
+					Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+					startActivity(intent);
+				}
+				else{
+					Toast.makeText(MainActivity.this, "Please enter a chat name", Toast.LENGTH_SHORT).show();
+				}					
+			}
+		});    	
+    }
+    
+    public void goToSettings(){    	
+    	goToSettings.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				//Open Wifi settings
+		        startActivityForResult(new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS), 0);
+			}
+		});    	
     }
 }

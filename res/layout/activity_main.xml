@@ -4,6 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.android.wondercom.MainActivity" >
+    
+    <TextView 
+        android:id="@+id/setChatNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/setChatName"
+        android:text="@string/set_chat_name"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+    
+    <EditText 
+        android:id="@id/setChatName"
+        android:inputType="text"
+        android:lines="1"
+        android:maxLength="10"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
     <Button 
         android:id="@+id/goToSettings"
@@ -19,9 +38,3 @@
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
-
-<!-- <ListView 
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/goToChat"></ListView> -->
