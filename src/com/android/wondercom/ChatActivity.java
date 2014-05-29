@@ -146,10 +146,11 @@ public class ChatActivity extends Activity {
 		}
 	}
 
-	public void refreshList(Message message){
+	public void refreshList(Message message, boolean isMine){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("type", message.getmType());
 		map.put("chatName", message.getChatName());
+		map.put("isMine", isMine);
 		
 		if(message.getmType() == Message.TEXT_MESSAGE){
 			map.put("text", message.getmText());
@@ -177,7 +178,7 @@ public class ChatActivity extends Activity {
 		
 		if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_OWNER){
 			Log.v(TAG, "SendMessageServer start");
-			new SendMessageServer(ChatActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mes);
+			new SendMessageServer(ChatActivity.this, true).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mes);
 		}
 		else if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_CLIENT){
 			Log.v(TAG, "SendMessageClient start");

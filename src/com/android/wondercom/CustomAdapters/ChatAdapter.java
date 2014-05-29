@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.wondercom.R;
@@ -53,6 +54,7 @@ public class ChatAdapter extends BaseAdapter {
 			cache.chatName = (TextView) view.findViewById(R.id.chatName);
             cache.text = (TextView) view.findViewById(R.id.text);
             cache.image = (ImageView) view.findViewById(R.id.image);
+            cache.relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
 	            
 			view.setTag(cache);
 		}
@@ -60,6 +62,14 @@ public class ChatAdapter extends BaseAdapter {
 		//Retrive the items from cache
         CacheView cache = (CacheView) view.getTag();
         cache.chatName.setText((String)listMessage.get(position).get("chatName"));
+        
+        //Colourise differently own message
+        if((Boolean) listMessage.get(position).get("isMine")){
+        	cache.relativeLayout.setBackground(view.getResources().getDrawable(R.drawable.chat_bubble_mine));
+        }   
+        else{
+        	cache.relativeLayout.setBackground(view.getResources().getDrawable(R.drawable.chat_bubble));
+        }
         
         if(type == Message.TEXT_MESSAGE){        	
         	cache.image.setVisibility(View.GONE);
@@ -81,5 +91,6 @@ public class ChatAdapter extends BaseAdapter {
 		public TextView chatName;
 		public TextView text;
 		public ImageView image;
+		public RelativeLayout relativeLayout;
 	}
 }

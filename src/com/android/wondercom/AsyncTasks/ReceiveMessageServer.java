@@ -65,7 +65,7 @@ public class ReceiveMessageServer extends AsyncTask<Void, Message, Void>{
 		super.onProgressUpdate(values);
 		String text = values[0].getmText();
 		Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show();
-		new SendMessageServer(mActivity).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
+		new SendMessageServer(mActivity, false).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
 	}
 	
 }

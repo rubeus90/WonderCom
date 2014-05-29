@@ -19,10 +19,12 @@ import android.widget.Toast;
 public class SendMessageServer extends AsyncTask<Message, Void, Message>{
 	private static final String TAG = "SendMessageServer";
 	private ChatActivity mActivity;
-	private static final int SERVER_PORT = 4446;	
+	private static final int SERVER_PORT = 4446;
+	private boolean isMine;
 
-	public SendMessageServer(ChatActivity activity){
+	public SendMessageServer(ChatActivity activity, boolean mine){
 		mActivity = activity;
+		isMine = mine;
 	}
 	
 	@Override
@@ -66,6 +68,6 @@ public class SendMessageServer extends AsyncTask<Message, Void, Message>{
 		super.onPostExecute(result);
 		Toast.makeText(mActivity, "Message sent", Toast.LENGTH_SHORT).show();
 		
-		mActivity.refreshList(result);	
+		mActivity.refreshList(result, isMine);	
 	}
 }

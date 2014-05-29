@@ -62,6 +62,6 @@ public class SendMessageClient extends AsyncTask<Message, Void, Message>{
 		Log.v(TAG, "onPostExecute");
 		super.onPostExecute(result);
 		Toast.makeText(mActivity, "Message sent", Toast.LENGTH_SHORT).show();
-		mActivity.refreshList(result);
+		mActivity.refreshList(result, true);
 	}
 }

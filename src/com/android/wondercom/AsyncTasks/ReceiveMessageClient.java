@@ -61,7 +61,7 @@ public class ReceiveMessageClient extends AsyncTask<Void, Message, Void> {
 		String text = values[0].getmText();
 		Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show();
 		
-		mActivity.refreshList(values[0]);
+		mActivity.refreshList(values[0], false);
 
 	}
 }
