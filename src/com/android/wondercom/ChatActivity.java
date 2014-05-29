@@ -66,11 +66,12 @@ public class ChatActivity extends Activity {
         listView.setAdapter(chatAdapter);
         
         //Start the AsyncTask for the server to receive messages
-        Log.v(TAG, "Start the AsyncTask for the server to receive messages");
         if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_OWNER){
+        	Log.v(TAG, "Start the AsyncTask for the server to receive messages");
         	new ReceiveMessageServer(ChatActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
         }
         else if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_CLIENT){
+        	Log.v(TAG, "Start the AsyncTask for the client to receive messages");
         	new ReceiveMessageClient(ChatActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
         }
         
