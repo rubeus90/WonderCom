@@ -1,16 +1,15 @@
 package com.android.wondercom;
 
-import com.android.wondercom.InitThreads.ClientInit;
-import com.android.wondercom.InitThreads.ServerInit;
-import com.android.wondercom.Receivers.WifiDirectBroadcastReceiver;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,12 +20,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.wondercom.InitThreads.ClientInit;
+import com.android.wondercom.InitThreads.ServerInit;
+import com.android.wondercom.Receivers.WifiDirectBroadcastReceiver;
+
 /*
  * This activity is the launcher activity. 
  * Once the connection established, the ChatActivity is launched.
  */
 public class MainActivity extends Activity{
 	public static final String TAG = "MainActivity";	
+	public static final String DEFAULT_CHAT_NAME = "";
 	private WifiP2pManager mManager;
 	private Channel mChannel;
 	private WifiDirectBroadcastReceiver mReceiver;
@@ -70,6 +74,7 @@ public class MainActivity extends Activity{
         //Set the chat name
         setChatName = (EditText) findViewById(R.id.setChatName);
         setChatNameLabel = (TextView) findViewById(R.id.setChatNameLabel);
+        setChatName.setText(loadChatName(this));
     }
 
     @Override
@@ -134,7 +139,8 @@ public class MainActivity extends Activity{
 			public void onClick(View arg0) {
 				if(!setChatName.getText().toString().equals("")){
 					//Set the chat name
-					chatName = setChatName.getText().toString();
+					saveChatName(MainActivity.this, setChatName.getText().toString());
+					chatName = loadChatName(MainActivity.this);
 					
 					//Start the init process
 					if(mReceiver.isGroupeOwner() ==  WifiDirectBroadcastReceiver.IS_OWNER){
@@ -172,4 +178,18 @@ public class MainActivity extends Activity{
 			}
 		});    	
     }
+    
+    //Save the chat name to SharedPreferences
+  	public void saveChatName(Context context, String chatName) {
+  		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+  		Editor edit = prefs.edit();
+  		edit.putString("chatName", chatName);
+  		edit.commit();
+  	}
+
+  	//Retrieve the chat name from SharedPreferences
+  	public String loadChatName(Context context) {
+  		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+  		return prefs.getString("chatName", DEFAULT_CHAT_NAME);
+  	}
 }
