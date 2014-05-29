@@ -1,4 +1,16 @@
 WonderCom
 =========
 
-Android application for commucation using secure mobile ad-hoc network
+Android application for basic commucation using Wifi Direct.
+
+#Features
+* Text messaging
+* Image sending
+
+#Todo
+* Voice chat
+* Video chat
+* File sending
+
+#Author
+NGUYEN Hong Ngoc
