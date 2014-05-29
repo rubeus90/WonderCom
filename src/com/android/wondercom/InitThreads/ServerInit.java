@@ -6,7 +6,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import android.util.Log;
+
 public class ServerInit extends Thread{
+	private static final String TAG = "ServerInit";
 	private static final int SERVER_PORT = 4444;
 	public static ArrayList<InetAddress> clients;
 	private ServerSocket serverSocket;
@@ -25,7 +28,7 @@ public class ServerInit extends Thread{
 		    while(true) {
 		       Socket clientSocket = serverSocket.accept();
 		       clients.add(clientSocket.getInetAddress());
-		       System.out.println(clientSocket.getInetAddress().getHostAddress());
+		       Log.v(TAG, "New client: " + clientSocket.getInetAddress().getHostAddress());
 		       clientSocket.close();
 		    }
 		} catch (IOException e) {
@@ -38,6 +41,7 @@ public class ServerInit extends Thread{
 		super.interrupt();
 		try {
 			serverSocket.close();
+			Log.v(TAG, "Server init process interrupted");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

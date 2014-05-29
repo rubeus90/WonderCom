@@ -40,6 +40,7 @@ public class MainActivity extends Activity{
 	private TextView setChatNameLabel;
 	private EditText setChatName;
 	public static String chatName;
+	public static ServerInit server;
 
 	//Getters and Setters
     public WifiP2pManager getmManager() { return mManager; }
@@ -50,7 +51,6 @@ public class MainActivity extends Activity{
 	public TextView getSetChatNameLabel() { return setChatNameLabel; }
 	public Button getGoToSettings() { return goToSettings; }
 	public EditText getSetChatName() { return setChatName; }
-	
 	
 	
 	@Override
@@ -145,7 +145,7 @@ public class MainActivity extends Activity{
 					//Start the init process
 					if(mReceiver.isGroupeOwner() ==  WifiDirectBroadcastReceiver.IS_OWNER){
 						Toast.makeText(MainActivity.this, "I'm the group owner  " + mReceiver.getOwnerAddr().getHostAddress(), Toast.LENGTH_SHORT).show();
-						ServerInit server = new ServerInit();
+						server = new ServerInit();
 						server.start();
 					}
 					else if(mReceiver.isGroupeOwner() ==  WifiDirectBroadcastReceiver.IS_CLIENT){

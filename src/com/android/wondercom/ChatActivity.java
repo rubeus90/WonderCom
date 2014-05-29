@@ -75,24 +75,24 @@ public class ChatActivity extends Activity {
         }
         
 		//Send a message
-        Log.v(TAG, "Send message");
         Button button = (Button) findViewById(R.id.sendMessage);
         edit = (EditText) findViewById(R.id.editMessage);
         button.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
+				Log.v(TAG, "Send message");
 				sendMessage(Message.TEXT_MESSAGE);
 			}
 		});
         
         //Pick an image
-        Log.v(TAG, "Pick an image");
         Button pickImage = (Button) findViewById(R.id.pickImage);
         pickImage.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
+				Log.v(TAG, "Pick an image");
 				Intent intent = new Intent(Intent.ACTION_PICK);
 				intent.setType("image/*");
 				intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -126,10 +126,13 @@ public class ChatActivity extends Activity {
         unregisterReceiver(mReceiver);
     }    
     
-    @Override
+	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		android.os.Process.killProcess(android.os.Process.myPid());
+		if(MainActivity.server!=null){
+			MainActivity.server.interrupt();
+		}		
+		android.os.Process.killProcess(android.os.Process.myPid());		
 	}
     
     //Return the Uri of the picked image
