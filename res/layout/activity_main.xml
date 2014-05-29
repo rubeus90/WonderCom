@@ -16,10 +16,10 @@
     
     <EditText 
         android:id="@id/setChatName"
-        android:inputType="text"
+        android:inputType="textCapWords"
         android:lines="1"
-        android:maxLength="10"
-        android:layout_width="150dp"
+        android:maxLength="20"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone" />
