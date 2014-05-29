@@ -29,7 +29,7 @@
 	        android:layout_width="0dp"
 	        android:layout_weight="5"
 	        android:layout_height="match_parent"
-	        android:inputType="text" />
+	        android:inputType="textCapSentences" />
 	    <Button 
 	        android:id="@+id/sendMessage"
 	        android:layout_width="0dp"

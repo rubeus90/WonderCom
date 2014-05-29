@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,7 @@ public class ChatAdapter extends BaseAdapter {
         	cache.image.setVisibility(View.GONE);
         	cache.text.setVisibility(View.VISIBLE);
             cache.text.setText((String)listMessage.get(position).get("text"));
+            Linkify.addLinks(cache.text, Linkify.ALL);
 		}
 		else if(type == Message.IMAGE_MESSAGE){
 			cache.text.setVisibility(View.GONE);
