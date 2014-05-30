@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
 import com.android.wondercom.ChatActivity;
+import com.android.wondercom.MainActivity;
 import com.android.wondercom.R;
 import com.android.wondercom.Entities.Message;
 
@@ -20,7 +21,12 @@ public class AbstractReceiver extends AsyncTask<Void, Message, Void>{
 	protected void playNotification(Context context, Message message){
 		Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 		
-		Intent intent = new Intent(context, ChatActivity.class);		
+		//Intent exactly like Android intent to launch the app => the app is simply brought back to front
+		Intent intent = new Intent(context, MainActivity.class);
+		intent.setAction(Intent.ACTION_MAIN);
+		intent.addCategory(Intent.CATEGORY_LAUNCHER);
+		
+		
 		PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent, 0);
 		
 		Notification mNotification = new Notification.Builder(context)

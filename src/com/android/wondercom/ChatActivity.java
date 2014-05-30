@@ -60,6 +60,9 @@ public class ChatActivity extends Activity {
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
         
+        //Start the service to receive message
+        startService(new Intent(this, MessageService.class));
+        
         //Itilialise the adapter for the chat
         listView = (ListView) findViewById(R.id.messageList);
         listMessage = new ArrayList<HashMap<String, Object>>();
@@ -91,8 +94,6 @@ public class ChatActivity extends Activity {
 				startActivityForResult(intent, PICK_IMAGE);
 			}
 		});
-        
-        startService(new Intent(this, MessageService.class));
 	}
 	
 	@Override
@@ -138,10 +139,13 @@ public class ChatActivity extends Activity {
 		
 		switch(requestCode){
 			case PICK_IMAGE:
+				System.out.println("heyeeeeeeeeee  " +resultCode);
 				if (resultCode == RESULT_OK && data.getData() != null) {
 					imageUri = data.getData();
 					sendMessage(Message.IMAGE_MESSAGE);
+					
 				}
+				break;
 		}
 	}
 
