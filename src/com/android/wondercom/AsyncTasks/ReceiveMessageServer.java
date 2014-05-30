@@ -6,23 +6,17 @@ import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import com.android.wondercom.ChatActivity;
+import android.content.Context;
+import android.widget.Toast;
 import com.android.wondercom.Entities.Message;
 
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.widget.Toast;
-
-public class ReceiveMessageServer extends AsyncTask<Void, Message, Void>{
+public class ReceiveMessageServer extends AbstractReceiver {
 	private static final int SERVER_PORT = 4445;
-	private ChatActivity mActivity;
+	private Context mContext;
 	private ServerSocket serverSocket;
 
-	public ReceiveMessageServer(ChatActivity activity){
-		mActivity = activity;
+	public ReceiveMessageServer(Context context){
+		mContext = context;
 	}
 	
 	@Override
@@ -66,18 +60,12 @@ public class ReceiveMessageServer extends AsyncTask<Void, Message, Void>{
 	@Override
 	protected void onProgressUpdate(Message... values) {
 		super.onProgressUpdate(values);
-		playNotificationSound();
+		playNotification(mContext, values[0]);
 		
 		String text = values[0].getmText();
-		Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show();
+		Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();
 		
-		new SendMessageServer(mActivity, false).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
-	}
-	
-	public void playNotificationSound(){
-		Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-		MediaPlayer mp = MediaPlayer.create(mActivity, notification);
-		mp.start();
+		new SendMessageServer(mContext, false).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
 	}
 	
 }

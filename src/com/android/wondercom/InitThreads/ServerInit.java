@@ -49,6 +49,4 @@ public class ServerInit extends Thread{
 			e.printStackTrace();
 		}
 	}
-	
-	
 }

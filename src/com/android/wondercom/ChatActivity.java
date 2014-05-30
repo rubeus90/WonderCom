@@ -4,15 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.android.wondercom.AsyncTasks.ReceiveMessageClient;
-import com.android.wondercom.AsyncTasks.ReceiveMessageServer;
-import com.android.wondercom.AsyncTasks.SendMessageClient;
-import com.android.wondercom.AsyncTasks.SendMessageServer;
-import com.android.wondercom.CustomAdapters.ChatAdapter;
-import com.android.wondercom.Entities.Image;
-import com.android.wondercom.Entities.Message;
-import com.android.wondercom.Receivers.WifiDirectBroadcastReceiver;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +20,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.android.wondercom.AsyncTasks.SendMessageClient;
+import com.android.wondercom.AsyncTasks.SendMessageServer;
+import com.android.wondercom.CustomAdapters.ChatAdapter;
+import com.android.wondercom.Entities.Image;
+import com.android.wondercom.Entities.Message;
+import com.android.wondercom.Receivers.WifiDirectBroadcastReceiver;
+
 public class ChatActivity extends Activity {
 	public static final String TAG = "ChatActivity";	
 	public static final int PICK_IMAGE = 1;
@@ -37,9 +35,9 @@ public class ChatActivity extends Activity {
 	private WifiDirectBroadcastReceiver mReceiver;
 	private IntentFilter mIntentFilter;
 	private EditText edit;
-	private ListView listView;
-	private List<HashMap<String, Object>> listMessage;
-	private ChatAdapter chatAdapter;
+	private static ListView listView;
+	private static List<HashMap<String, Object>> listMessage;
+	private static ChatAdapter chatAdapter;
 	private Uri imageUri;
 	
 	
@@ -64,16 +62,6 @@ public class ChatActivity extends Activity {
         listMessage = new ArrayList<HashMap<String, Object>>();
         chatAdapter = new ChatAdapter(this, listMessage);
         listView.setAdapter(chatAdapter);
-        
-        //Start the AsyncTask for the server to receive messages
-        if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_OWNER){
-        	Log.v(TAG, "Start the AsyncTask for the server to receive messages");
-        	new ReceiveMessageServer(ChatActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
-        }
-        else if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_CLIENT){
-        	Log.v(TAG, "Start the AsyncTask for the client to receive messages");
-        	new ReceiveMessageClient(ChatActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void[])null);
-        }
         
 		//Send a message
         Button button = (Button) findViewById(R.id.sendMessage);
@@ -100,6 +88,8 @@ public class ChatActivity extends Activity {
 				startActivityForResult(intent, PICK_IMAGE);
 			}
 		});
+        
+        startService(new Intent(this, MessageService.class));
 	}
 	
 	@Override
@@ -150,7 +140,7 @@ public class ChatActivity extends Activity {
 		}
 	}
 
-	public void refreshList(Message message, boolean isMine){
+	public static void refreshList(Message message, boolean isMine){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("type", message.getmType());
 		map.put("chatName", message.getChatName());

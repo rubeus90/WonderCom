@@ -5,23 +5,23 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 
-import com.android.wondercom.ChatActivity;
-import com.android.wondercom.Entities.Message;
-
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.AsyncTask;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.widget.Toast;
 
-public class ReceiveMessageClient extends AsyncTask<Void, Message, Void> {
+import com.android.wondercom.ChatActivity;
+import com.android.wondercom.MainActivity;
+import com.android.wondercom.Entities.Message;
+
+public class ReceiveMessageClient extends AbstractReceiver {
 	private static final int SERVER_PORT = 4446;
-	private ChatActivity mActivity;
+	private Context mContext;
 	private ServerSocket socket;
 
-	public ReceiveMessageClient(ChatActivity activity){
-		mActivity = activity;
+	public ReceiveMessageClient(Context context){
+		mContext = context;
 	}
 	
 	@Override
@@ -61,17 +61,28 @@ public class ReceiveMessageClient extends AsyncTask<Void, Message, Void> {
 	@Override
 	protected void onProgressUpdate(Message... values) {
 		super.onProgressUpdate(values);
-		playNotificationSound();
+		playNotification(mContext, values[0]);
 		
 		String text = values[0].getmText();
-		Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show();		
+		Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();		
 		
-		mActivity.refreshList(values[0], false);	
+		if(isActivityRunning(MainActivity.class)){
+			ChatActivity.refreshList(values[0], false);
+		}			
 	}
 	
-	public void playNotificationSound(){
-		Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-		MediaPlayer mp = MediaPlayer.create(mActivity, notification);
-		mp.start();
+	@SuppressWarnings("rawtypes")
+	public Boolean isActivityRunning(Class activityClass) {
+        ActivityManager activityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
+
+        for (ActivityManager.RunningTaskInfo task : tasks) {
+        	System.out.println(task.baseActivity.getClassName());
+        	System.out.println(activityClass.getCanonicalName());
+            if (activityClass.getCanonicalName().equalsIgnoreCase(task.baseActivity.getClassName()))
+                return true;
+        }
+
+        return false;
 	}
 }

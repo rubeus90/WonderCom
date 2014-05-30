@@ -6,22 +6,24 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-
+import java.util.List;
 import com.android.wondercom.ChatActivity;
+import com.android.wondercom.MainActivity;
 import com.android.wondercom.Entities.Message;
-
+import android.app.ActivityManager;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
 public class SendMessageClient extends AsyncTask<Message, Void, Message>{
 	private static final String TAG = "SendMessageClient";
-	private ChatActivity mActivity;
+	private Context mContext;
 	private static final int SERVER_PORT = 4445;
 	private InetAddress mServerAddr;
 	
-	public SendMessageClient(ChatActivity activity, InetAddress serverAddr){
-		mActivity = activity;
+	public SendMessageClient(Context context, InetAddress serverAddr){
+		mContext = context;
 		mServerAddr = serverAddr;
 	}
 	
@@ -61,7 +63,23 @@ public class SendMessageClient extends AsyncTask<Message, Void, Message>{
 	protected void onPostExecute(Message result) {
 		Log.v(TAG, "onPostExecute");
 		super.onPostExecute(result);
-		Toast.makeText(mActivity, "Message sent", Toast.LENGTH_SHORT).show();
-		mActivity.refreshList(result, true);
+		Toast.makeText(mContext, "Message sent", Toast.LENGTH_SHORT).show();
+		
+		if(isActivityRunning(MainActivity.class)){
+			ChatActivity.refreshList(result, true);
+		}		
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public Boolean isActivityRunning(Class activityClass) {
+        ActivityManager activityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
+
+        for (ActivityManager.RunningTaskInfo task : tasks) {
+            if (activityClass.getCanonicalName().equalsIgnoreCase(task.baseActivity.getClassName()))
+                return true;
+        }
+
+        return false;
 	}
 }
