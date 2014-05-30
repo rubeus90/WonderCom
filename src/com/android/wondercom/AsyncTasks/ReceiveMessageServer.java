@@ -10,6 +10,9 @@ import java.net.Socket;
 import com.android.wondercom.ChatActivity;
 import com.android.wondercom.Entities.Message;
 
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -63,9 +66,18 @@ public class ReceiveMessageServer extends AsyncTask<Void, Message, Void>{
 	@Override
 	protected void onProgressUpdate(Message... values) {
 		super.onProgressUpdate(values);
+		playNotificationSound();
+		
 		String text = values[0].getmText();
 		Toast.makeText(mActivity, text, Toast.LENGTH_SHORT).show();
+		
 		new SendMessageServer(mActivity, false).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
+	}
+	
+	public void playNotificationSound(){
+		Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+		MediaPlayer mp = MediaPlayer.create(mActivity, notification);
+		mp.start();
 	}
 	
 }
