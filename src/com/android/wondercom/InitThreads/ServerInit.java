@@ -27,8 +27,11 @@ public class ServerInit extends Thread{
 			// Collect client ip's
 		    while(true) {
 		       Socket clientSocket = serverSocket.accept();
-		       clients.add(clientSocket.getInetAddress());
-		       Log.v(TAG, "New client: " + clientSocket.getInetAddress().getHostAddress());
+		       if(!clients.contains(clientSocket.getInetAddress())){
+		    	   clients.add(clientSocket.getInetAddress());
+		    	   Log.v(TAG, "New client: " + clientSocket.getInetAddress().getHostAddress());
+		       }		       
+		       
 		       clientSocket.close();
 		    }
 		} catch (IOException e) {
