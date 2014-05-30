@@ -8,11 +8,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -109,12 +112,14 @@ public class ChatActivity extends Activity {
 				Log.v(TAG, "Discovery process failed");
 			}
 		});
+		saveStateForeground(true);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         unregisterReceiver(mReceiver);
+        saveStateForeground(false);
     }    
     
 	@Override
@@ -180,5 +185,12 @@ public class ChatActivity extends Activity {
 		}		
 		
 		edit.setText("");
+	}
+	
+	public void saveStateForeground(boolean isForeground){
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+  		Editor edit = prefs.edit();
+  		edit.putBoolean("isForeground", isForeground);
+  		edit.commit();
 	}
 }

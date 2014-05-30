@@ -5,9 +5,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+
 import com.android.wondercom.ChatActivity;
 import com.android.wondercom.R;
 import com.android.wondercom.Entities.Message;
@@ -36,8 +39,11 @@ public class AbstractReceiver extends AsyncTask<Void, Message, Void>{
 		mNotification.flags |= Notification.FLAG_AUTO_CANCEL;
 		mNotification.defaults |= Notification.DEFAULT_VIBRATE;
 		
-		mNotificationManager.notify(0, mNotification);
-
+		//Check if the app is in foreground or not. Display the notification only if the app is in background
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+		if(!pref.getBoolean("isForeground", false)){
+			mNotificationManager.notify(0, mNotification);
+		}
 	}
 
 	@Override
