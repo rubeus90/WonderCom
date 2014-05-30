@@ -38,7 +38,8 @@
         <activity
             android:name="com.android.wondercom.ChatActivity"
             android:label="@string/title_activity_chat"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleInstance" >
         </activity>
     </application>
 

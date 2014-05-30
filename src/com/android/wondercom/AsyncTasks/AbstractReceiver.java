@@ -17,8 +17,9 @@ public class AbstractReceiver extends AsyncTask<Void, Message, Void>{
 	protected void playNotification(Context context, Message message){
 		Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 		
-		Intent intent = new Intent(context, ChatActivity.class);
+		Intent intent = new Intent(context, ChatActivity.class);		
 		PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent, 0);
+		
 		Notification mNotification = new Notification.Builder(context)
 			.setContentTitle(message.getChatName())
 			.setContentText(message.getmText())
