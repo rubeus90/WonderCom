@@ -17,11 +17,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.wondercom.AsyncTasks.SendMessageClient;
 import com.android.wondercom.AsyncTasks.SendMessageServer;
@@ -76,22 +79,13 @@ public class ChatActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				Log.v(TAG, "Send message");
-				sendMessage(Message.TEXT_MESSAGE);
-			}
-		});
-        
-        //Pick an image
-        Button pickImage = (Button) findViewById(R.id.pickImage);
-        pickImage.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				Log.v(TAG, "Pick an image");
-				Intent intent = new Intent(Intent.ACTION_PICK);
-				intent.setType("image/*");
-				intent.setAction(Intent.ACTION_GET_CONTENT);
-				startActivityForResult(intent, PICK_IMAGE);
+				if(!edit.getText().toString().equals("")){
+					Log.v(TAG, "Send message");
+					sendMessage(Message.TEXT_MESSAGE);
+				}				
+				else{
+					Toast.makeText(ChatActivity.this, "Please enter a not empty message", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}
@@ -197,4 +191,24 @@ public class ChatActivity extends Activity {
   		edit.putBoolean("isForeground", isForeground);
   		edit.commit();
 	}
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.chat, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int idItem = item.getItemId();
+        if (idItem == R.id.send_image) {
+        	Log.v(TAG, "Pick an image");
+			Intent intent = new Intent(Intent.ACTION_PICK);
+			intent.setType("image/*");
+			intent.setAction(Intent.ACTION_GET_CONTENT);
+			startActivityForResult(intent, PICK_IMAGE);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }	
 }

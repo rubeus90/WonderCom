@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.android.wondercom.ChatActivity" >
+    
+    <item
+        android:id="@+id/send_image"
+        android:title="@string/send_image"
+        app:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_menu_camera" />
+
+</menu>

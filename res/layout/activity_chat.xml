@@ -19,17 +19,14 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true" >
-
-        <Button 
-            android:id="@+id/pickImage"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+        
 	    <EditText 
 	        android:id="@+id/editMessage"
 	        android:layout_width="0dp"
 	        android:layout_weight="5"
 	        android:layout_height="match_parent"
-	        android:inputType="textCapSentences" />
+	        android:inputType="textCapSentences"
+	        android:hint="@string/enter_text" />
 	    <Button 
 	        android:id="@+id/sendMessage"
 	        android:layout_width="0dp"

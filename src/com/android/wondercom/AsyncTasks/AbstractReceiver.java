@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
-import com.android.wondercom.ChatActivity;
 import com.android.wondercom.MainActivity;
 import com.android.wondercom.R;
 import com.android.wondercom.Entities.Message;

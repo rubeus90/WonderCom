@@ -111,7 +111,8 @@ public class MainActivity extends Activity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int idItem = item.getItemId();
-        if (idItem == R.id.action_settings) {
+        if (idItem == R.id.disconnect) {
+        	mManager.removeGroup(mChannel, null);
             return true;
         }
         return super.onOptionsItemSelected(item);
