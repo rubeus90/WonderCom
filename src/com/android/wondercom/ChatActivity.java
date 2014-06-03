@@ -133,7 +133,6 @@ public class ChatActivity extends Activity {
 		
 		switch(requestCode){
 			case PICK_IMAGE:
-				System.out.println("heyeeeeeeeeee  " +resultCode);
 				if (resultCode == RESULT_OK && data.getData() != null) {
 					imageUri = data.getData();
 					sendMessage(Message.IMAGE_MESSAGE);

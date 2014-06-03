@@ -26,7 +26,6 @@ import android.widget.Toast;
 public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 	public static final int IS_OWNER = 1;
 	public static final int IS_CLIENT = 2;
-	public static final int GROUP_NOT_FORMED = 3;
 	private static final String TAG = "WifiDirectBroadcastReceiver";
 	
 	private WifiP2pManager mManager;
@@ -124,10 +123,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 						else if (info.groupFormed) { 
 							isGroupeOwner = IS_CLIENT;		
 							activateGoToChat("client");
-						}		
-						else{
-							isGroupeOwner = GROUP_NOT_FORMED;
-						}
+						}	
 					}
 				});				
 			}

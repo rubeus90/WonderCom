@@ -113,6 +113,7 @@ public class MainActivity extends Activity{
         int idItem = item.getItemId();
         if (idItem == R.id.disconnect) {
         	mManager.removeGroup(mChannel, null);
+        	finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -153,9 +154,6 @@ public class MainActivity extends Activity{
 						Toast.makeText(MainActivity.this, "I'm the client", Toast.LENGTH_SHORT).show();
 						ClientInit client = new ClientInit(mReceiver.getOwnerAddr());
 						client.start();
-					}
-					else if(mReceiver.isGroupeOwner() ==  WifiDirectBroadcastReceiver.GROUP_NOT_FORMED){
-						Toast.makeText(MainActivity.this, "Error: The group is not formed", Toast.LENGTH_SHORT).show();
 					}
 					
 					//Open the ChatActivity
