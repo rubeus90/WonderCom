@@ -9,5 +9,7 @@
     <string name="set_chat_name">Please choose your chat name</string>
     <string name="enter_text">Enter your message here</string>
     <string name="send_image">Send image</string>
+    <string name="pick_image">Pick image</string>
+    <string name="take_photo">Take photo</string>
 
 </resources>

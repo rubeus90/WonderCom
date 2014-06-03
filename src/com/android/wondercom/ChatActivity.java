@@ -16,6 +16,7 @@ import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.Toast;
 
 import com.android.wondercom.AsyncTasks.SendMessageClient;
@@ -36,6 +39,7 @@ import com.android.wondercom.Receivers.WifiDirectBroadcastReceiver;
 public class ChatActivity extends Activity {
 	public static final String TAG = "ChatActivity";	
 	public static final int PICK_IMAGE = 1;
+	public static final int TAKE_PHOTO = 100;
 	private WifiP2pManager mManager;
 	private Channel mChannel;
 	private WifiDirectBroadcastReceiver mReceiver;
@@ -139,6 +143,12 @@ public class ChatActivity extends Activity {
 					
 				}
 				break;
+			case TAKE_PHOTO:
+				if (resultCode == RESULT_OK && data.getData() != null) {
+					imageUri = data.getData();
+					sendMessage(Message.IMAGE_MESSAGE);
+				}
+				break;
 		}
 	}
 
@@ -200,14 +210,39 @@ public class ChatActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int idItem = item.getItemId();
-        if (idItem == R.id.send_image) {
-        	Log.v(TAG, "Pick an image");
-			Intent intent = new Intent(Intent.ACTION_PICK);
-			intent.setType("image/*");
-			intent.setAction(Intent.ACTION_GET_CONTENT);
-			startActivityForResult(intent, PICK_IMAGE);
+        if (idItem == R.id.send_image) {        	
+        	showPopup(listView);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }	
+    
+    //Show the popup menu
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				switch(item.getItemId()){
+				case R.id.pick_image:
+					Log.v(TAG, "Pick an image");
+					Intent intent = new Intent(Intent.ACTION_PICK);
+					intent.setType("image/*");
+					intent.setAction(Intent.ACTION_GET_CONTENT);
+					startActivityForResult(intent, PICK_IMAGE);
+					break;
+				
+				case R.id.take_photo:
+					Log.v(TAG, "Take a photo");
+					Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+				    startActivityForResult(intent2, TAKE_PHOTO);
+				    break;
+				}
+				return true;
+			}
+		});
+        popup.inflate(R.menu.send_image);
+        popup.show();
+    }
 }

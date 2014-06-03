@@ -1129,6 +1129,7 @@ containing a value of this type.
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
+        public static final int pick_image=0x7f05004b;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
@@ -1154,6 +1155,7 @@ containing a value of this type.
         public static final int split_action_bar=0x7f05001e;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
+        public static final int take_photo=0x7f05004c;
         public static final int text=0x7f050047;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
@@ -1221,6 +1223,7 @@ containing a value of this type.
     public static final class menu {
         public static final int chat=0x7f0c0000;
         public static final int main=0x7f0c0001;
+        public static final int send_image=0x7f0c0002;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1267,9 +1270,11 @@ containing a value of this type.
         public static final int disconnect=0x7f0a000e;
         public static final int enter_text=0x7f0a0013;
         public static final int go_to_settings_button=0x7f0a0010;
+        public static final int pick_image=0x7f0a0015;
         public static final int send_button=0x7f0a0011;
         public static final int send_image=0x7f0a0014;
         public static final int set_chat_name=0x7f0a0012;
+        public static final int take_photo=0x7f0a0016;
         public static final int title_activity_chat=0x7f0a000f;
     }
     public static final class style {

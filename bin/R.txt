@@ -284,6 +284,7 @@ int id middle 0x7f050012
 int id never 0x7f050009
 int id none 0x7f050010
 int id normal 0x7f050000
+int id pick_image 0x7f05004b
 int id progress_circular 0x7f050018
 int id progress_horizontal 0x7f050019
 int id radio 0x7f05002f
@@ -309,6 +310,7 @@ int id showTitle 0x7f050006
 int id split_action_bar 0x7f05001e
 int id submit_area 0x7f050039
 int id tabMode 0x7f050002
+int id take_photo 0x7f05004c
 int id text 0x7f050047
 int id title 0x7f05002b
 int id top_action_bar 0x7f050020
@@ -348,6 +350,7 @@ int layout chat_row 0x7f03001a
 int layout support_simple_spinner_dropdown_item 0x7f03001b
 int menu chat 0x7f0c0000
 int menu main 0x7f0c0001
+int menu send_image 0x7f0c0002
 int string abc_action_bar_home_description 0x7f0a0001
 int string abc_action_bar_up_description 0x7f0a0002
 int string abc_action_menu_overflow_description 0x7f0a0003
@@ -365,9 +368,11 @@ int string app_name 0x7f0a000d
 int string disconnect 0x7f0a000e
 int string enter_text 0x7f0a0013
 int string go_to_settings_button 0x7f0a0010
+int string pick_image 0x7f0a0015
 int string send_button 0x7f0a0011
 int string send_image 0x7f0a0014
 int string set_chat_name 0x7f0a0012
+int string take_photo 0x7f0a0016
 int string title_activity_chat 0x7f0a000f
 int style AppBaseTheme 0x7f0b008b
 int style AppTheme 0x7f0b008c
