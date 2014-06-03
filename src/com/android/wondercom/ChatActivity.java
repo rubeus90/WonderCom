@@ -211,7 +211,7 @@ public class ChatActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int idItem = item.getItemId();
         if (idItem == R.id.send_image) {        	
-        	showPopup(listView);
+        	showPopup(edit);
             return true;
         }
         return super.onOptionsItemSelected(item);
