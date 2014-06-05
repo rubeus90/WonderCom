@@ -11,5 +11,7 @@
     <string name="send_image">Send image</string>
     <string name="pick_image">Pick image</string>
     <string name="take_photo">Take photo</string>
+    <string name="title_activity_voice_chat">VoiceChat</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

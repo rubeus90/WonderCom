@@ -77,8 +77,6 @@ public class ReceiveMessageClient extends AbstractReceiver {
         List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
 
         for (ActivityManager.RunningTaskInfo task : tasks) {
-        	System.out.println(task.baseActivity.getClassName());
-        	System.out.println(activityClass.getCanonicalName());
             if (activityClass.getCanonicalName().equalsIgnoreCase(task.baseActivity.getClassName()))
                 return true;
         }

@@ -9,5 +9,15 @@
         android:title="@string/send_image"
         app:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_camera" />
+    
+    <item 
+        android:id="@+id/voice_chat"
+        android:title="Voice Chat"
+        app:showAsAction="ifRoom" />
+    
+    <item 
+        android:id="@+id/video_chat"
+        android:title="Video Chat"
+        app:showAsAction="ifRoom" />
 
 </menu>

@@ -210,10 +210,16 @@ public class ChatActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int idItem = item.getItemId();
-        if (idItem == R.id.send_image) {        	
-        	showPopup(edit);
-            return true;
+        switch(idItem){
+        	case R.id.send_image:
+	        	showPopup(edit);
+	        	break;
+        	case R.id.voice_chat:
+        		break;
+        	case R.id.video_chat:
+        		startActivity(new Intent(ChatActivity.this, VideoChat.class));
         }
+        
         return super.onOptionsItemSelected(item);
     }	
     
