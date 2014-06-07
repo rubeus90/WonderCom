@@ -215,9 +215,10 @@ public class ChatActivity extends Activity {
 	        	showPopup(edit);
 	        	break;
         	case R.id.voice_chat:
+        		startActivity(new Intent(ChatActivity.this, VideoChatReceiverActivity.class));
         		break;
         	case R.id.video_chat:
-        		startActivity(new Intent(ChatActivity.this, VideoChat.class));
+        		startActivity(new Intent(ChatActivity.this, VideoChatActivity.class));
         }
         
         return super.onOptionsItemSelected(item);

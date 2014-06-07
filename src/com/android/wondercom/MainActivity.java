@@ -58,6 +58,8 @@ public class MainActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); 
         
+        startActivity(new Intent(MainActivity.this, VideoChatActivity.class));
+        
         //Init the Channel, Intent filter and Broadcast receiver
         init();
         

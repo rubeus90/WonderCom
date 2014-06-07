@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <uses-feature android:name="android.hardware.camera.any" />
 
@@ -44,11 +45,17 @@
             android:label="@string/title_activity_chat" >
         </activity>
         <activity
-            android:name="com.android.wondercom.VideoChat"
-            android:label="@string/title_activity_voice_chat" >
+            android:name="com.android.wondercom.VideoChatActivity"
+            android:label="@string/title_activity_video_chat" >
         </activity>
+        <activity
+            android:name="com.android.wondercom.VideoChatReceiverActivity"
+            android:label="@string/title_activity_video_chat_receiver" >
+        </activity>
+        
+        <service android:name="net.majorkernelpanic.spydroid.api.CustomRtspServer"/>
     </application>
 
-</manifest>
-<!-- android:parentActivityName="com.android.wondercom.MainActivity" -->
+</manifest><!-- android:parentActivityName="com.android.wondercom.MainActivity" -->
+
 
