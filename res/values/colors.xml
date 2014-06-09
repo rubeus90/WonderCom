@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <item name="actionbar_text" type="color">#ecf0f1</item>
-        <item name="actionbar_background" type="color">#E08283</item>
-        <item name="chat_text_background" type="color">#89C4F4</item>
-        <item name="chat_text_background_mine" type="color">#E08283</item>
-        <item name="chat_text" type="color">#ecf0f1</item>
+
+    <item name="actionbar_text" type="color">#ecf0f1</item>
+    <item name="actionbar_background" type="color">#E08283</item>
+    <item name="chat_text_background" type="color">#89C4F4</item>
+    <item name="chat_text_background_mine" type="color">#E08283</item>
+    <item name="chat_text" type="color">#ecf0f1</item>
+    <item name="black" type="color">#000000</item>
+
+    <color name="black_overlay">#66000000</color>
+
 </resources>

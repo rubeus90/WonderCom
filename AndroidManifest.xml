@@ -23,25 +23,32 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/CustomActionBarTheme" >
-        
-        <service android:name=".MessageService" android:enabled="true" />
+        <service
+            android:name="com.android.wondercom.MessageService"
+            android:enabled="true" />
 
         <activity
             android:name="com.android.wondercom.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name="com.android.wondercom.ChatActivity"
-            android:label="@string/title_activity_chat"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_chat" >
+        </activity>
+        <activity
+            android:name="com.android.wondercom.ViewImageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_view_image"
+            android:theme="@style/FullscreenTheme" >
         </activity>
     </application>
 
 </manifest>
-
 <!-- android:parentActivityName="com.android.wondercom.MainActivity" -->
+

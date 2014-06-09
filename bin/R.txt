@@ -67,6 +67,8 @@ int attr listPreferredItemHeightSmall 0x7f01001d
 int attr listPreferredItemPaddingLeft 0x7f01001f
 int attr listPreferredItemPaddingRight 0x7f010020
 int attr logo 0x7f01002d
+int attr metaButtonBarButtonStyle 0x7f01006f
+int attr metaButtonBarStyle 0x7f01006e
 int attr navigationMode 0x7f010027
 int attr paddingEnd 0x7f010039
 int attr paddingStart 0x7f010038
@@ -120,12 +122,14 @@ int bool abc_config_actionMenuItemAllCaps 0x7f060005
 int bool abc_config_allowActionMenuItemTextWithIcon 0x7f060004
 int bool abc_config_showMenuShortcutsWhenKeyboardPresent 0x7f060003
 int bool abc_split_action_bar_is_narrow 0x7f060002
-int color abc_search_url_text_holo 0x7f070008
+int color abc_search_url_text_holo 0x7f07000a
 int color abc_search_url_text_normal 0x7f070000
 int color abc_search_url_text_pressed 0x7f070002
 int color abc_search_url_text_selected 0x7f070001
 int color actionbar_background 0x7f070004
 int color actionbar_text 0x7f070003
+int color black 0x7f070008
+int color black_overlay 0x7f070009
 int color chat_text 0x7f070007
 int color chat_text_background 0x7f070005
 int color chat_text_background_mine 0x7f070006
@@ -255,21 +259,24 @@ int id action_menu_presenter 0x7f050017
 int id action_mode_close_button 0x7f050024
 int id activity_chooser_view_content 0x7f050025
 int id always 0x7f05000b
+int id back_button 0x7f050047
 int id beginning 0x7f050011
-int id chatName 0x7f050046
+int id chatName 0x7f050049
 int id checkbox 0x7f05002d
 int id collapseActionView 0x7f05000d
 int id container 0x7f050040
 int id default_activity_button 0x7f050028
 int id dialog 0x7f05000e
 int id disableHome 0x7f050008
-int id disconnect 0x7f05004a
+int id disconnect 0x7f05004d
 int id dropdown 0x7f05000f
 int id editMessage 0x7f05003e
 int id edit_query 0x7f050030
 int id end 0x7f050013
 int id expand_activities_button 0x7f050026
 int id expanded_menu 0x7f05002c
+int id fullscreen_content 0x7f050045
+int id fullscreen_content_controls 0x7f050046
 int id goToChat 0x7f050044
 int id goToSettings 0x7f050043
 int id home 0x7f050014
@@ -284,11 +291,11 @@ int id middle 0x7f050012
 int id never 0x7f050009
 int id none 0x7f050010
 int id normal 0x7f050000
-int id pick_image 0x7f05004b
+int id pick_image 0x7f05004e
 int id progress_circular 0x7f050018
 int id progress_horizontal 0x7f050019
 int id radio 0x7f05002f
-int id relativeLayout 0x7f050045
+int id relativeLayout 0x7f050048
 int id search_badge 0x7f050032
 int id search_bar 0x7f050031
 int id search_button 0x7f050033
@@ -300,7 +307,7 @@ int id search_plate 0x7f050036
 int id search_src_text 0x7f050037
 int id search_voice_btn 0x7f05003b
 int id sendMessage 0x7f05003f
-int id send_image 0x7f050049
+int id send_image 0x7f05004c
 int id setChatName 0x7f050042
 int id setChatNameLabel 0x7f050041
 int id shortcut 0x7f05002e
@@ -310,11 +317,11 @@ int id showTitle 0x7f050006
 int id split_action_bar 0x7f05001e
 int id submit_area 0x7f050039
 int id tabMode 0x7f050002
-int id take_photo 0x7f05004c
-int id text 0x7f050047
+int id take_photo 0x7f05004f
+int id text 0x7f05004a
 int id title 0x7f05002b
 int id top_action_bar 0x7f050020
-int id underline 0x7f050048
+int id underline 0x7f05004b
 int id up 0x7f050021
 int id useLogo 0x7f050003
 int id withText 0x7f05000c
@@ -346,8 +353,9 @@ int layout abc_search_view 0x7f030016
 int layout abc_simple_decor 0x7f030017
 int layout activity_chat 0x7f030018
 int layout activity_main 0x7f030019
-int layout chat_row 0x7f03001a
-int layout support_simple_spinner_dropdown_item 0x7f03001b
+int layout activity_view_image 0x7f03001a
+int layout chat_row 0x7f03001b
+int layout support_simple_spinner_dropdown_item 0x7f03001c
 int menu chat 0x7f0c0000
 int menu main 0x7f0c0001
 int menu send_image 0x7f0c0002
@@ -365,6 +373,7 @@ int string abc_searchview_description_voice 0x7f0a0008
 int string abc_shareactionprovider_share_with 0x7f0a000c
 int string abc_shareactionprovider_share_with_application 0x7f0a000b
 int string app_name 0x7f0a000d
+int string back_button 0x7f0a0018
 int string disconnect 0x7f0a000e
 int string enter_text 0x7f0a0013
 int string go_to_settings_button 0x7f0a0010
@@ -374,12 +383,17 @@ int string send_image 0x7f0a0014
 int string set_chat_name 0x7f0a0012
 int string take_photo 0x7f0a0016
 int string title_activity_chat 0x7f0a000f
+int string title_activity_view_image 0x7f0a0017
 int style AppBaseTheme 0x7f0b008b
 int style AppTheme 0x7f0b008c
-int style CustomActionBarTheme 0x7f0b008d
-int style MyActionBar 0x7f0b008e
-int style MyActionBarTitleText 0x7f0b008f
-int style OverflowStyle 0x7f0b0090
+int style ButtonBar 0x7f0b008e
+int style ButtonBarButton 0x7f0b008f
+int style CustomActionBarTheme 0x7f0b0091
+int style FullscreenActionBarStyle 0x7f0b0090
+int style FullscreenTheme 0x7f0b008d
+int style MyActionBar 0x7f0b0092
+int style MyActionBarTitleText 0x7f0b0093
+int style OverflowStyle 0x7f0b0094
 int style TextAppearance_AppCompat_Base_CompactMenu_Dialog 0x7f0b0063
 int style TextAppearance_AppCompat_Base_SearchResult 0x7f0b006d
 int style TextAppearance_AppCompat_Base_SearchResult_Subtitle 0x7f0b006f
@@ -561,6 +575,9 @@ int styleable ActionMode_titleTextStyle 1
 int[] styleable ActivityChooserView { 0x7f01006a, 0x7f01006b }
 int styleable ActivityChooserView_expandActivityOverflowButtonDrawable 1
 int styleable ActivityChooserView_initialActivityCount 0
+int[] styleable ButtonBarContainerTheme { 0x7f01006e, 0x7f01006f }
+int styleable ButtonBarContainerTheme_metaButtonBarButtonStyle 1
+int styleable ButtonBarContainerTheme_metaButtonBarStyle 0
 int[] styleable CompatTextView { 0x7f01006d }
 int styleable CompatTextView_textAllCaps 0
 int[] styleable LinearLayoutICS { 0x7f01002e, 0x7f010055, 0x7f010056 }

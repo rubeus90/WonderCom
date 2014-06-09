@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -15,15 +17,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.wondercom.R;
+import com.android.wondercom.ViewImageActivity;
 import com.android.wondercom.Entities.Message;
 
 public class ChatAdapter extends BaseAdapter {
 	private List<HashMap<String,Object>> listMessage;
 	private LayoutInflater inflater;
+	public static Bitmap bitmap;
+	private Context mContext;
 
 	public ChatAdapter(Context context, List<HashMap<String, Object>> listMessage){
 		this.listMessage = listMessage;
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mContext = context;
 	}
 	
 	@Override
@@ -40,6 +46,7 @@ public class ChatAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
+	
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -81,6 +88,16 @@ public class ChatAdapter extends BaseAdapter {
 			cache.text.setVisibility(View.GONE);
 			cache.image.setVisibility(View.VISIBLE);
 			cache.image.setImageBitmap((Bitmap) listMessage.get(position).get("image"));
+			cache.image.setTag(position);
+			
+			cache.image.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					bitmap = (Bitmap) listMessage.get((Integer) v.getTag()).get("image");
+					mContext.startActivity(new Intent(mContext, ViewImageActivity.class));
+				}
+			});
 		}       
         
 		return view;
