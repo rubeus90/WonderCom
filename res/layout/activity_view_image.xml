@@ -15,7 +15,7 @@
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="Full screen image" />
+        android:contentDescription="@string/full_screen_image" />
 
     <!--
          This FrameLayout insets its children based on system windows using

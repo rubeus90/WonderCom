@@ -269,6 +269,7 @@ int id default_activity_button 0x7f050028
 int id dialog 0x7f05000e
 int id disableHome 0x7f050008
 int id disconnect 0x7f05004d
+int id download_image 0x7f05004e
 int id dropdown 0x7f05000f
 int id editMessage 0x7f05003e
 int id edit_query 0x7f050030
@@ -291,7 +292,7 @@ int id middle 0x7f050012
 int id never 0x7f050009
 int id none 0x7f050010
 int id normal 0x7f050000
-int id pick_image 0x7f05004e
+int id pick_image 0x7f05004f
 int id progress_circular 0x7f050018
 int id progress_horizontal 0x7f050019
 int id radio 0x7f05002f
@@ -317,7 +318,7 @@ int id showTitle 0x7f050006
 int id split_action_bar 0x7f05001e
 int id submit_area 0x7f050039
 int id tabMode 0x7f050002
-int id take_photo 0x7f05004f
+int id take_photo 0x7f050050
 int id text 0x7f05004a
 int id title 0x7f05002b
 int id top_action_bar 0x7f050020
@@ -358,7 +359,8 @@ int layout chat_row 0x7f03001b
 int layout support_simple_spinner_dropdown_item 0x7f03001c
 int menu chat 0x7f0c0000
 int menu main 0x7f0c0001
-int menu send_image 0x7f0c0002
+int menu popup 0x7f0c0002
+int menu send_image 0x7f0c0003
 int string abc_action_bar_home_description 0x7f0a0001
 int string abc_action_bar_up_description 0x7f0a0002
 int string abc_action_menu_overflow_description 0x7f0a0003
@@ -375,7 +377,9 @@ int string abc_shareactionprovider_share_with_application 0x7f0a000b
 int string app_name 0x7f0a000d
 int string back_button 0x7f0a0018
 int string disconnect 0x7f0a000e
+int string download_image 0x7f0a0019
 int string enter_text 0x7f0a0013
+int string full_screen_image 0x7f0a001a
 int string go_to_settings_button 0x7f0a0010
 int string pick_image 0x7f0a0015
 int string send_button 0x7f0a0011

@@ -3,13 +3,13 @@ package com.android.wondercom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
@@ -18,17 +18,20 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.Toast;
-
 import com.android.wondercom.AsyncTasks.SendMessageClient;
 import com.android.wondercom.AsyncTasks.SendMessageServer;
 import com.android.wondercom.CustomAdapters.ChatAdapter;
@@ -70,7 +73,7 @@ public class ChatActivity extends Activity {
         //Start the service to receive message
         startService(new Intent(this, MessageService.class));
         
-        //Itilialise the adapter for the chat
+        //Initialize the adapter for the chat
         listView = (ListView) findViewById(R.id.messageList);
         listMessage = new ArrayList<HashMap<String, Object>>();
         chatAdapter = new ChatAdapter(this, listMessage);
@@ -92,6 +95,9 @@ public class ChatActivity extends Activity {
 				}
 			}
 		});
+        
+        //Register the context menu to the list view (for pop up menu)
+        registerForContextMenu(listView);
 	}
 	
 	@Override
@@ -244,5 +250,32 @@ public class ChatActivity extends Activity {
 		});
         popup.inflate(R.menu.send_image);
         popup.show();
+    }
+    
+    //Create pop up menu for image download, delete message, etc...
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.popup, menu);
+    }
+    
+    //Handle click event on the pop up menu
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.download_image:
+            	downloadImage(info.id);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+    
+    //Download image and save it to the app's external directory
+    public void downloadImage(long id){
+    	MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) listMessage.get((int) id).get("image") ,
+    		    "test.jpg", "test.jpg");
     }
 }

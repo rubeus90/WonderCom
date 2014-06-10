@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
      android:layout_width="match_parent"
-     android:layout_height="match_parent">
+     android:layout_height="match_parent" >
     
     <RelativeLayout 
         android:id="@+id/relativeLayout"
@@ -9,7 +9,7 @@
 	   	android:layout_height="wrap_content"
 	   	android:background="@drawable/chat_bubble"
 	   	android:layout_alignParentLeft="true"
-	   	android:layout_margin="10dp">
+	   	android:layout_margin="10dp" >
         
         <TextView 
 	        android:id="@+id/chatName"
@@ -19,7 +19,8 @@
 	        android:maxLines="1" 
 	    	android:maxLength="20"
 	    	android:textColor="@color/chat_text"
-	    	android:layout_centerHorizontal="true" />        
+	    	android:layout_centerHorizontal="true"
+	    	android:longClickable="true" />        
 	    
 	    <TextView 
 	        android:id="@+id/text"
@@ -27,7 +28,8 @@
 	        android:layout_height="wrap_content"
 	        android:layout_below="@id/chatName" 
 	        android:textColor="@color/chat_text"
-	        android:layout_marginTop="10dp" />
+	        android:layout_marginTop="10dp"
+	        android:longClickable="true" />
 	    
 	    <com.android.wondercom.CustomViews.DynamicImageView
 	        android:id="@+id/image"
@@ -35,7 +37,8 @@
 	        android:layout_width="180dp"
 	        android:layout_height="wrap_content"
 	        android:scaleType="fitCenter"
-	        android:layout_marginTop="10dp" />
+	        android:layout_marginTop="10dp"
+	        android:longClickable="true" />
     
     </RelativeLayout>   
     

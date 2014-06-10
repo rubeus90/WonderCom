@@ -13,5 +13,7 @@
     <string name="take_photo">Take photo</string>
     <string name="title_activity_view_image">ViewImageActivity</string>
     <string name="back_button">Back</string>
+    <string name="download_image">Download image</string>
+    <string name="full_screen_image">Full screen image</string>
 
 </resources>
