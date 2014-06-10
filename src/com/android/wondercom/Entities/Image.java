@@ -2,10 +2,13 @@ package com.android.wondercom.Entities;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.OpenableColumns;
 import android.util.Log;
 
 /**
@@ -77,5 +80,26 @@ public class Image {
 			Log.e(TAG, "Failed to decode the bitmap with the size selected");
 		}
 		return null;
+	}
+	
+	public String getFileName(){
+		Cursor cursor = mContext.getContentResolver().query(mUri, null, null, null, null);
+		
+		/*
+	     * Get the column indexes of the data in the Cursor,
+	     * move to the first row in the Cursor, get the data,
+	     * and display it.
+	     */
+		int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+		cursor.moveToFirst();
+		return cursor.getString(nameIndex);
+	}
+	
+	public long getFileSize(){
+		Cursor cursor = mContext.getContentResolver().query(mUri, null, null, null, null);
+		
+		int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
+	    cursor.moveToFirst();
+	    return cursor.getLong(sizeIndex);
 	}
 }

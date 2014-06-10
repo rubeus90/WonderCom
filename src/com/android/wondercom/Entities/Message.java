@@ -19,7 +19,10 @@ public class Message implements Serializable{
 	private String chatName;
 	private byte[] byteArray;
 	private InetAddress senderAddress;
+	private String fileName;
+	private long fileSize;
 	
+	//Getters and Setters
 	public int getmType() { return mType; }
 	public void setmType(int mType) { this.mType = mType; }
 	public String getmText() { return mText; }
@@ -30,6 +33,10 @@ public class Message implements Serializable{
 	public void setByteArray(byte[] byteArray) { this.byteArray = byteArray; }
 	public InetAddress getSenderAddress() { return senderAddress; }
 	public void setSenderAddress(InetAddress senderAddress) { this.senderAddress = senderAddress; }
+	public String getFileName() { return fileName; }
+	public void setFileName(String fileName) { this.fileName = fileName; }
+	public long getFileSize() { return fileSize; }
+	public void setFileSize(long fileSize) { this.fileSize = fileSize; }
 	
 	
 	public Message(int type, String text, InetAddress sender, String name){

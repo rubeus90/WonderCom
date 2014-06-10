@@ -168,6 +168,8 @@ public class ChatActivity extends Activity {
 			map.put("text", message.getmText());
 		}		
 		else if(message.getmType() == Message.IMAGE_MESSAGE){
+			map.put("fileName", message.getFileName());
+			map.put("fileSize", message.getFileSize());
 			map.put("image", message.byteArrayToBitmap(message.getByteArray()));
 			Log.v(TAG, "Set image to listMessage ok ");
 		}
@@ -185,6 +187,8 @@ public class ChatActivity extends Activity {
 			Image image = new Image(this, imageUri);
 			Log.v(TAG, "Bitmap from url ok");
 			mes.setByteArray(mes.bitmapToByteArray(image.getBitmapFromUri()));
+			mes.setFileName(image.getFileName());
+			mes.setFileSize(image.getFileSize());
 			Log.v(TAG, "Set byte array to image ok");
 		}
 		
@@ -275,7 +279,8 @@ public class ChatActivity extends Activity {
     
     //Download image and save it to the app's external directory
     public void downloadImage(long id){
-    	MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) listMessage.get((int) id).get("image") ,
-    		    "test.jpg", "test.jpg");
+    	HashMap<String,Object> hash = listMessage.get((int) id);
+    	MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) hash.get("image") ,
+    		    (String) hash.get("fileName"), (String) hash.get("fileName"));
     }
 }
