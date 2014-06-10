@@ -95,7 +95,13 @@ public class ChatAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 					bitmap = (Bitmap) listMessage.get((Integer) v.getTag()).get("image");
-					mContext.startActivity(new Intent(mContext, ViewImageActivity.class));
+					
+					Intent intent = new Intent(mContext, ViewImageActivity.class);
+					//Send file name and file size
+					String fileName = (String) listMessage.get((Integer) v.getTag()).get("fileName");
+					intent.putExtra("fileName", fileName);
+					
+					mContext.startActivity(intent);
 				}
 			});
 		}       

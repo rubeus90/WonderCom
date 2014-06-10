@@ -5,6 +5,7 @@ import com.android.wondercom.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,6 +55,10 @@ public class ViewImageActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_view_image);
+		
+		Intent intent = getIntent();
+		String fileName = intent.getStringExtra("fileName");
+		setTitle(fileName);
 
 		final View controlsView = findViewById(R.id.fullscreen_content_controls);
 		
