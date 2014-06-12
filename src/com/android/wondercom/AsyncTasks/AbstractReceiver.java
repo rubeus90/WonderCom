@@ -1,5 +1,12 @@
 package com.android.wondercom.AsyncTasks;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,6 +16,7 @@ import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 
 import com.android.wondercom.MainActivity;
@@ -16,6 +24,11 @@ import com.android.wondercom.R;
 import com.android.wondercom.Entities.Message;
 
 public class AbstractReceiver extends AsyncTask<Void, Message, Void>{
+	
+	@Override
+	protected Void doInBackground(Void... params) {
+		return null;
+	}
 	
 	protected void playNotification(Context context, Message message){
 		Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -50,9 +63,34 @@ public class AbstractReceiver extends AsyncTask<Void, Message, Void>{
 			mNotificationManager.notify(0, mNotification);
 		}
 	}
-
-	@Override
-	protected Void doInBackground(Void... params) {
-		return null;
-	}
+//
+//	public void saveMediaFile(Context context, File audioFile){
+//		File f = new File(context.getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath());
+//
+//        File dirs = new File(f.getParent());
+//        if (!dirs.exists())
+//            dirs.mkdirs();
+//        
+//        try {
+//			f.createNewFile();			
+//			copyFile(audioFile, f);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//        
+//	}	
+//	
+//	public void copyFile(File src, File dst) throws IOException {
+//	    InputStream in = new FileInputStream(src);
+//	    OutputStream out = new FileOutputStream(dst);
+//
+//	    // Transfer bytes from in to out
+//	    byte[] buf = new byte[1024];
+//	    int len;
+//	    while ((len = in.read(buf)) > 0) {
+//	        out.write(buf, 0, len);
+//	    }
+//	    in.close();
+//	    out.close();
+//	}
 }

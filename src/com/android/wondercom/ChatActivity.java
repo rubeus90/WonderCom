@@ -1,8 +1,15 @@
 package com.android.wondercom;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +22,7 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -32,10 +40,12 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.Toast;
+
 import com.android.wondercom.AsyncTasks.SendMessageClient;
 import com.android.wondercom.AsyncTasks.SendMessageServer;
 import com.android.wondercom.CustomAdapters.ChatAdapter;
 import com.android.wondercom.Entities.Image;
+import com.android.wondercom.Entities.MediaFile;
 import com.android.wondercom.Entities.Message;
 import com.android.wondercom.Receivers.WifiDirectBroadcastReceiver;
 
@@ -180,7 +190,9 @@ public class ChatActivity extends Activity {
 				Log.v(TAG, "Set byte array to image ok");
 				break;
 			case Message.AUDIO_MESSAGE:
-				//TODO
+				MediaFile mediaFile = new MediaFile(fileURL);
+				mes.setByteArray(mediaFile.fileToByteArray());
+				mes.setFileName(mediaFile.getFileName());
 				break;
 		}		
 		
@@ -210,15 +222,20 @@ public class ChatActivity extends Activity {
 			map.put("image", message.byteArrayToBitmap(message.getByteArray()));
 			Log.v(TAG, "Set image to listMessage ok ");
 		}
+		else if(message.getmType() == Message.AUDIO_MESSAGE){
+			map.put("fileName", message.getFileName());
+			map.put("audioPath", message.getMediaFile().getAbsolutePath());
+		}
 		
 		listMessage.add(map);
     	chatAdapter.notifyDataSetChanged();
     	
+    	//Scroll to the last element of the list
     	listView.setSelection(listMessage.size() - 1);
     }	
 
-// Save the app's state (foreground or background) to a SharedPrefereces
-public void saveStateForeground(boolean isForeground){
+	// Save the app's state (foreground or background) to a SharedPrefereces
+	public void saveStateForeground(boolean isForeground){
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
   		Editor edit = prefs.edit();
   		edit.putBoolean("isForeground", isForeground);

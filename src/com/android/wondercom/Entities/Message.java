@@ -1,6 +1,7 @@
 package com.android.wondercom.Entities;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.InetAddress;
@@ -13,6 +14,8 @@ public class Message implements Serializable{
 	public static final int TEXT_MESSAGE = 1;
 	public static final int IMAGE_MESSAGE = 2;
 	public static final int VIDEO_MESSAGE = 3;
+	public static final int AUDIO_MESSAGE = 4;
+	public static final int FILE_MESSAGE = 5;
 	
 	private int mType;
 	private String mText;
@@ -21,6 +24,7 @@ public class Message implements Serializable{
 	private InetAddress senderAddress;
 	private String fileName;
 	private long fileSize;
+	private File mediaFile;
 	
 	//Getters and Setters
 	public int getmType() { return mType; }
@@ -37,6 +41,9 @@ public class Message implements Serializable{
 	public void setFileName(String fileName) { this.fileName = fileName; }
 	public long getFileSize() { return fileSize; }
 	public void setFileSize(long fileSize) { this.fileSize = fileSize; }
+	public File getMediaFile() { return mediaFile; }
+	public void setMediaFile(File mediaFile) { this.mediaFile = mediaFile; }
+	
 	
 	
 	public Message(int type, String text, InetAddress sender, String name){

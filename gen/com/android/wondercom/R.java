@@ -1110,6 +1110,7 @@ containing a value of this type.
         public static final int action_mode_close_button=0x7f050024;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
+        public static final int audioPlayer=0x7f05004f;
         public static final int back_button=0x7f05004b;
         public static final int beginning=0x7f050011;
         public static final int chatName=0x7f05004d;
@@ -1119,8 +1120,8 @@ containing a value of this type.
         public static final int default_activity_button=0x7f050028;
         public static final int dialog=0x7f05000e;
         public static final int disableHome=0x7f050008;
-        public static final int disconnect=0x7f050054;
-        public static final int download_image=0x7f050055;
+        public static final int disconnect=0x7f050055;
+        public static final int download_image=0x7f050056;
         public static final int dropdown=0x7f05000f;
         public static final int editMessage=0x7f05003e;
         public static final int edit_query=0x7f050030;
@@ -1144,7 +1145,7 @@ containing a value of this type.
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
         public static final int ok=0x7f050048;
-        public static final int pick_image=0x7f050056;
+        public static final int pick_image=0x7f050057;
         public static final int playback_audio=0x7f050047;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
@@ -1162,10 +1163,10 @@ containing a value of this type.
         public static final int search_src_text=0x7f050037;
         public static final int search_voice_btn=0x7f05003b;
         public static final int sendMessage=0x7f05003f;
-        public static final int send_audio=0x7f050051;
-        public static final int send_file=0x7f050053;
-        public static final int send_image=0x7f050050;
-        public static final int send_video=0x7f050052;
+        public static final int send_audio=0x7f050052;
+        public static final int send_file=0x7f050054;
+        public static final int send_image=0x7f050051;
+        public static final int send_video=0x7f050053;
         public static final int setChatName=0x7f050042;
         public static final int setChatNameLabel=0x7f050041;
         public static final int shortcut=0x7f05002e;
@@ -1176,11 +1177,11 @@ containing a value of this type.
         public static final int stop_recording=0x7f050046;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
-        public static final int take_photo=0x7f050057;
+        public static final int take_photo=0x7f050058;
         public static final int text=0x7f05004e;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
-        public static final int underline=0x7f05004f;
+        public static final int underline=0x7f050050;
         public static final int up=0x7f050021;
         public static final int useLogo=0x7f050003;
         public static final int withText=0x7f05000c;
