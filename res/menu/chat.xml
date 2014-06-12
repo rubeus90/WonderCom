@@ -9,5 +9,20 @@
         android:title="@string/send_image"
         app:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_camera" />
+    
+    <item 
+        android:id="@+id/send_audio"
+        android:title="@string/send_audio"
+        app:showAsAction="ifRoom" />
+    
+    <item 
+        android:id="@+id/send_video"
+        android:title="@string/send_video"
+        app:showAsAction="ifRoom" />
+    
+    <item
+        android:id="@+id/send_file"
+        android:title="@string/send_file"
+        app:showAsAction="ifRoom" />
 
 </menu>

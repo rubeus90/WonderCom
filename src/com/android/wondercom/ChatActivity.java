@@ -42,7 +42,9 @@ import com.android.wondercom.Receivers.WifiDirectBroadcastReceiver;
 public class ChatActivity extends Activity {
 	public static final String TAG = "ChatActivity";	
 	public static final int PICK_IMAGE = 1;
-	public static final int TAKE_PHOTO = 100;
+	public static final int TAKE_PHOTO = 2;
+	public static final int RECORD_AUDIO = 3;
+	
 	private WifiP2pManager mManager;
 	private Channel mChannel;
 	private WifiDirectBroadcastReceiver mReceiver;
@@ -52,6 +54,7 @@ public class ChatActivity extends Activity {
 	private static List<HashMap<String, Object>> listMessage;
 	private static ChatAdapter chatAdapter;
 	private Uri imageUri;
+	private String fileURL;
 	
 	
 	@Override
@@ -145,8 +148,7 @@ public class ChatActivity extends Activity {
 			case PICK_IMAGE:
 				if (resultCode == RESULT_OK && data.getData() != null) {
 					imageUri = data.getData();
-					sendMessage(Message.IMAGE_MESSAGE);
-					
+					sendMessage(Message.IMAGE_MESSAGE);					
 				}
 				break;
 			case TAKE_PHOTO:
@@ -155,42 +157,32 @@ public class ChatActivity extends Activity {
 					sendMessage(Message.IMAGE_MESSAGE);
 				}
 				break;
+			case RECORD_AUDIO:
+				if (resultCode == RESULT_OK) {
+					fileURL = (String) data.getStringExtra("audioPath");
+					sendMessage(Message.AUDIO_MESSAGE);
+				}
+				break;
 		}
 	}
-
-	public static void refreshList(Message message, boolean isMine){
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("type", message.getmType());
-		map.put("chatName", message.getChatName());
-		map.put("isMine", isMine);
-		
-		if(message.getmType() == Message.TEXT_MESSAGE){
-			map.put("text", message.getmText());
-		}		
-		else if(message.getmType() == Message.IMAGE_MESSAGE){
-			map.put("fileName", message.getFileName());
-			map.put("fileSize", message.getFileSize());
-			map.put("image", message.byteArrayToBitmap(message.getByteArray()));
-			Log.v(TAG, "Set image to listMessage ok ");
-		}
-		
-		listMessage.add(map);
-    	chatAdapter.notifyDataSetChanged();
-    	
-    	listView.setSelection(listMessage.size() - 1);
-    }	
 	
+	// Hydrate Message object then launch the AsyncTasks to send it
 	public void sendMessage(int type){
 		Message mes = new Message(type, edit.getText().toString(), null, MainActivity.chatName);
 		
-		if(type == Message.IMAGE_MESSAGE){
-			Image image = new Image(this, imageUri);
-			Log.v(TAG, "Bitmap from url ok");
-			mes.setByteArray(mes.bitmapToByteArray(image.getBitmapFromUri()));
-			mes.setFileName(image.getFileName());
-			mes.setFileSize(image.getFileSize());
-			Log.v(TAG, "Set byte array to image ok");
-		}
+		switch(type){
+			case Message.IMAGE_MESSAGE:
+				Image image = new Image(this, imageUri);
+				Log.v(TAG, "Bitmap from url ok");
+				mes.setByteArray(mes.bitmapToByteArray(image.getBitmapFromUri()));
+				mes.setFileName(image.getFileName());
+				mes.setFileSize(image.getFileSize());
+				Log.v(TAG, "Set byte array to image ok");
+				break;
+			case Message.AUDIO_MESSAGE:
+				//TODO
+				break;
+		}		
 		
 		if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_OWNER){
 			Log.v(TAG, "SendMessageServer start");
@@ -204,7 +196,29 @@ public class ChatActivity extends Activity {
 		edit.setText("");
 	}
 	
-	public void saveStateForeground(boolean isForeground){
+	// Refresh the message list
+	public static void refreshList(Message message, boolean isMine){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("type", message.getmType());
+		map.put("chatName", message.getChatName());
+		map.put("isMine", isMine);
+		map.put("text", message.getmText());	
+		
+		if(message.getmType() == Message.IMAGE_MESSAGE){
+			map.put("fileName", message.getFileName());
+			map.put("fileSize", message.getFileSize());
+			map.put("image", message.byteArrayToBitmap(message.getByteArray()));
+			Log.v(TAG, "Set image to listMessage ok ");
+		}
+		
+		listMessage.add(map);
+    	chatAdapter.notifyDataSetChanged();
+    	
+    	listView.setSelection(listMessage.size() - 1);
+    }	
+
+// Save the app's state (foreground or background) to a SharedPrefereces
+public void saveStateForeground(boolean isForeground){
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
   		Editor edit = prefs.edit();
   		edit.putBoolean("isForeground", isForeground);
@@ -217,14 +231,28 @@ public class ChatActivity extends Activity {
         return true;
     }
 
+	// Handle click on the menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int idItem = item.getItemId();
-        if (idItem == R.id.send_image) {        	
-        	showPopup(edit);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        switch(idItem){
+	        case R.id.send_image:
+	        	showPopup(edit);
+	        	return true;
+	        	
+	        case R.id.send_audio:
+	        	startActivityForResult(new Intent(this, RecordAudioActivity.class), RECORD_AUDIO);
+	        	return true;
+	        	
+	        case R.id.send_video:
+	        	return true;
+	        	
+	        case R.id.send_file:
+	        	return true;
+	        	
+	        default:
+	        	return super.onOptionsItemSelected(item);        	
+        }  
     }	
     
     //Show the popup menu

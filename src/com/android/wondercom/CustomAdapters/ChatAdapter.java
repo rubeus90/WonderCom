@@ -85,7 +85,12 @@ public class ChatAdapter extends BaseAdapter {
             Linkify.addLinks(cache.text, Linkify.ALL);
 		}
 		else if(type == Message.IMAGE_MESSAGE){
-			cache.text.setVisibility(View.GONE);
+			if(listMessage.get(position).get("text").equals("")){
+				cache.text.setVisibility(View.GONE);
+			}
+			else{
+				cache.text.setText((String)listMessage.get(position).get("text"));
+			}
 			cache.image.setVisibility(View.VISIBLE);
 			cache.image.setImageBitmap((Bitmap) listMessage.get(position).get("image"));
 			cache.image.setTag(position);

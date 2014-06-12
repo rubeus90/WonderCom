@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- App and Activities -->
     <string name="app_name">WonderCom</string>
-    <string name="disconnect">Disconnect</string>
+    <string name="title_activity_view_image">ViewImageActivity</string>
     <string name="title_activity_chat">Chatroom</string>
-    <string name="go_to_settings_button">Go to Settings</string>
-    <string name="send_button">Send</string>
-    <string name="set_chat_name">Please choose your chat name</string>
-    <string name="enter_text">Enter your message here</string>
+
+    <!-- Menus -->
+    <string name="disconnect">Disconnect</string>
     <string name="send_image">Send image</string>
+    <string name="download_image">Download image</string>
+    <string name="send_audio">Send audio message</string>
+    <string name="send_video">Send video message</string>
+    <string name="send_file">Send file</string>
+
+    <!-- Popup menus -->
     <string name="pick_image">Pick image</string>
     <string name="take_photo">Take photo</string>
-    <string name="title_activity_view_image">ViewImageActivity</string>
+
+    <!-- Buttons -->
+    <string name="go_to_settings_button">Go to Settings</string>
+    <string name="send_button">Send</string>
     <string name="back_button">Back</string>
-    <string name="download_image">Download image</string>
+    <string name="record_button">Start recording</string>
+    <string name="playback_button">Play</string>
+    <string name="stop_recording_button">Stop recording</string>
+    <string name="ok">OK</string>
+
+    <!-- EditTexts -->
+    <string name="set_chat_name">Please choose your chat name</string>
+    <string name="enter_text">Enter your message here</string>
+
+    <!-- Descriptions -->
     <string name="full_screen_image">Full screen image</string>
+    <string name="title_activity_record_audio">RecordAudioActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
