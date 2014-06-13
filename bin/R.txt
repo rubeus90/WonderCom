@@ -259,7 +259,6 @@ int id action_menu_presenter 0x7f050017
 int id action_mode_close_button 0x7f050024
 int id activity_chooser_view_content 0x7f050025
 int id always 0x7f05000b
-int id audioPlayer 0x7f05004f
 int id back_button 0x7f05004b
 int id beginning 0x7f050011
 int id chatName 0x7f05004d
@@ -295,6 +294,7 @@ int id none 0x7f050010
 int id normal 0x7f050000
 int id ok 0x7f050048
 int id pick_image 0x7f050057
+int id playAudio 0x7f05004f
 int id playback_audio 0x7f050047
 int id progress_circular 0x7f050018
 int id progress_horizontal 0x7f050019

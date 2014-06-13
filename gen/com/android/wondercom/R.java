@@ -1110,7 +1110,6 @@ containing a value of this type.
         public static final int action_mode_close_button=0x7f050024;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
-        public static final int audioPlayer=0x7f05004f;
         public static final int back_button=0x7f05004b;
         public static final int beginning=0x7f050011;
         public static final int chatName=0x7f05004d;
@@ -1146,6 +1145,7 @@ containing a value of this type.
         public static final int normal=0x7f050000;
         public static final int ok=0x7f050048;
         public static final int pick_image=0x7f050057;
+        public static final int playAudio=0x7f05004f;
         public static final int playback_audio=0x7f050047;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;

@@ -1,5 +1,6 @@
 package com.android.wondercom.CustomAdapters;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,8 +14,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -64,7 +65,7 @@ public class ChatAdapter extends BaseAdapter {
             cache.text = (TextView) view.findViewById(R.id.text);
             cache.image = (ImageView) view.findViewById(R.id.image);
             cache.relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
-            cache.audioPlayer = (MediaController) view.findViewById(R.id.audioPlayer);
+            cache.audioPlayer = (Button) view.findViewById(R.id.playAudio);
 	            
 			view.setTag(cache);
 		}
@@ -124,6 +125,22 @@ public class ChatAdapter extends BaseAdapter {
 			}
 			cache.image.setVisibility(View.GONE);
 			cache.audioPlayer.setVisibility(View.VISIBLE);
+			cache.audioPlayer.setTag(position);
+			cache.audioPlayer.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					MediaPlayer mPlayer = new MediaPlayer();
+			        try {
+			            mPlayer.setDataSource((String) listMessage.get((Integer) v.getTag()).get("filePath"));
+			            mPlayer.prepare();
+			            mPlayer.start();
+			        } catch (IOException e) {
+			            e.printStackTrace();
+			        }
+					
+				}
+			});
 		}
         
 		return view;
@@ -135,6 +152,6 @@ public class ChatAdapter extends BaseAdapter {
 		public TextView text;
 		public ImageView image;
 		public RelativeLayout relativeLayout;
-		public MediaController audioPlayer;
+		public Button audioPlayer;
 	}
 }

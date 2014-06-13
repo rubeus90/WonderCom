@@ -2,12 +2,15 @@ package com.android.wondercom.Entities;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.InetAddress;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 
 @SuppressWarnings("serial")
 public class Message implements Serializable{
@@ -24,7 +27,7 @@ public class Message implements Serializable{
 	private InetAddress senderAddress;
 	private String fileName;
 	private long fileSize;
-	private File mediaFile;
+	private String filePath;
 	
 	//Getters and Setters
 	public int getmType() { return mType; }
@@ -41,8 +44,8 @@ public class Message implements Serializable{
 	public void setFileName(String fileName) { this.fileName = fileName; }
 	public long getFileSize() { return fileSize; }
 	public void setFileSize(long fileSize) { this.fileSize = fileSize; }
-	public File getMediaFile() { return mediaFile; }
-	public void setMediaFile(File mediaFile) { this.mediaFile = mediaFile; }
+	public String getFilePath() { return filePath; }
+	public void setFilePath(String filePath) { this.filePath = filePath; }
 	
 	
 	
@@ -67,5 +70,24 @@ public class Message implements Serializable{
 	
 	public Bitmap byteArrayToBitmap(byte[] b){
 		return BitmapFactory.decodeByteArray(b, 0, b.length);
+	}
+	
+	public void saveByteArrayToFile(Context context){
+		filePath = context.getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath() + "/" + fileName;
+		File file = new File(filePath);
+
+		if (file.exists()) {
+			file.delete();
+		}
+
+		try {
+			FileOutputStream fos=new FileOutputStream(file.getPath());
+
+			fos.write(byteArray);
+			fos.close();
+		}
+		catch (java.io.IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -65,6 +65,10 @@ public class ReceiveMessageServer extends AbstractReceiver {
 		String text = values[0].getmText();
 		Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();
 		
+		if(values[0].getmType() == Message.AUDIO_MESSAGE){
+			values[0].saveByteArrayToFile(mContext);
+		}
+		
 		new SendMessageServer(mContext, false).executeOnExecutor(THREAD_POOL_EXECUTOR, values);
 	}
 	

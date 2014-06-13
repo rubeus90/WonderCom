@@ -1,11 +1,5 @@
 package com.android.wondercom;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +16,6 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -190,9 +183,10 @@ public class ChatActivity extends Activity {
 				Log.v(TAG, "Set byte array to image ok");
 				break;
 			case Message.AUDIO_MESSAGE:
-				MediaFile mediaFile = new MediaFile(fileURL);
+				MediaFile mediaFile = new MediaFile(this, fileURL);
 				mes.setByteArray(mediaFile.fileToByteArray());
 				mes.setFileName(mediaFile.getFileName());
+				mes.setFilePath(mediaFile.getFilePath());
 				break;
 		}		
 		
@@ -223,8 +217,9 @@ public class ChatActivity extends Activity {
 			Log.v(TAG, "Set image to listMessage ok ");
 		}
 		else if(message.getmType() == Message.AUDIO_MESSAGE){
+			//TODO
+			map.put("filePath", message.getFilePath());
 			map.put("fileName", message.getFileName());
-			map.put("audioPath", message.getMediaFile().getAbsolutePath());
 		}
 		
 		listMessage.add(map);
