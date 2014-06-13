@@ -64,12 +64,13 @@ public class Message implements Serializable{
 	public void saveByteArrayToFile(Context context){
 		switch(mType){
 			case Message.AUDIO_MESSAGE:
-				filePath = context.getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath() 
-							+ "/" + fileName;
+				filePath = context.getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath()+"/"+fileName;
+				break;
+			case Message.VIDEO_MESSAGE:
+				filePath = context.getExternalFilesDir(Environment.DIRECTORY_MOVIES).getAbsolutePath()+"/"+fileName;
 				break;
 			case Message.FILE_MESSAGE:
-				filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() 
-							+ "/" + fileName;
+				filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()+"/"+fileName;
 				break;
 		}
 		

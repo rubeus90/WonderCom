@@ -11,7 +11,8 @@
         android:layout_above="@+id/writeZone"
         android:fadeScrollbars="true"
         android:divider="@null"
-        android:dividerHeight="0dp"></ListView>
+        android:dividerHeight="0dp"
+        android:background="@color/chat_list_background" ></ListView>
     
     <LinearLayout
         android:id="@id/writeZone"

@@ -47,6 +47,7 @@ public class ChatActivity extends Activity {
 	public static final int PICK_IMAGE = 1;
 	public static final int TAKE_PHOTO = 2;
 	public static final int RECORD_AUDIO = 3;
+	public static final int RECORD_VIDEO = 4;
 	
 	private WifiP2pManager mManager;
 	private Channel mChannel;
@@ -257,6 +258,11 @@ public class ChatActivity extends Activity {
 	        	return true;
 	        	
 	        case R.id.send_video:
+	        	Log.v(TAG, "Start activity to record video");
+	        	Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+	        	if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
+	                startActivityForResult(takeVideoIntent, RECORD_VIDEO);
+	            }
 	        	return true;
 	        	
 	        case R.id.send_file:
@@ -280,13 +286,21 @@ public class ChatActivity extends Activity {
 					Intent intent = new Intent(Intent.ACTION_PICK);
 					intent.setType("image/*");
 					intent.setAction(Intent.ACTION_GET_CONTENT);
+					
+					// Prevent crash if no app can handle the intent
+					if (intent.resolveActivity(getPackageManager()) != null) {
+						startActivityForResult(intent, PICK_IMAGE);
+				    }
 					startActivityForResult(intent, PICK_IMAGE);
 					break;
 				
 				case R.id.take_photo:
 					Log.v(TAG, "Take a photo");
 					Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-				    startActivityForResult(intent2, TAKE_PHOTO);
+					
+					if (intent2.resolveActivity(getPackageManager()) != null) {
+						startActivityForResult(intent2, TAKE_PHOTO);
+				    }				    
 				    break;
 				}
 				return true;
@@ -317,7 +331,7 @@ public class ChatActivity extends Activity {
         }
     }
     
-    //Download image and save it to the app's external directory
+    //Download image and save it to the camera directory
     public void downloadImage(long id){
     	HashMap<String,Object> hash = listMessage.get((int) id);
     	MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) hash.get("image") ,
