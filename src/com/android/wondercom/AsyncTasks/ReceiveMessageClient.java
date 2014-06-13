@@ -66,7 +66,9 @@ public class ReceiveMessageClient extends AbstractReceiver {
 		String text = values[0].getmText();
 		Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();		
 		
-		if(values[0].getmType() == Message.AUDIO_MESSAGE){
+		//If the message contains a video or an audio, we saved this file to the external storage
+		int type = values[0].getmType();
+		if(type == Message.AUDIO_MESSAGE || type == Message.VIDEO_MESSAGE){
 			values[0].saveByteArrayToFile(mContext);
 		}
 		
@@ -81,8 +83,6 @@ public class ReceiveMessageClient extends AbstractReceiver {
         List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
 
         for (ActivityManager.RunningTaskInfo task : tasks) {
-        	System.out.println(task.baseActivity.getClassName());
-        	System.out.println(activityClass.getCanonicalName());
             if (activityClass.getCanonicalName().equalsIgnoreCase(task.baseActivity.getClassName()))
                 return true;
         }

@@ -13,8 +13,10 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
- 	<uses-permission android:name="android.permission.RECORD_AUDIO" />
- 	<uses-permission android:name="android.permission.CAMERA" android:required="true" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission
+        android:name="android.permission.CAMERA"
+        android:required="true" />
 
     <uses-feature android:name="android.hardware.camera.any" />
 
@@ -51,8 +53,12 @@
             android:name="com.android.wondercom.RecordAudioActivity"
             android:label="@string/title_activity_record_audio" >
         </activity>
+        <activity
+            android:name="com.android.wondercom.PlayVideoActivity"
+            android:label="@string/title_activity_play_video" >
+        </activity>
     </application>
 
-</manifest><!-- android:parentActivityName="com.android.wondercom.MainActivity" -->
+</manifest> <!-- android:parentActivityName="com.android.wondercom.MainActivity" -->
 
 

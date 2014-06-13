@@ -57,7 +57,7 @@ public class ChatActivity extends Activity {
 	private static ListView listView;
 	private static List<HashMap<String, Object>> listMessage;
 	private static ChatAdapter chatAdapter;
-	private Uri imageUri;
+	private Uri fileUri;
 	private String fileURL;
 	
 	
@@ -143,7 +143,7 @@ public class ChatActivity extends Activity {
 		android.os.Process.killProcess(android.os.Process.myPid());		
 	}
     
-    //Return the Uri of the picked image
+    // Handle the data sent back by the 'for result' activities (pick/take image, record audio/video)
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -151,13 +151,13 @@ public class ChatActivity extends Activity {
 		switch(requestCode){
 			case PICK_IMAGE:
 				if (resultCode == RESULT_OK && data.getData() != null) {
-					imageUri = data.getData();
+					fileUri = data.getData();
 					sendMessage(Message.IMAGE_MESSAGE);					
 				}
 				break;
 			case TAKE_PHOTO:
 				if (resultCode == RESULT_OK && data.getData() != null) {
-					imageUri = data.getData();
+					fileUri = data.getData();
 					sendMessage(Message.IMAGE_MESSAGE);
 				}
 				break;
@@ -167,16 +167,25 @@ public class ChatActivity extends Activity {
 					sendMessage(Message.AUDIO_MESSAGE);
 				}
 				break;
+			case RECORD_VIDEO:
+				if (resultCode == RESULT_OK) {
+					fileUri = data.getData();
+					fileURL = MediaFile.getRealPathFromURI(this, fileUri);
+					sendMessage(Message.VIDEO_MESSAGE);
+				}
+				break;
 		}
 	}
 	
 	// Hydrate Message object then launch the AsyncTasks to send it
 	public void sendMessage(int type){
+		Log.v(TAG, "Send message starts");
+		// Message written in EditText is always sent
 		Message mes = new Message(type, edit.getText().toString(), null, MainActivity.chatName);
 		
 		switch(type){
 			case Message.IMAGE_MESSAGE:
-				Image image = new Image(this, imageUri);
+				Image image = new Image(this, fileUri);
 				Log.v(TAG, "Bitmap from url ok");
 				mes.setByteArray(image.bitmapToByteArray(image.getBitmapFromUri()));
 				mes.setFileName(image.getFileName());
@@ -184,13 +193,20 @@ public class ChatActivity extends Activity {
 				Log.v(TAG, "Set byte array to image ok");
 				break;
 			case Message.AUDIO_MESSAGE:
-				MediaFile mediaFile = new MediaFile(this, fileURL, Message.AUDIO_MESSAGE);
-				mes.setByteArray(mediaFile.fileToByteArray());
-				mes.setFileName(mediaFile.getFileName());
-				mes.setFilePath(mediaFile.getFilePath());
+				MediaFile audioFile = new MediaFile(this, fileURL, Message.AUDIO_MESSAGE);
+				mes.setByteArray(audioFile.fileToByteArray());
+				mes.setFileName(audioFile.getFileName());
+				mes.setFilePath(audioFile.getFilePath());
 				break;
+			case Message.VIDEO_MESSAGE:
+				MediaFile videoFile = new MediaFile(this, fileURL, Message.AUDIO_MESSAGE);
+				mes.setByteArray(videoFile.fileToByteArray());
+				mes.setFileName(videoFile.getFileName());
+				mes.setFilePath(videoFile.getFilePath());
 		}		
+		Log.v(TAG, "Message object hydrated");
 		
+		Log.v(TAG, "Start AsyncTasks to send the message");
 		if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_OWNER){
 			Log.v(TAG, "SendMessageServer start");
 			new SendMessageServer(ChatActivity.this, true).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mes);
@@ -205,6 +221,8 @@ public class ChatActivity extends Activity {
 	
 	// Refresh the message list
 	public static void refreshList(Message message, boolean isMine){
+		Log.v(TAG, "Refresh message list starts");
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("type", message.getmType());
 		map.put("chatName", message.getChatName());
@@ -221,9 +239,15 @@ public class ChatActivity extends Activity {
 			map.put("filePath", message.getFilePath());
 			map.put("fileName", message.getFileName());
 		}
+		else if(message.getmType() == Message.VIDEO_MESSAGE){
+			map.put("filePath", message.getFilePath());
+			map.put("fileName", message.getFileName());
+		}
 		
 		listMessage.add(map);
     	chatAdapter.notifyDataSetChanged();
+    	
+    	Log.v(TAG, "Chat Adapter notified of the changes");
     	
     	//Scroll to the last element of the list
     	listView.setSelection(listMessage.size() - 1);

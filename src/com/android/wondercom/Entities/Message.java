@@ -62,6 +62,7 @@ public class Message implements Serializable{
 	}
 	
 	public void saveByteArrayToFile(Context context){
+		Log.v(TAG, "Save byte array to file");
 		switch(mType){
 			case Message.AUDIO_MESSAGE:
 				filePath = context.getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath()+"/"+fileName;
@@ -85,9 +86,11 @@ public class Message implements Serializable{
 
 			fos.write(byteArray);
 			fos.close();
+			Log.v(TAG, "Write byte array to file DONE !");
 		}
 		catch (java.io.IOException e) {
 			e.printStackTrace();
+			Log.e(TAG, "Write byte array to file FAILED !");
 		}
 	}
 }

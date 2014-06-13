@@ -3,7 +3,6 @@ package com.android.wondercom.CustomAdapters;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.wondercom.PlayVideoActivity;
 import com.android.wondercom.R;
 import com.android.wondercom.ViewImageActivity;
 import com.android.wondercom.Entities.Message;
@@ -66,6 +66,7 @@ public class ChatAdapter extends BaseAdapter {
             cache.image = (ImageView) view.findViewById(R.id.image);
             cache.relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
             cache.audioPlayer = (Button) view.findViewById(R.id.playAudio);
+            cache.videoPlayer = (Button) view.findViewById(R.id.playVideo);
 	            
 			view.setTag(cache);
 		}
@@ -82,21 +83,25 @@ public class ChatAdapter extends BaseAdapter {
         	cache.relativeLayout.setBackground(view.getResources().getDrawable(R.drawable.chat_bubble));
         }
         
-        if(type == Message.TEXT_MESSAGE){        	
-        	cache.image.setVisibility(View.GONE);
-        	cache.audioPlayer.setVisibility(View.GONE);
+        //We disable all the views and enable certain views depending on the message's type
+        disableAllMediaViews(cache);
+        
+        /***********************************************
+          				Text Message
+         ***********************************************/
+        if(type == Message.TEXT_MESSAGE){           	
         	cache.text.setVisibility(View.VISIBLE);
             cache.text.setText((String)listMessage.get(position).get("text"));
             Linkify.addLinks(cache.text, Linkify.ALL);
 		}
+        
+        /***********************************************
+			            Image Message
+         ***********************************************/
 		else if(type == Message.IMAGE_MESSAGE){
-			if(listMessage.get(position).get("text").equals("")){
-				cache.text.setVisibility(View.GONE);
-			}
-			else{
+			if(!listMessage.get(position).get("text").equals("")){
 				cache.text.setText((String)listMessage.get(position).get("text"));
 			}
-			cache.audioPlayer.setVisibility(View.GONE);
 			cache.image.setVisibility(View.VISIBLE);
 			cache.image.setImageBitmap((Bitmap) listMessage.get(position).get("image"));
 			cache.image.setTag(position);
@@ -115,15 +120,15 @@ public class ChatAdapter extends BaseAdapter {
 					mContext.startActivity(intent);
 				}
 			});
-		}      
+		}     
+        
+        /***********************************************
+        				Audio Message
+         ***********************************************/
 		else if(type == Message.AUDIO_MESSAGE){
-			if(listMessage.get(position).get("text").equals("")){
-				cache.text.setVisibility(View.GONE);
-			}
-			else{
+			if(!listMessage.get(position).get("text").equals("")){
 				cache.text.setText((String)listMessage.get(position).get("text"));
 			}
-			cache.image.setVisibility(View.GONE);
 			cache.audioPlayer.setVisibility(View.VISIBLE);
 			cache.audioPlayer.setTag(position);
 			cache.audioPlayer.setOnClickListener(new OnClickListener() {
@@ -143,7 +148,34 @@ public class ChatAdapter extends BaseAdapter {
 			});
 		}
         
+        /***********************************************
+        				Video Message
+         ***********************************************/
+		else if(type == Message.VIDEO_MESSAGE){
+			if(!listMessage.get(position).get("text").equals("")){
+				cache.text.setText((String)listMessage.get(position).get("text"));
+			}
+			cache.videoPlayer.setVisibility(View.VISIBLE);
+			cache.videoPlayer.setTag(position);
+			cache.videoPlayer.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, PlayVideoActivity.class);
+					intent.putExtra("filePath", (String) listMessage.get((Integer) v.getTag()).get("filePath"));
+					mContext.startActivity(intent);
+				}
+			});
+		}
+        
 		return view;
+	}
+	
+	public void disableAllMediaViews(CacheView cache){
+		cache.text.setVisibility(View.GONE);
+		cache.image.setVisibility(View.GONE);
+		cache.audioPlayer.setVisibility(View.GONE);
+		cache.videoPlayer.setVisibility(View.GONE);
 	}
 
 	//Cache
@@ -153,5 +185,6 @@ public class ChatAdapter extends BaseAdapter {
 		public ImageView image;
 		public RelativeLayout relativeLayout;
 		public Button audioPlayer;
+		public Button videoPlayer;
 	}
 }

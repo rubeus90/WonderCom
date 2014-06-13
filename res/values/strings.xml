@@ -35,5 +35,6 @@
     <string name="full_screen_image">Full screen image</string>
     <string name="title_activity_record_audio">RecordAudioActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_play_video">PlayVideoActivity</string>
 
 </resources>
