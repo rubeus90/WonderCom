@@ -1,9 +1,7 @@
 package com.android.wondercom.Entities;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.net.InetAddress;
 
@@ -11,9 +9,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Log;
 
 @SuppressWarnings("serial")
 public class Message implements Serializable{
+	private static final String TAG = "Message";
 	public static final int TEXT_MESSAGE = 1;
 	public static final int IMAGE_MESSAGE = 2;
 	public static final int VIDEO_MESSAGE = 3;
@@ -56,24 +56,23 @@ public class Message implements Serializable{
 		chatName = name;
 	}
 	
-	public byte[] bitmapToByteArray(Bitmap bitmap){
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);    
-		byte[] b = baos.toByteArray();
-		try {
-			baos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return b;
-	}
-	
 	public Bitmap byteArrayToBitmap(byte[] b){
+		Log.v(TAG, "Convert byte array to image (bitmap)");
 		return BitmapFactory.decodeByteArray(b, 0, b.length);
 	}
 	
 	public void saveByteArrayToFile(Context context){
-		filePath = context.getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath() + "/" + fileName;
+		switch(mType){
+			case Message.AUDIO_MESSAGE:
+				filePath = context.getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath() 
+							+ "/" + fileName;
+				break;
+			case Message.FILE_MESSAGE:
+				filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() 
+							+ "/" + fileName;
+				break;
+		}
+		
 		File file = new File(filePath);
 
 		if (file.exists()) {

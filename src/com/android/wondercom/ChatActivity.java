@@ -177,13 +177,13 @@ public class ChatActivity extends Activity {
 			case Message.IMAGE_MESSAGE:
 				Image image = new Image(this, imageUri);
 				Log.v(TAG, "Bitmap from url ok");
-				mes.setByteArray(mes.bitmapToByteArray(image.getBitmapFromUri()));
+				mes.setByteArray(image.bitmapToByteArray(image.getBitmapFromUri()));
 				mes.setFileName(image.getFileName());
 				mes.setFileSize(image.getFileSize());
 				Log.v(TAG, "Set byte array to image ok");
 				break;
 			case Message.AUDIO_MESSAGE:
-				MediaFile mediaFile = new MediaFile(this, fileURL);
+				MediaFile mediaFile = new MediaFile(this, fileURL, Message.AUDIO_MESSAGE);
 				mes.setByteArray(mediaFile.fileToByteArray());
 				mes.setFileName(mediaFile.getFileName());
 				mes.setFilePath(mediaFile.getFilePath());
@@ -217,7 +217,6 @@ public class ChatActivity extends Activity {
 			Log.v(TAG, "Set image to listMessage ok ");
 		}
 		else if(message.getmType() == Message.AUDIO_MESSAGE){
-			//TODO
 			map.put("filePath", message.getFilePath());
 			map.put("fileName", message.getFileName());
 		}
@@ -253,6 +252,7 @@ public class ChatActivity extends Activity {
 	        	return true;
 	        	
 	        case R.id.send_audio:
+	        	Log.v(TAG, "Start activity to record audio");
 	        	startActivityForResult(new Intent(this, RecordAudioActivity.class), RECORD_AUDIO);
 	        	return true;
 	        	

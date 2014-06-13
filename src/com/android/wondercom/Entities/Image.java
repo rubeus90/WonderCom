@@ -1,5 +1,6 @@
 package com.android.wondercom.Entities;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -101,5 +102,18 @@ public class Image {
 		int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
 	    cursor.moveToFirst();
 	    return cursor.getLong(sizeIndex);
+	}
+	
+	public byte[] bitmapToByteArray(Bitmap bitmap){
+		Log.v(TAG, "Convert image to byte array");
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);    
+		byte[] b = baos.toByteArray();
+		try {
+			baos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return b;
 	}
 }
