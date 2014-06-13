@@ -22,7 +22,6 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,11 +42,13 @@ import com.android.wondercom.Entities.Message;
 import com.android.wondercom.Receivers.WifiDirectBroadcastReceiver;
 
 public class ChatActivity extends Activity {
-	public static final String TAG = "ChatActivity";	
-	public static final int PICK_IMAGE = 1;
-	public static final int TAKE_PHOTO = 2;
-	public static final int RECORD_AUDIO = 3;
-	public static final int RECORD_VIDEO = 4;
+	private static final String TAG = "ChatActivity";	
+	private static final int PICK_IMAGE = 1;
+	private static final int TAKE_PHOTO = 2;
+	private static final int RECORD_AUDIO = 3;
+	private static final int RECORD_VIDEO = 4;
+	private static final int DOWNLOAD_IMAGE = 100;
+	private static final int DELETE_MESSAGE = 101;
 	
 	private WifiP2pManager mManager;
 	private Channel mChannel;
@@ -208,11 +209,11 @@ public class ChatActivity extends Activity {
 		
 		Log.v(TAG, "Start AsyncTasks to send the message");
 		if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_OWNER){
-			Log.v(TAG, "SendMessageServer start");
+			Log.v(TAG, "Message hydrated, start SendMessageServer AsyncTask");
 			new SendMessageServer(ChatActivity.this, true).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mes);
 		}
 		else if(mReceiver.isGroupeOwner() == WifiDirectBroadcastReceiver.IS_CLIENT){
-			Log.v(TAG, "SendMessageClient start");
+			Log.v(TAG, "Message hydrated, start SendMessageClient AsyncTask");
 			new SendMessageClient(ChatActivity.this, mReceiver.getOwnerAddr()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mes);
 		}		
 		
@@ -338,16 +339,30 @@ public class ChatActivity extends Activity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.popup, menu);
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.popup, menu);
+        menu.setHeaderTitle("Options");
+        
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+        HashMap<String,Object> hash = listMessage.get((int) info.position);
+        int type = (Integer) hash.get("type");
+        switch(type){
+        	case Message.IMAGE_MESSAGE:
+        		menu.add(0, DOWNLOAD_IMAGE, Menu.NONE, "Download image");
+        		break;
+        	case Message.TEXT_MESSAGE:
+        		menu.add(0, DELETE_MESSAGE, Menu.NONE, "Delete message");
+        		break;
+        }
     }
     
     //Handle click event on the pop up menu
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        
         switch (item.getItemId()) {
-            case R.id.download_image:
+            case DOWNLOAD_IMAGE:
             	downloadImage(info.id);
                 return true;
             default:
