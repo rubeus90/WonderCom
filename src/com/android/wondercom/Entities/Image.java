@@ -93,7 +93,10 @@ public class Image {
 	     */
 		int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
 		cursor.moveToFirst();
-		return cursor.getString(nameIndex);
+		String name = cursor.getString(nameIndex);
+		cursor.close();
+		
+		return name;
 	}
 	
 	public long getFileSize(){
@@ -101,7 +104,10 @@ public class Image {
 		
 		int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
 	    cursor.moveToFirst();
-	    return cursor.getLong(sizeIndex);
+	    long size = cursor.getLong(sizeIndex);
+	    cursor.close();
+	    
+	    return size;
 	}
 	
 	public byte[] bitmapToByteArray(Bitmap bitmap){

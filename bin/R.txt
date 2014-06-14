@@ -271,7 +271,6 @@ int id default_activity_button 0x7f050028
 int id dialog 0x7f05000e
 int id disableHome 0x7f050008
 int id disconnect 0x7f050057
-int id download_image 0x7f050058
 int id dropdown 0x7f05000f
 int id editMessage 0x7f05003e
 int id edit_query 0x7f050030
@@ -295,7 +294,7 @@ int id never 0x7f050009
 int id none 0x7f050010
 int id normal 0x7f050000
 int id ok 0x7f050049
-int id pick_image 0x7f050059
+int id pick_image 0x7f050058
 int id playAudio 0x7f050050
 int id playVideo 0x7f050051
 int id playback_audio 0x7f050048
@@ -329,7 +328,7 @@ int id split_action_bar 0x7f05001e
 int id stop_recording 0x7f050047
 int id submit_area 0x7f050039
 int id tabMode 0x7f050002
-int id take_photo 0x7f05005a
+int id take_photo 0x7f050059
 int id text 0x7f05004f
 int id title 0x7f05002b
 int id top_action_bar 0x7f050020
@@ -373,8 +372,7 @@ int layout chat_row 0x7f03001d
 int layout support_simple_spinner_dropdown_item 0x7f03001e
 int menu chat 0x7f0c0000
 int menu main 0x7f0c0001
-int menu popup 0x7f0c0002
-int menu send_image 0x7f0c0003
+int menu send_image 0x7f0c0002
 int string abc_action_bar_home_description 0x7f0a0001
 int string abc_action_bar_up_description 0x7f0a0002
 int string abc_action_menu_overflow_description 0x7f0a0003

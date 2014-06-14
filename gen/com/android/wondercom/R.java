@@ -1122,7 +1122,6 @@ containing a value of this type.
         public static final int dialog=0x7f05000e;
         public static final int disableHome=0x7f050008;
         public static final int disconnect=0x7f050057;
-        public static final int download_image=0x7f050058;
         public static final int dropdown=0x7f05000f;
         public static final int editMessage=0x7f05003e;
         public static final int edit_query=0x7f050030;
@@ -1146,7 +1145,7 @@ containing a value of this type.
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
         public static final int ok=0x7f050049;
-        public static final int pick_image=0x7f050059;
+        public static final int pick_image=0x7f050058;
         public static final int playAudio=0x7f050050;
         public static final int playVideo=0x7f050051;
         public static final int playback_audio=0x7f050048;
@@ -1180,7 +1179,7 @@ containing a value of this type.
         public static final int stop_recording=0x7f050047;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
-        public static final int take_photo=0x7f05005a;
+        public static final int take_photo=0x7f050059;
         public static final int text=0x7f05004f;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
@@ -1252,8 +1251,7 @@ containing a value of this type.
     public static final class menu {
         public static final int chat=0x7f0c0000;
         public static final int main=0x7f0c0001;
-        public static final int popup=0x7f0c0002;
-        public static final int send_image=0x7f0c0003;
+        public static final int send_image=0x7f0c0002;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
