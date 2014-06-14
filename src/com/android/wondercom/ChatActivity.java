@@ -316,7 +316,6 @@ public class ChatActivity extends Activity {
 					if (intent.resolveActivity(getPackageManager()) != null) {
 						startActivityForResult(intent, PICK_IMAGE);
 				    }
-					startActivityForResult(intent, PICK_IMAGE);
 					break;
 				
 				case R.id.take_photo:
