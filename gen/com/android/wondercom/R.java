@@ -1241,12 +1241,13 @@ containing a value of this type.
         public static final int abc_search_view=0x7f030016;
         public static final int abc_simple_decor=0x7f030017;
         public static final int activity_chat=0x7f030018;
-        public static final int activity_main=0x7f030019;
-        public static final int activity_play_video=0x7f03001a;
-        public static final int activity_record_audio=0x7f03001b;
-        public static final int activity_view_image=0x7f03001c;
-        public static final int chat_row=0x7f03001d;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001e;
+        public static final int activity_file_picker=0x7f030019;
+        public static final int activity_main=0x7f03001a;
+        public static final int activity_play_video=0x7f03001b;
+        public static final int activity_record_audio=0x7f03001c;
+        public static final int activity_view_image=0x7f03001d;
+        public static final int chat_row=0x7f03001e;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001f;
     }
     public static final class menu {
         public static final int chat=0x7f0c0000;
@@ -1327,6 +1328,7 @@ containing a value of this type.
         public static final int stop_recording_button=0x7f0a001d;
         public static final int take_photo=0x7f0a0017;
         public static final int title_activity_chat=0x7f0a000f;
+        public static final int title_activity_file_picker=0x7f0a0025;
         public static final int title_activity_play_video=0x7f0a0024;
         public static final int title_activity_record_audio=0x7f0a0022;
         public static final int title_activity_view_image=0x7f0a000e;

@@ -2,7 +2,8 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Custom theme -->
     <style name="CustomActionBarTheme" parent="@android:style/Theme.Holo.Light">
-        <item name="android:actionBarStyle">@style/MyActionBar</item>        
+        <item name="android:actionBarStyle">@style/MyActionBar</item>   
+        <item name="android:windowContentOverlay">@null</item>     
     </style>
 
     <!-- ActionBar styles -->
@@ -10,6 +11,7 @@
         <item name="android:background">@color/actionbar_background</item>
         <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
         <item name="actionOverflowButtonStyle">@style/OverflowStyle</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>    
 
     <!-- ActionBar title text -->
