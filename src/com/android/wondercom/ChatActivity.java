@@ -362,6 +362,10 @@ public class ChatActivity extends Activity {
             case DOWNLOAD_IMAGE:
             	downloadImage(info.id);
                 return true;
+                
+            case DELETE_MESSAGE:
+            	deleteMessage(info.id);
+            	return true;
             default:
                 return super.onContextItemSelected(item);
         }
@@ -372,5 +376,11 @@ public class ChatActivity extends Activity {
     	HashMap<String,Object> hash = listMessage.get((int) id);
     	MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) hash.get("image") ,
     		    (String) hash.get("fileName"), (String) hash.get("fileName"));
+    }
+    
+    //Delete a message from the message list (doesn't delete on other phones)
+    public void deleteMessage(long id){
+    	listMessage.remove((int) id);
+    	chatAdapter.notifyDataSetChanged();
     }
 }
