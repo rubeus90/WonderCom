@@ -5,14 +5,14 @@
  
     <!-- view background color -->
     <solid
-        android:color="@color/chat_text_background_mine" >
+        android:color="@color/app_background" >
     </solid>
  
     <!-- view border color and width -->
-<!--     <stroke -->
-<!--         android:width="3dp" -->
-<!--         android:color="#1c1b20" > -->
-<!--     </stroke> -->
+    <stroke
+        android:width="1dp"
+        android:color="@color/chat_text_background_mine" >
+    </stroke>
  
     <!-- If you want to add some padding -->
     <padding
@@ -24,7 +24,7 @@
  
     <!-- Here is the corner radius -->
     <corners
-        android:radius="6dp"   >
+        android:radius="10dp"   >
     </corners>
  
 </shape>

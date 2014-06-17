@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -75,9 +76,16 @@ public class MainActivity extends Activity{
         setChatName = (EditText) findViewById(R.id.setChatName);
         setChatNameLabel = (TextView) findViewById(R.id.setChatNameLabel);
         setChatName.setText(loadChatName(this));
-    }
+    }	
 
     @Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		
+		customiseActionBar();
+	}
+    
+	@Override
     public void onResume() {
         super.onResume();
         registerReceiver(mReceiver, mIntentFilter);
@@ -191,4 +199,19 @@ public class MainActivity extends Activity{
   		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
   		return prefs.getString("chatName", DEFAULT_CHAT_NAME);
   	}
+  	
+  	private void customiseActionBar()
+    {
+        int titleId = 0;
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
+            titleId = getResources().getIdentifier("action_bar_title", "id", "android");
+        else
+            titleId = R.id.action_bar_title;
+
+        if(titleId>0){
+            TextView titleView = (TextView)findViewById(titleId);
+            titleView.setTextSize(22);
+        }
+    }
 }

@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -30,6 +31,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.Toast;
 
@@ -47,6 +49,7 @@ public class ChatActivity extends Activity {
 	private static final int TAKE_PHOTO = 2;
 	private static final int RECORD_AUDIO = 3;
 	private static final int RECORD_VIDEO = 4;
+	private static final int CHOOSE_FILE = 5;
 	private static final int DOWNLOAD_IMAGE = 100;
 	private static final int DELETE_MESSAGE = 101;
 	
@@ -106,6 +109,13 @@ public class ChatActivity extends Activity {
         
         //Register the context menu to the list view (for pop up menu)
         registerForContextMenu(listView);
+	}
+	
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		
+		customiseActionBar();
 	}
 	
 	@Override
@@ -291,6 +301,9 @@ public class ChatActivity extends Activity {
 	        	return true;
 	        	
 	        case R.id.send_file:
+	        	Log.v(TAG, "Start activity to choose file");
+	        	Intent chooseFileIntent = new Intent(this, FilePickerActivity.class);
+	        	startActivityForResult(chooseFileIntent, CHOOSE_FILE);
 	        	return true;
 	        	
 	        default:
@@ -382,5 +395,20 @@ public class ChatActivity extends Activity {
     public void deleteMessage(long id){
     	listMessage.remove((int) id);
     	chatAdapter.notifyDataSetChanged();
+    }
+    
+    private void customiseActionBar()
+    {
+        int titleId = 0;
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
+            titleId = getResources().getIdentifier("action_bar_title", "id", "android");
+        else
+            titleId = R.id.action_bar_title;
+
+        if(titleId>0){
+            TextView titleView = (TextView)findViewById(titleId);
+            titleView.setTextSize(22);
+        }
     }
 }

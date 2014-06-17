@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="actionbar_text">#535391</color>
-    <color name="actionbar_background">#FFFFFF</color>
-    <color name="chat_text_background">#7980DB</color>
-    <color name="chat_text_background_mine">#DB67B0</color>
-    <color name="chat_text">#ecf0f1</color>
     <color name="app_background">#FFFFFF</color>
-    <color name="button_background">#535391</color>
-    <color name="button_text">#FFFFFF</color>
     <color name="app_text">#535391</color>
     
+    <color name="actionbar_background">#FFFFFF</color>
+    <color name="actionbar_text">#535391</color>
+    
+    <color name="chat_text_background">#D6D9FF</color>
+    <color name="chat_text_background_mine">#7980DB</color>    
+    <color name="chat_text">#535391</color>
+    
+    
+    <color name="button_background">#535391</color>
+    <color name="button_text">#FFFFFF</color>
+    
+    <!-- Generic colors -->
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="black_overlay">#66000000</color>
