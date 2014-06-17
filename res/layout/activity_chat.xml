@@ -12,28 +12,32 @@
         android:fadeScrollbars="true"
         android:divider="@null"
         android:dividerHeight="0dp"
-        android:background="@color/chat_list_background" ></ListView>
+        android:background="@color/app_background" ></ListView>
     
     <LinearLayout
         android:id="@id/writeZone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true"
+        android:background="@color/app_background" >
         
 	    <EditText 
 	        android:id="@+id/editMessage"
 	        android:layout_width="0dp"
 	        android:layout_weight="5"
 	        android:layout_height="match_parent"
-	        android:inputType="textCapSentences"
-	        android:hint="@string/enter_text" />
+	        android:inputType="textMultiLine|textCapSentences"
+	        android:maxLines="4"
+	        android:hint="@string/enter_text"/>
 	    <Button 
 	        android:id="@+id/sendMessage"
 	        android:layout_width="0dp"
 	        android:layout_weight="2"
 	        android:layout_height="match_parent"
-	        android:text="@string/send_button" />
+	        android:text="@string/send_button"
+	        android:background="@drawable/button"
+	        android:textColor="@color/button_text" />
 	
 	</LinearLayout>
     
