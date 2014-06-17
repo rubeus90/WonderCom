@@ -3,8 +3,11 @@
 
     <!-- App and Activities -->
     <string name="app_name">WonderCom</string>
-    <string name="title_activity_view_image">ViewImageActivity</string>
+    <string name="title_activity_view_image">View image</string>
     <string name="title_activity_chat">Chatroom</string>
+    <string name="title_activity_record_audio">Record audio</string>
+    <string name="title_activity_play_video">Play video</string>
+    <string name="title_activity_file_picker">File chooser</string>
 
     <!-- Menus -->
     <string name="disconnect">Disconnect</string>
@@ -32,10 +35,7 @@
     <string name="enter_text">Enter your message here</string>
 
     <!-- Descriptions -->
-    <string name="full_screen_image">Full screen image</string>
-    <string name="title_activity_record_audio">RecordAudioActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_play_video">PlayVideoActivity</string>
-    <string name="title_activity_file_picker">FilePickerActivity</string>
+    <string name="full_screen_image">Full screen image</string>    
+    <string name="file_icon">File icon</string>
 
 </resources>
