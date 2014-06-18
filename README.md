@@ -12,11 +12,11 @@ This application is developed during a 3-month-internship at Nanyang Polytechnic
 * File message
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/rubeus90/WonderCom/master/Screenshots/Screenshot_2014-06-18-15-01-29.png" width="310" />&nbsp;
-<img src="https://raw.githubusercontent.com/rubeus90/WonderCom/master/Screenshots/Screenshot_2014-06-18-15-03-11.png" width="310" />
-<img src="https://raw.githubusercontent.com/rubeus90/WonderCom/master/Screenshots/Screenshot_2014-06-18-15-04-40.png" width="310" />&nbsp;
-<img src="https://raw.githubusercontent.com/rubeus90/WonderCom/master/Screenshots/Screenshot_2014-06-18-15-22-50.png" width="310" />
-<img src="https://raw.githubusercontent.com/rubeus90/WonderCom/master/Screenshots/Screenshot_2014-06-18-15-04-40.png" width="310" />
+<img src="https://raw.githubusercontent.com/rubeus90/WonderCom/master/Screenshots/Screenshot_2014-06-18-15-01-29.png" width="160" />&nbsp;
+<img src="https://raw.githubusercontent.com/rubeus90/WonderCom/master/Screenshots/Screenshot_2014-06-18-15-03-11.png" width="160" />
+<img src="https://raw.githubusercontent.com/rubeus90/WonderCom/master/Screenshots/Screenshot_2014-06-18-15-22-50.png" width="160" />&nbsp;
+<img src="https://raw.githubusercontent.com/rubeus90/WonderCom/master/Screenshots/Screenshot_2014-06-18-15-14-08.png" width="160" />&nbsp;
+<img src="https://raw.githubusercontent.com/rubeus90/WonderCom/master/Screenshots/Screenshot_2014-06-18-15-04-40.png" width="160" />
 </p>
 
 #Todo
