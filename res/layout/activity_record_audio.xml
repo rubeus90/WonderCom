@@ -3,34 +3,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
-    android:gravity="center" >
-
-    <Button
+    android:background="@color/app_background" >
+    
+    <ImageView 
         android:id="@+id/record_audio"
-        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="@string/record_button" />
+        android:contentDescription="@string/record_button"
+        android:src="@drawable/microphone_start"/>
     
-    <Button
-        android:id="@+id/stop_recording"
+    <LinearLayout 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/stop_recording_button"
-        android:layout_toRightOf="@id/record_audio" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true">
+        
+        <ImageView 
+	        android:id="@+id/play_audio"
+	        android:layout_margin="20dp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:contentDescription="@string/playback_button"
+	        android:src="@drawable/play"/>
+	    
+	    <ImageView 
+	        android:id="@+id/ok"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:contentDescription="@string/ok"
+	        android:layout_margin="20dp"
+	        android:src="@drawable/ok"/>
+	    
+    </LinearLayout>
     
-    <Button 
-        android:id="@+id/playback_audio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/playback_button"
-        android:layout_below="@id/record_audio" />
     
-    <Button 
-        android:id="@+id/ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ok"
-        android:layout_toRightOf="@id/playback_audio"
-        android:layout_below="@id/record_audio" />    
+    
+    
 
 </RelativeLayout>

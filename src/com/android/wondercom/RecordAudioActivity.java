@@ -13,16 +13,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class RecordAudioActivity extends Activity {
 	private static final String TAG = "RecordAudioActivity";
-	private Button startRecording;
-	private Button stopRecording;
-	private Button playback;
-	private Button ok;
+	private ImageView buttonRecord;
+	private ImageView buttonPlay;
+	private ImageView buttonOk;
 	private MediaRecorder mRecorder;
 	private String mFileName;
 	private MediaPlayer mPlayer;
+	private boolean isRecording = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,29 +32,35 @@ public class RecordAudioActivity extends Activity {
 		
 		mFileName = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath();
         mFileName += "/" + fileName() + ".3gp";
-		
-		startRecording = (Button) findViewById(R.id.record_audio);
-		stopRecording = (Button) findViewById(R.id.stop_recording);
-		playback = (Button) findViewById(R.id.playback_audio);
-		ok = (Button) findViewById(R.id.ok);
-		
-		startRecording.setOnClickListener(new OnClickListener() {
+        
+        buttonRecord = (ImageView) findViewById(R.id.record_audio);
+        buttonPlay = (ImageView) findViewById(R.id.play_audio);
+        buttonOk = (ImageView) findViewById(R.id.ok);
+        buttonPlay.setVisibility(View.GONE);
+        buttonOk.setVisibility(View.GONE);
+        
+		buttonRecord.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
-				startRecording();
+				if(!isRecording){
+					isRecording = true;
+					buttonRecord.setImageDrawable(getResources().getDrawable(R.drawable.microphone_stop));
+					buttonPlay.setVisibility(View.GONE);
+			        buttonOk.setVisibility(View.GONE);
+					startRecording();					
+				}
+				else{
+					isRecording = false;
+					buttonRecord.setImageDrawable(getResources().getDrawable(R.drawable.microphone_start));
+					stopRecording();
+					buttonPlay.setVisibility(View.VISIBLE);
+			        buttonOk.setVisibility(View.VISIBLE);
+				}
 			}
 		});
 		
-		stopRecording.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				stopRecording();
-			}
-		});
-		
-		playback.setOnClickListener(new OnClickListener() {
+		buttonPlay.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -61,7 +68,7 @@ public class RecordAudioActivity extends Activity {
 			}
 		});
 		
-		ok.setOnClickListener(new OnClickListener() {
+		buttonOk.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

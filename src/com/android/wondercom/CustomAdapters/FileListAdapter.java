@@ -78,6 +78,7 @@ public class FileListAdapter extends BaseAdapter {
 				break;
 			case Item.UP:
 				cache.name.setText(item.getName());
+				cache.icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.up));
 				break;
 		}
 		
