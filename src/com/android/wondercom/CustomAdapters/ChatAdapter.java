@@ -105,6 +105,7 @@ public class ChatAdapter extends BaseAdapter {
          ***********************************************/
 		else if(type == Message.IMAGE_MESSAGE){
 			if(!mes.getmText().equals("")){
+				cache.text.setVisibility(View.VISIBLE);
 				cache.text.setText(mes.getmText());
 			}
 			cache.image.setVisibility(View.VISIBLE);
@@ -133,6 +134,7 @@ public class ChatAdapter extends BaseAdapter {
          ***********************************************/
 		else if(type == Message.AUDIO_MESSAGE){
 			if(!mes.getmText().equals("")){
+				cache.text.setVisibility(View.VISIBLE);
 				cache.text.setText(mes.getmText());
 			}
 			cache.audioPlayer.setVisibility(View.VISIBLE);
@@ -174,6 +176,7 @@ public class ChatAdapter extends BaseAdapter {
          ***********************************************/
 		else if(type == Message.VIDEO_MESSAGE){
 			if(!mes.getmText().equals("")){
+				cache.text.setVisibility(View.VISIBLE);
 				cache.text.setText(mes.getmText());
 			}
 			cache.videoPlayer.setVisibility(View.VISIBLE);
