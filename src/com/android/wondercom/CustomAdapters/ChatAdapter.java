@@ -2,10 +2,12 @@ package com.android.wondercom.CustomAdapters;
 
 import java.io.IOException;
 import java.util.List;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +67,7 @@ public class ChatAdapter extends BaseAdapter {
             cache.text = (TextView) view.findViewById(R.id.text);
             cache.image = (ImageView) view.findViewById(R.id.image);
             cache.relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
-            cache.audioPlayer = (Button) view.findViewById(R.id.playAudio);
+            cache.audioPlayer = (ImageView) view.findViewById(R.id.playAudio);
             cache.videoPlayer = (Button) view.findViewById(R.id.playVideo);
             cache.fileSaved = (TextView) view.findViewById(R.id.fileSaved);
 	            
@@ -136,13 +138,27 @@ public class ChatAdapter extends BaseAdapter {
 			cache.audioPlayer.setOnClickListener(new OnClickListener() {
 				
 				@Override
-				public void onClick(View v) {
+				public void onClick(final View v) {
 					MediaPlayer mPlayer = new MediaPlayer();
 					Message mes = listMessage.get((Integer) v.getTag());
-			        try {
+			        try {			        	
 			            mPlayer.setDataSource(mes.getFilePath());
 			            mPlayer.prepare();
 			            mPlayer.start();
+			            
+			            //Disable the button when the audio is playing
+			            v.setEnabled(false);
+			            ((ImageView)v).setImageDrawable(mContext.getResources().getDrawable(R.drawable.play_audio_in_progress));
+			            
+			            mPlayer.setOnCompletionListener(new OnCompletionListener() {
+							
+							@Override
+							public void onCompletion(MediaPlayer mp) {
+								//Re-enable the button when the audio has finished playing
+								v.setEnabled(true);
+								((ImageView)v).setImageDrawable(mContext.getResources().getDrawable(R.drawable.play_audio));
+							}
+						});
 			        } catch (IOException e) {
 			            e.printStackTrace();
 			        }
@@ -199,7 +215,7 @@ public class ChatAdapter extends BaseAdapter {
 		public TextView text;
 		public ImageView image;
 		public RelativeLayout relativeLayout;
-		public Button audioPlayer;
+		public ImageView audioPlayer;
 		public Button videoPlayer;
 		public TextView fileSaved;
 	}

@@ -260,7 +260,9 @@ int drawable microphone_start 0x7f02005f
 int drawable microphone_stop 0x7f020060
 int drawable ok 0x7f020061
 int drawable play 0x7f020062
-int drawable up 0x7f020063
+int drawable play_audio 0x7f020063
+int drawable play_audio_in_progress 0x7f020064
+int drawable up 0x7f020065
 int id action_bar 0x7f05001c
 int id action_bar_activity_content 0x7f050015
 int id action_bar_container 0x7f05001b

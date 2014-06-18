@@ -40,25 +40,29 @@
 	        android:layout_marginTop="10dp"
 	        android:longClickable="true" />
 	    
-	    <Button
+	    <ImageView
 	        android:id="@+id/playAudio"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="@string/playback_button"
-	        android:layout_below="@id/image" />
+	        android:contentDescription="@string/playback_button"
+	        android:layout_below="@id/image"
+	        android:src="@drawable/play_audio"
+	        android:longClickable="true" />
 	    
 	    <Button 
 	        android:id="@+id/playVideo"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/playback_button"
-	        android:layout_below="@id/playAudio" />
+	        android:layout_below="@id/playAudio"
+	        android:longClickable="true" />
 	    
 	    <TextView 
 	        android:id="@+id/fileSaved"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/playVideo" />
+	        android:layout_below="@id/playVideo"
+	        android:longClickable="true" />
     
     </RelativeLayout>   
     

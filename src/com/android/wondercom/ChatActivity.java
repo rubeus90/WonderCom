@@ -211,11 +211,13 @@ public class ChatActivity extends Activity {
 				MediaFile audioFile = new MediaFile(this, fileURL, Message.AUDIO_MESSAGE);
 				mes.setByteArray(audioFile.fileToByteArray());
 				mes.setFileName(audioFile.getFileName());
+				mes.setFilePath(audioFile.getFilePath());
 				break;
 			case Message.VIDEO_MESSAGE:
 				MediaFile videoFile = new MediaFile(this, fileURL, Message.AUDIO_MESSAGE);
 				mes.setByteArray(videoFile.fileToByteArray());
 				mes.setFileName(videoFile.getFileName());
+				mes.setFilePath(videoFile.getFilePath());
 				break;
 			case Message.FILE_MESSAGE:
 				MediaFile file = new MediaFile(this, fileURL, Message.FILE_MESSAGE);
@@ -344,13 +346,14 @@ public class ChatActivity extends Activity {
         
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         Message mes = listMessage.get((int) info.position);
+        
+        //Option to delete message independently of its type
+        menu.add(0, DELETE_MESSAGE, Menu.NONE, "Delete message");
+        
         int type = mes.getmType();
         switch(type){
         	case Message.IMAGE_MESSAGE:
         		menu.add(0, DOWNLOAD_IMAGE, Menu.NONE, "Download image");
-        		break;
-        	case Message.TEXT_MESSAGE:
-        		menu.add(0, DELETE_MESSAGE, Menu.NONE, "Delete message");
         		break;
         }
     }
