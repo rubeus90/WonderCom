@@ -67,6 +67,7 @@ public class ChatAdapter extends BaseAdapter {
             cache.relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
             cache.audioPlayer = (Button) view.findViewById(R.id.playAudio);
             cache.videoPlayer = (Button) view.findViewById(R.id.playVideo);
+            cache.fileSaved = (TextView) view.findViewById(R.id.fileSaved);
 	            
 			view.setTag(cache);
 		}
@@ -170,6 +171,16 @@ public class ChatAdapter extends BaseAdapter {
 				}
 			});
 		}
+		else if(type == Message.FILE_MESSAGE){
+			if(!mes.getmText().equals("")){
+				cache.text.setText(mes.getmText());
+			}
+			cache.fileSaved.setVisibility(View.VISIBLE);
+			if(mes.isMine())
+				cache.fileSaved.setText("File \"" + mes.getFileName() + "\" is sent succesfully");
+			else
+				cache.fileSaved.setText("File \"" + mes.getFileName() + "\" is saved succesfully in " + mes.getFilePath());
+		}
         
 		return view;
 	}
@@ -179,6 +190,7 @@ public class ChatAdapter extends BaseAdapter {
 		cache.image.setVisibility(View.GONE);
 		cache.audioPlayer.setVisibility(View.GONE);
 		cache.videoPlayer.setVisibility(View.GONE);
+		cache.fileSaved.setVisibility(View.GONE);
 	}
 
 	//Cache
@@ -189,5 +201,6 @@ public class ChatAdapter extends BaseAdapter {
 		public RelativeLayout relativeLayout;
 		public Button audioPlayer;
 		public Button videoPlayer;
+		public TextView fileSaved;
 	}
 }

@@ -183,6 +183,12 @@ public class ChatActivity extends Activity {
 					sendMessage(Message.VIDEO_MESSAGE);
 				}
 				break;
+			case CHOOSE_FILE:
+				if (resultCode == RESULT_OK) {
+					fileURL = (String) data.getStringExtra("filePath");
+					sendMessage(Message.FILE_MESSAGE);
+				}
+				break;
 		}
 	}
 	
@@ -205,13 +211,20 @@ public class ChatActivity extends Activity {
 				MediaFile audioFile = new MediaFile(this, fileURL, Message.AUDIO_MESSAGE);
 				mes.setByteArray(audioFile.fileToByteArray());
 				mes.setFileName(audioFile.getFileName());
-				mes.setFilePath(audioFile.getFilePath());
+//				mes.setFilePath(audioFile.getFilePath());
 				break;
 			case Message.VIDEO_MESSAGE:
 				MediaFile videoFile = new MediaFile(this, fileURL, Message.AUDIO_MESSAGE);
 				mes.setByteArray(videoFile.fileToByteArray());
 				mes.setFileName(videoFile.getFileName());
-				mes.setFilePath(videoFile.getFilePath());
+//				mes.setFilePath(videoFile.getFilePath());
+				break;
+			case Message.FILE_MESSAGE:
+				MediaFile file = new MediaFile(this, fileURL, Message.FILE_MESSAGE);
+				mes.setByteArray(file.fileToByteArray());
+				mes.setFileName(file.getFileName());
+//				mes.setFilePath(file.getFilePath());
+				break;
 		}		
 		Log.v(TAG, "Message object hydrated");
 		

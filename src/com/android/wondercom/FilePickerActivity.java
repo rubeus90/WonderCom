@@ -3,8 +3,6 @@ package com.android.wondercom;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,10 +48,11 @@ public class FilePickerActivity extends ListActivity{
 			//Is a directory
 			if(f.isDirectory()){
 				File[] innerFiles = f.listFiles();
-				int numItems = 0;
-				for(File innerF : innerFiles){
-					numItems++;
-				}
+				int numItems;
+				if(innerFiles!=null)
+					numItems = innerFiles.length;
+				else
+					numItems = 0;
 				
 				Item item = new Item(Item.DIRECTORY, f.getName(), numItems, f.getAbsolutePath());
 				directories.add(item);
