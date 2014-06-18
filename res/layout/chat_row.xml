@@ -53,7 +53,8 @@
 	        android:id="@+id/videoMessage"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/playAudio">
+	        android:layout_below="@id/playAudio"
+	        android:layout_marginTop="10dp">
 	        
 	        <com.android.wondercom.CustomViews.DynamicImageView 
 		        android:id="@+id/playVideo"

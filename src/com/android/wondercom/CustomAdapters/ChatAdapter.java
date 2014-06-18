@@ -71,6 +71,7 @@ public class ChatAdapter extends BaseAdapter {
             cache.audioPlayer = (ImageView) view.findViewById(R.id.playAudio);
             cache.videoPlayer = (ImageView) view.findViewById(R.id.playVideo);
             cache.fileSaved = (TextView) view.findViewById(R.id.fileSaved);
+            cache.videoPlayerButton = (ImageView) view.findViewById(R.id.buttonPlayVideo);
 	            
 			view.setTag(cache);
 		}
@@ -176,6 +177,7 @@ public class ChatAdapter extends BaseAdapter {
 				cache.text.setText(mes.getmText());
 			}
 			cache.videoPlayer.setVisibility(View.VISIBLE);
+			cache.videoPlayerButton.setVisibility(View.VISIBLE);
 			cache.videoPlayer.setImageBitmap(ThumbnailUtils.createVideoThumbnail(mes.getFilePath(), Thumbnails.MINI_KIND));
 			cache.videoPlayer.setTag(position);
 			cache.videoPlayer.setOnClickListener(new OnClickListener() {
@@ -209,6 +211,7 @@ public class ChatAdapter extends BaseAdapter {
 		cache.audioPlayer.setVisibility(View.GONE);
 		cache.videoPlayer.setVisibility(View.GONE);
 		cache.fileSaved.setVisibility(View.GONE);
+		cache.videoPlayerButton.setVisibility(View.GONE);
 	}
 
 	//Cache
@@ -219,6 +222,7 @@ public class ChatAdapter extends BaseAdapter {
 		public RelativeLayout relativeLayout;
 		public ImageView audioPlayer;
 		public ImageView videoPlayer;
+		public ImageView videoPlayerButton;
 		public TextView fileSaved;
 	}
 }

@@ -15,6 +15,8 @@ public class PlayVideoActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play_video);
 		
+		getActionBar().hide();
+		
 		Intent intent = getIntent();
 		String filePath = (String) intent.getStringExtra("filePath");
 		System.out.println("PlayVideoActivity   " + filePath);
@@ -22,5 +24,7 @@ public class PlayVideoActivity extends Activity {
 		videoPlayer = (VideoView) findViewById(R.id.videoPlayer);
 		videoPlayer.setVideoPath(filePath);
 		videoPlayer.setMediaController(new MediaController(this));
+		
+		videoPlayer.start();
 	}
 }
