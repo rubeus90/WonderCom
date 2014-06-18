@@ -3,6 +3,7 @@ package com.android.wondercom;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -95,5 +96,16 @@ public class FilePickerActivity extends ListActivity{
 		intent.putExtra("filePath", item.getAbsolutePath());
 		setResult(RESULT_OK, intent);
 		finish();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		if(!currentDir.getName().equals(rootDirPath)){
+			fillDirectory(currentDir.getParentFile());
+			currentDir = currentDir.getParentFile();
+		}
+		else{
+			finish();
+		}
 	}
 }

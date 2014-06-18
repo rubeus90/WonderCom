@@ -211,19 +211,16 @@ public class ChatActivity extends Activity {
 				MediaFile audioFile = new MediaFile(this, fileURL, Message.AUDIO_MESSAGE);
 				mes.setByteArray(audioFile.fileToByteArray());
 				mes.setFileName(audioFile.getFileName());
-//				mes.setFilePath(audioFile.getFilePath());
 				break;
 			case Message.VIDEO_MESSAGE:
 				MediaFile videoFile = new MediaFile(this, fileURL, Message.AUDIO_MESSAGE);
 				mes.setByteArray(videoFile.fileToByteArray());
 				mes.setFileName(videoFile.getFileName());
-//				mes.setFilePath(videoFile.getFilePath());
 				break;
 			case Message.FILE_MESSAGE:
 				MediaFile file = new MediaFile(this, fileURL, Message.FILE_MESSAGE);
 				mes.setByteArray(file.fileToByteArray());
 				mes.setFileName(file.getFileName());
-//				mes.setFilePath(file.getFilePath());
 				break;
 		}		
 		Log.v(TAG, "Message object hydrated");
@@ -246,29 +243,6 @@ public class ChatActivity extends Activity {
 		Log.v(TAG, "Refresh message list starts");
 		
 		message.setMine(isMine);
-		
-//		HashMap<String, Object> map = new HashMap<String, Object>();
-//		map.put("type", message.getmType());
-//		map.put("chatName", message.getChatName());
-//		map.put("isMine", isMine);
-//		map.put("text", message.getmText());	
-//		
-//		
-//		
-//		if(message.getmType() == Message.IMAGE_MESSAGE){
-//			map.put("fileName", message.getFileName());
-//			map.put("fileSize", message.getFileSize());
-//			map.put("image", message.byteArrayToBitmap(message.getByteArray()));
-//			Log.v(TAG, "Set image to listMessage ok ");
-//		}
-//		else if(message.getmType() == Message.AUDIO_MESSAGE){
-//			map.put("filePath", message.getFilePath());
-//			map.put("fileName", message.getFileName());
-//		}
-//		else if(message.getmType() == Message.VIDEO_MESSAGE){
-//			map.put("filePath", message.getFilePath());
-//			map.put("fileName", message.getFileName());
-//		}
 		
 		listMessage.add(message);
     	chatAdapter.notifyDataSetChanged();

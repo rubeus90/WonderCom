@@ -59,16 +59,22 @@ public class FileListAdapter extends BaseAdapter {
 		
 		//Retrive the items from cache
         CacheView cache = (CacheView) view.getTag();
-        cache.icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher));
         
 		switch(item.getTypeItem()){
 			case Item.DIRECTORY:
 				cache.name.setText(item.getName());
 				cache.details.setText(item.getNumItems() + " item(s)");
+				if(item.getNumItems() > 0){
+					cache.icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.folder_full));
+				}
+				else{
+					cache.icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.folder_emtpy));
+				}
 				break;
 			case Item.FILE:	
 				cache.name.setText(item.getName());
 				cache.details.setText(item.getSize() + " bytes");
+				cache.icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.file));
 				break;
 			case Item.UP:
 				cache.name.setText(item.getName());
@@ -79,9 +85,9 @@ public class FileListAdapter extends BaseAdapter {
 	}
 
 	//Cache
-		private static class CacheView{
-			public TextView name;
-			public ImageView icon;
-			public TextView details;
-		}
+	private static class CacheView{
+		public TextView name;
+		public ImageView icon;
+		public TextView details;
+	}
 }
