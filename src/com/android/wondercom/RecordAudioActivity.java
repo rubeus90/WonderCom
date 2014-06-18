@@ -12,7 +12,6 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 
 public class RecordAudioActivity extends Activity {

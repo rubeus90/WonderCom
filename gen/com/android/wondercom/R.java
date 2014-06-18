@@ -1113,7 +1113,8 @@ containing a value of this type.
         public static final int play=0x7f020062;
         public static final int play_audio=0x7f020063;
         public static final int play_audio_in_progress=0x7f020064;
-        public static final int up=0x7f020065;
+        public static final int play_video_button=0x7f020065;
+        public static final int up=0x7f020066;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -1131,6 +1132,7 @@ containing a value of this type.
         public static final int always=0x7f05000b;
         public static final int back_button=0x7f05004b;
         public static final int beginning=0x7f050011;
+        public static final int buttonPlayVideo=0x7f050052;
         public static final int chatName=0x7f05004d;
         public static final int checkbox=0x7f05002d;
         public static final int collapseActionView=0x7f05000d;
@@ -1138,17 +1140,17 @@ containing a value of this type.
         public static final int default_activity_button=0x7f050028;
         public static final int dialog=0x7f05000e;
         public static final int disableHome=0x7f050008;
-        public static final int disconnect=0x7f05005a;
+        public static final int disconnect=0x7f05005c;
         public static final int dropdown=0x7f05000f;
         public static final int editMessage=0x7f05003e;
         public static final int edit_query=0x7f050030;
         public static final int end=0x7f050013;
         public static final int expand_activities_button=0x7f050026;
         public static final int expanded_menu=0x7f05002c;
-        public static final int fileSaved=0x7f050051;
-        public static final int file_details=0x7f050055;
-        public static final int file_icon=0x7f050053;
-        public static final int file_name=0x7f050054;
+        public static final int fileSaved=0x7f050053;
+        public static final int file_details=0x7f050057;
+        public static final int file_icon=0x7f050055;
+        public static final int file_name=0x7f050056;
         public static final int fullscreen_content=0x7f050049;
         public static final int fullscreen_content_controls=0x7f05004a;
         public static final int goToChat=0x7f050044;
@@ -1166,9 +1168,9 @@ containing a value of this type.
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
         public static final int ok=0x7f050048;
-        public static final int pick_image=0x7f05005b;
+        public static final int pick_image=0x7f05005d;
         public static final int playAudio=0x7f05004f;
-        public static final int playVideo=0x7f050050;
+        public static final int playVideo=0x7f050051;
         public static final int play_audio=0x7f050047;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
@@ -1186,10 +1188,10 @@ containing a value of this type.
         public static final int search_src_text=0x7f050037;
         public static final int search_voice_btn=0x7f05003b;
         public static final int sendMessage=0x7f05003f;
-        public static final int send_audio=0x7f050057;
-        public static final int send_file=0x7f050059;
-        public static final int send_image=0x7f050056;
-        public static final int send_video=0x7f050058;
+        public static final int send_audio=0x7f050059;
+        public static final int send_file=0x7f05005b;
+        public static final int send_image=0x7f050058;
+        public static final int send_video=0x7f05005a;
         public static final int setChatName=0x7f050042;
         public static final int setChatNameLabel=0x7f050041;
         public static final int shortcut=0x7f05002e;
@@ -1199,13 +1201,14 @@ containing a value of this type.
         public static final int split_action_bar=0x7f05001e;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
-        public static final int take_photo=0x7f05005c;
+        public static final int take_photo=0x7f05005e;
         public static final int text=0x7f05004e;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
-        public static final int underline=0x7f050052;
+        public static final int underline=0x7f050054;
         public static final int up=0x7f050021;
         public static final int useLogo=0x7f050003;
+        public static final int videoMessage=0x7f050050;
         public static final int videoPlayer=0x7f050045;
         public static final int withText=0x7f05000c;
         public static final int writeZone=0x7f05003d;

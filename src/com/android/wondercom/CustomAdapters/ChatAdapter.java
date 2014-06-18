@@ -8,13 +8,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.media.ThumbnailUtils;
+import android.provider.MediaStore.Images.Thumbnails;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -68,7 +69,7 @@ public class ChatAdapter extends BaseAdapter {
             cache.image = (ImageView) view.findViewById(R.id.image);
             cache.relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
             cache.audioPlayer = (ImageView) view.findViewById(R.id.playAudio);
-            cache.videoPlayer = (Button) view.findViewById(R.id.playVideo);
+            cache.videoPlayer = (ImageView) view.findViewById(R.id.playVideo);
             cache.fileSaved = (TextView) view.findViewById(R.id.fileSaved);
 	            
 			view.setTag(cache);
@@ -175,6 +176,7 @@ public class ChatAdapter extends BaseAdapter {
 				cache.text.setText(mes.getmText());
 			}
 			cache.videoPlayer.setVisibility(View.VISIBLE);
+			cache.videoPlayer.setImageBitmap(ThumbnailUtils.createVideoThumbnail(mes.getFilePath(), Thumbnails.MINI_KIND));
 			cache.videoPlayer.setTag(position);
 			cache.videoPlayer.setOnClickListener(new OnClickListener() {
 				
@@ -216,7 +218,7 @@ public class ChatAdapter extends BaseAdapter {
 		public ImageView image;
 		public RelativeLayout relativeLayout;
 		public ImageView audioPlayer;
-		public Button videoPlayer;
+		public ImageView videoPlayer;
 		public TextView fileSaved;
 	}
 }

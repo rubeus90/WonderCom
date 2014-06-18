@@ -49,19 +49,36 @@
 	        android:src="@drawable/play_audio"
 	        android:longClickable="true" />
 	    
-	    <Button 
-	        android:id="@+id/playVideo"
+	    <RelativeLayout 
+	        android:id="@+id/videoMessage"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="@string/playback_button"
-	        android:layout_below="@id/playAudio"
-	        android:longClickable="true" />
+	        android:layout_below="@id/playAudio">
+	        
+	        <com.android.wondercom.CustomViews.DynamicImageView 
+		        android:id="@+id/playVideo"
+		        android:layout_width="180dp"
+		        android:layout_height="wrap_content"
+		        android:scaleType="fitCenter"
+		        android:contentDescription="@string/playback_button"	        
+		        android:longClickable="true" />
+	        
+	        <ImageView 
+	            android:id="@+id/buttonPlayVideo"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerInParent="true"
+	            android:src="@drawable/play_video_button"
+	            android:contentDescription="@string/playback_button"/>
+	        
+	    </RelativeLayout>
+	    
 	    
 	    <TextView 
 	        android:id="@+id/fileSaved"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/playVideo"
+	        android:layout_below="@id/videoMessage"
 	        android:longClickable="true" />
     
     </RelativeLayout>   
