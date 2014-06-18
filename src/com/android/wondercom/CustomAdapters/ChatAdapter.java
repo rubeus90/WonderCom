@@ -1,9 +1,7 @@
 package com.android.wondercom.CustomAdapters;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,12 +23,12 @@ import com.android.wondercom.ViewImageActivity;
 import com.android.wondercom.Entities.Message;
 
 public class ChatAdapter extends BaseAdapter {
-	private List<HashMap<String,Object>> listMessage;
+	private List<Message> listMessage;
 	private LayoutInflater inflater;
 	public static Bitmap bitmap;
 	private Context mContext;
 
-	public ChatAdapter(Context context, List<HashMap<String, Object>> listMessage){
+	public ChatAdapter(Context context, List<Message> listMessage){
 		this.listMessage = listMessage;
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mContext = context;
@@ -56,7 +54,8 @@ public class ChatAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
 		
-		int type = (Integer) listMessage.get(position).get("type");
+		Message mes = listMessage.get(position);
+		int type = mes.getmType();
 		
 		if(view == null){
 			CacheView cache = new CacheView();            
@@ -74,10 +73,10 @@ public class ChatAdapter extends BaseAdapter {
 		
 		//Retrive the items from cache
         CacheView cache = (CacheView) view.getTag();
-        cache.chatName.setText((String)listMessage.get(position).get("chatName"));
+        cache.chatName.setText(listMessage.get(position).getChatName());
         
         //Colourise differently own message
-        if((Boolean) listMessage.get(position).get("isMine")){
+        if((Boolean) listMessage.get(position).isMine()){
         	cache.relativeLayout.setBackground(view.getResources().getDrawable(R.drawable.chat_bubble_mine));
         }   
         else{
@@ -92,7 +91,7 @@ public class ChatAdapter extends BaseAdapter {
          ***********************************************/
         if(type == Message.TEXT_MESSAGE){           	
         	cache.text.setVisibility(View.VISIBLE);
-            cache.text.setText((String)listMessage.get(position).get("text"));
+            cache.text.setText(mes.getmText());
             Linkify.addLinks(cache.text, Linkify.ALL);
 		}
         
@@ -100,22 +99,23 @@ public class ChatAdapter extends BaseAdapter {
 			            Image Message
          ***********************************************/
 		else if(type == Message.IMAGE_MESSAGE){
-			if(!listMessage.get(position).get("text").equals("")){
-				cache.text.setText((String)listMessage.get(position).get("text"));
+			if(!mes.getmText().equals("")){
+				cache.text.setText(mes.getmText());
 			}
 			cache.image.setVisibility(View.VISIBLE);
-			cache.image.setImageBitmap((Bitmap) listMessage.get(position).get("image"));
+			
+			cache.image.setImageBitmap(mes.byteArrayToBitmap(mes.getByteArray()));
 			cache.image.setTag(position);
 			
 			cache.image.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					bitmap = (Bitmap) listMessage.get((Integer) v.getTag()).get("image");
+					Message mes = listMessage.get((Integer) v.getTag());
+					bitmap = mes.byteArrayToBitmap(mes.getByteArray());
 					
 					Intent intent = new Intent(mContext, ViewImageActivity.class);
-					//Send file name and file size
-					String fileName = (String) listMessage.get((Integer) v.getTag()).get("fileName");
+					String fileName = mes.getFileName();
 					intent.putExtra("fileName", fileName);
 					
 					mContext.startActivity(intent);
@@ -127,8 +127,8 @@ public class ChatAdapter extends BaseAdapter {
         				Audio Message
          ***********************************************/
 		else if(type == Message.AUDIO_MESSAGE){
-			if(!listMessage.get(position).get("text").equals("")){
-				cache.text.setText((String)listMessage.get(position).get("text"));
+			if(!mes.getmText().equals("")){
+				cache.text.setText(mes.getmText());
 			}
 			cache.audioPlayer.setVisibility(View.VISIBLE);
 			cache.audioPlayer.setTag(position);
@@ -137,8 +137,9 @@ public class ChatAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 					MediaPlayer mPlayer = new MediaPlayer();
+					Message mes = listMessage.get((Integer) v.getTag());
 			        try {
-			            mPlayer.setDataSource((String) listMessage.get((Integer) v.getTag()).get("filePath"));
+			            mPlayer.setDataSource(mes.getFilePath());
 			            mPlayer.prepare();
 			            mPlayer.start();
 			        } catch (IOException e) {
@@ -153,8 +154,8 @@ public class ChatAdapter extends BaseAdapter {
         				Video Message
          ***********************************************/
 		else if(type == Message.VIDEO_MESSAGE){
-			if(!listMessage.get(position).get("text").equals("")){
-				cache.text.setText((String)listMessage.get(position).get("text"));
+			if(!mes.getmText().equals("")){
+				cache.text.setText(mes.getmText());
 			}
 			cache.videoPlayer.setVisibility(View.VISIBLE);
 			cache.videoPlayer.setTag(position);
@@ -162,8 +163,9 @@ public class ChatAdapter extends BaseAdapter {
 				
 				@Override
 				public void onClick(View v) {
+					Message mes = listMessage.get((Integer) v.getTag());
 					Intent intent = new Intent(mContext, PlayVideoActivity.class);
-					intent.putExtra("filePath", (String) listMessage.get((Integer) v.getTag()).get("filePath"));
+					intent.putExtra("filePath", mes.getFilePath());
 					mContext.startActivity(intent);
 				}
 			});

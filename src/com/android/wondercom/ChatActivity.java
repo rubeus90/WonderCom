@@ -1,9 +1,7 @@
 package com.android.wondercom;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -31,8 +29,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 import android.widget.PopupMenu.OnMenuItemClickListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.wondercom.AsyncTasks.SendMessageClient;
@@ -59,7 +57,7 @@ public class ChatActivity extends Activity {
 	private IntentFilter mIntentFilter;
 	private EditText edit;
 	private static ListView listView;
-	private static List<HashMap<String, Object>> listMessage;
+	private static List<Message> listMessage;
 	private static ChatAdapter chatAdapter;
 	private Uri fileUri;
 	private String fileURL;
@@ -86,7 +84,7 @@ public class ChatActivity extends Activity {
         
         //Initialize the adapter for the chat
         listView = (ListView) findViewById(R.id.messageList);
-        listMessage = new ArrayList<HashMap<String, Object>>();
+        listMessage = new ArrayList<Message>();
         chatAdapter = new ChatAdapter(this, listMessage);
         listView.setAdapter(chatAdapter);
         
@@ -234,28 +232,32 @@ public class ChatActivity extends Activity {
 	public static void refreshList(Message message, boolean isMine){
 		Log.v(TAG, "Refresh message list starts");
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("type", message.getmType());
-		map.put("chatName", message.getChatName());
-		map.put("isMine", isMine);
-		map.put("text", message.getmText());	
+		message.setMine(isMine);
 		
-		if(message.getmType() == Message.IMAGE_MESSAGE){
-			map.put("fileName", message.getFileName());
-			map.put("fileSize", message.getFileSize());
-			map.put("image", message.byteArrayToBitmap(message.getByteArray()));
-			Log.v(TAG, "Set image to listMessage ok ");
-		}
-		else if(message.getmType() == Message.AUDIO_MESSAGE){
-			map.put("filePath", message.getFilePath());
-			map.put("fileName", message.getFileName());
-		}
-		else if(message.getmType() == Message.VIDEO_MESSAGE){
-			map.put("filePath", message.getFilePath());
-			map.put("fileName", message.getFileName());
-		}
+//		HashMap<String, Object> map = new HashMap<String, Object>();
+//		map.put("type", message.getmType());
+//		map.put("chatName", message.getChatName());
+//		map.put("isMine", isMine);
+//		map.put("text", message.getmText());	
+//		
+//		
+//		
+//		if(message.getmType() == Message.IMAGE_MESSAGE){
+//			map.put("fileName", message.getFileName());
+//			map.put("fileSize", message.getFileSize());
+//			map.put("image", message.byteArrayToBitmap(message.getByteArray()));
+//			Log.v(TAG, "Set image to listMessage ok ");
+//		}
+//		else if(message.getmType() == Message.AUDIO_MESSAGE){
+//			map.put("filePath", message.getFilePath());
+//			map.put("fileName", message.getFileName());
+//		}
+//		else if(message.getmType() == Message.VIDEO_MESSAGE){
+//			map.put("filePath", message.getFilePath());
+//			map.put("fileName", message.getFileName());
+//		}
 		
-		listMessage.add(map);
+		listMessage.add(message);
     	chatAdapter.notifyDataSetChanged();
     	
     	Log.v(TAG, "Chat Adapter notified of the changes");
@@ -354,8 +356,8 @@ public class ChatActivity extends Activity {
         menu.setHeaderTitle("Options");
         
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-        HashMap<String,Object> hash = listMessage.get((int) info.position);
-        int type = (Integer) hash.get("type");
+        Message mes = listMessage.get((int) info.position);
+        int type = mes.getmType();
         switch(type){
         	case Message.IMAGE_MESSAGE:
         		menu.add(0, DOWNLOAD_IMAGE, Menu.NONE, "Download image");
@@ -386,9 +388,9 @@ public class ChatActivity extends Activity {
     
     //Download image and save it to the camera directory
     public void downloadImage(long id){
-    	HashMap<String,Object> hash = listMessage.get((int) id);
-    	MediaStore.Images.Media.insertImage(getContentResolver(), (Bitmap) hash.get("image") ,
-    		    (String) hash.get("fileName"), (String) hash.get("fileName"));
+    	Message mes = listMessage.get((int) id);
+    	Bitmap bm = mes.byteArrayToBitmap(mes.getByteArray());
+    	MediaStore.Images.Media.insertImage(getContentResolver(), bm , mes.getFileName(), mes.getFileName());
     }
     
     //Delete a message from the message list (doesn't delete on other phones)

@@ -28,6 +28,7 @@ public class Message implements Serializable{
 	private String fileName;
 	private long fileSize;
 	private String filePath;
+	private boolean isMine;
 	
 	//Getters and Setters
 	public int getmType() { return mType; }
@@ -46,6 +47,8 @@ public class Message implements Serializable{
 	public void setFileSize(long fileSize) { this.fileSize = fileSize; }
 	public String getFilePath() { return filePath; }
 	public void setFilePath(String filePath) { this.filePath = filePath; }
+	public boolean isMine() { return isMine; }
+	public void setMine(boolean isMine) { this.isMine = isMine; }
 	
 	
 	
