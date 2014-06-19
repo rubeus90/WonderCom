@@ -20,7 +20,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-public class SendMessageServer extends AsyncTask<Message, Void, Message>{
+public class SendMessageServer extends AsyncTask<Message, Message, Message>{
 	private static final String TAG = "SendMessageServer";
 	private Context mContext;
 	private static final int SERVER_PORT = 4446;
@@ -35,6 +35,10 @@ public class SendMessageServer extends AsyncTask<Message, Void, Message>{
 	protected Message doInBackground(Message... msg) {
 		Log.v(TAG, "doInBackground");
 		
+		//Display le message on the sender before sending it
+		publishProgress(msg);
+		
+		//Send the message to clients
 		try {			
 			ArrayList<InetAddress> listClients = ServerInit.clients;
 			for(InetAddress addr : listClients){
@@ -67,14 +71,19 @@ public class SendMessageServer extends AsyncTask<Message, Void, Message>{
 	}
 
 	@Override
+	protected void onProgressUpdate(Message... values) {
+		super.onProgressUpdate(values);
+		
+		if(isActivityRunning(MainActivity.class)){
+			ChatActivity.refreshList(values[0], isMine);
+		}
+	}
+
+	@Override
 	protected void onPostExecute(Message result) {
 		Log.v(TAG, "onPostExecute");
 		super.onPostExecute(result);
-		Toast.makeText(mContext, "Message sent", Toast.LENGTH_SHORT).show();
-		
-		if(isActivityRunning(MainActivity.class)){
-			ChatActivity.refreshList(result, isMine);
-		}			
+		Toast.makeText(mContext, "Message sent", Toast.LENGTH_SHORT).show();	
 	}
 	
 	@SuppressWarnings("rawtypes")

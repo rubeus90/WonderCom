@@ -1,5 +1,6 @@
 package com.android.wondercom.AsyncTasks;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -31,8 +32,9 @@ public class ReceiveMessageClient extends AbstractReceiver {
 			while(true){
 				Socket destinationSocket = socket.accept();
 				
-				InputStream inputStream = destinationSocket.getInputStream();				
-				ObjectInputStream objectIS = new ObjectInputStream(inputStream);
+				InputStream inputStream = destinationSocket.getInputStream();
+				BufferedInputStream buffer = new BufferedInputStream(inputStream);
+				ObjectInputStream objectIS = new ObjectInputStream(buffer);
 				Message message = (Message) objectIS.readObject();
 				
 				destinationSocket.close();

@@ -16,7 +16,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-public class SendMessageClient extends AsyncTask<Message, Void, Message>{
+public class SendMessageClient extends AsyncTask<Message, Message, Message>{
 	private static final String TAG = "SendMessageClient";
 	private Context mContext;
 	private static final int SERVER_PORT = 4445;
@@ -30,6 +30,11 @@ public class SendMessageClient extends AsyncTask<Message, Void, Message>{
 	@Override
 	protected Message doInBackground(Message... msg) {
 		Log.v(TAG, "doInBackground");
+		
+		//Display le message on the sender before sending it
+		publishProgress(msg);
+		
+		//Send the message
 		Socket socket = new Socket();
 		try {
 			socket.setReuseAddress(true);
@@ -60,14 +65,19 @@ public class SendMessageClient extends AsyncTask<Message, Void, Message>{
 	}
 
 	@Override
+	protected void onProgressUpdate(Message... msg) {
+		super.onProgressUpdate(msg);
+		
+		if(isActivityRunning(MainActivity.class)){
+			ChatActivity.refreshList(msg[0], true);
+		}
+	}
+
+	@Override
 	protected void onPostExecute(Message result) {
 		Log.v(TAG, "onPostExecute");
 		super.onPostExecute(result);
 		Toast.makeText(mContext, "Message sent", Toast.LENGTH_SHORT).show();
-		
-		if(isActivityRunning(MainActivity.class)){
-			ChatActivity.refreshList(result, true);
-		}		
 	}
 	
 	@SuppressWarnings("rawtypes")
