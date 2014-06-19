@@ -1,7 +1,13 @@
 package com.android.wondercom;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +21,7 @@ import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -380,7 +387,22 @@ public class ChatActivity extends Activity {
     public void downloadImage(long id){
     	Message mes = listMessage.get((int) id);
     	Bitmap bm = mes.byteArrayToBitmap(mes.getByteArray());
-    	MediaStore.Images.Media.insertImage(getContentResolver(), bm , mes.getFileName(), mes.getFileName());
+//    	MediaStore.Images.Media.insertImage(getContentResolver(), bm , mes.getFileName(), mes.getFileName());
+    	
+    	
+    	String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+    	OutputStream fOut = null;
+    	File file = new File(path, mes.getFileName());
+    	try {
+			fOut = new FileOutputStream(file);
+			bm.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+	    	fOut.flush();
+	    	fOut.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
     //Delete a message from the message list (doesn't delete on other phones)

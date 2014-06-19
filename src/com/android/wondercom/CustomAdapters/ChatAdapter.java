@@ -113,11 +113,11 @@ public class ChatAdapter extends BaseAdapter {
 			}
 			cache.image.setVisibility(View.VISIBLE);
 			
-			if(!mapThumb.containsKey(mes.getFilePath())){
+			if(!mapThumb.containsKey(mes.getFileName())){
 				Bitmap thumb = mes.byteArrayToBitmap(mes.getByteArray());
-				mapThumb.put(mes.getFilePath(), thumb);				
+				mapThumb.put(mes.getFileName(), thumb);				
 			}
-			cache.image.setImageBitmap(mapThumb.get(mes.getFilePath()));
+			cache.image.setImageBitmap(mapThumb.get(mes.getFileName()));
 			cache.image.setTag(position);
 			
 			cache.image.setOnClickListener(new OnClickListener() {
