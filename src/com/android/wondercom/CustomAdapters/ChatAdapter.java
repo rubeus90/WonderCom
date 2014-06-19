@@ -1,6 +1,7 @@
 package com.android.wondercom.CustomAdapters;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -30,11 +31,13 @@ public class ChatAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	public static Bitmap bitmap;
 	private Context mContext;
+	private HashMap<String,Bitmap> mapThumb;
 
 	public ChatAdapter(Context context, List<Message> listMessage){
 		this.listMessage = listMessage;
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mContext = context;
+		mapThumb = new HashMap<String, Bitmap>();
 	}
 	
 	@Override
@@ -181,7 +184,14 @@ public class ChatAdapter extends BaseAdapter {
 			}
 			cache.videoPlayer.setVisibility(View.VISIBLE);
 			cache.videoPlayerButton.setVisibility(View.VISIBLE);
-			cache.videoPlayer.setImageBitmap(ThumbnailUtils.createVideoThumbnail(mes.getFilePath(), Thumbnails.MINI_KIND));
+			
+			if(!mapThumb.containsKey(mes.getFilePath())){
+				System.out.println("coucoucoucocuco");
+				Bitmap thumb = ThumbnailUtils.createVideoThumbnail(mes.getFilePath(), Thumbnails.MINI_KIND);
+				mapThumb.put(mes.getFilePath(), thumb);				
+			}
+			cache.videoPlayer.setImageBitmap(mapThumb.get(mes.getFilePath()));
+			
 			cache.videoPlayer.setTag(position);
 			cache.videoPlayer.setOnClickListener(new OnClickListener() {
 				
