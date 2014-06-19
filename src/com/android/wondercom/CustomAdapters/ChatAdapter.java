@@ -113,7 +113,11 @@ public class ChatAdapter extends BaseAdapter {
 			}
 			cache.image.setVisibility(View.VISIBLE);
 			
-			cache.image.setImageBitmap(mes.byteArrayToBitmap(mes.getByteArray()));
+			if(!mapThumb.containsKey(mes.getFilePath())){
+				Bitmap thumb = mes.byteArrayToBitmap(mes.getByteArray());
+				mapThumb.put(mes.getFilePath(), thumb);				
+			}
+			cache.image.setImageBitmap(mapThumb.get(mes.getFilePath()));
 			cache.image.setTag(position);
 			
 			cache.image.setOnClickListener(new OnClickListener() {
@@ -186,7 +190,6 @@ public class ChatAdapter extends BaseAdapter {
 			cache.videoPlayerButton.setVisibility(View.VISIBLE);
 			
 			if(!mapThumb.containsKey(mes.getFilePath())){
-				System.out.println("coucoucoucocuco");
 				Bitmap thumb = ThumbnailUtils.createVideoThumbnail(mes.getFilePath(), Thumbnails.MINI_KIND);
 				mapThumb.put(mes.getFilePath(), thumb);				
 			}
