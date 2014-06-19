@@ -387,8 +387,7 @@ public class ChatActivity extends Activity {
     public void downloadImage(long id){
     	Message mes = listMessage.get((int) id);
     	Bitmap bm = mes.byteArrayToBitmap(mes.getByteArray());
-//    	MediaStore.Images.Media.insertImage(getContentResolver(), bm , mes.getFileName(), mes.getFileName());
-    	
+//    	MediaStore.Images.Media.insertImage(getContentResolver(), bm , mes.getFileName(), mes.getFileName());    	
     	
     	String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
     	OutputStream fOut = null;
@@ -398,11 +397,27 @@ public class ChatActivity extends Activity {
 			bm.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
 	    	fOut.flush();
 	    	fOut.close();
+	    	refreshMediaLibrary();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    }
+    
+    public void refreshMediaLibrary(){
+    	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+    	{
+    	        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+    	        File f = new File("file://"+ Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
+    	        Uri contentUri = Uri.fromFile(f);
+    	        mediaScanIntent.setData(contentUri);
+    	        this.sendBroadcast(mediaScanIntent);
+    	}
+    	else
+    	{
+    	       sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+    	} 
     }
     
     //Delete a message from the message list (doesn't delete on other phones)
