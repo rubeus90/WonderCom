@@ -156,13 +156,20 @@ public class ChatActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
+		clearTmpFolders(getExternalFilesDir(null));
 		if(MainActivity.server!=null){
 			MainActivity.server.interrupt();
 		}		
 		android.os.Process.killProcess(android.os.Process.myPid());		
 	}
     
-    // Handle the data sent back by the 'for result' activities (pick/take image, record audio/video)
+    @Override
+	protected void onDestroy() {
+		super.onStop();
+		clearTmpFolders(getExternalFilesDir(null));
+	}
+
+	// Handle the data sent back by the 'for result' activities (pick/take image, record audio/video)
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -477,5 +484,18 @@ public class ChatActivity extends Activity {
             TextView titleView = (TextView)findViewById(titleId);
             titleView.setTextSize(22);
         }
+    }
+    
+    private void clearTmpFolders(File dir){
+    	//TODO
+    	File[] childDirs = dir.listFiles();	
+    	for(File child : childDirs){
+    		if(child.isDirectory()){
+    			clearTmpFolders(child);
+    		}
+    		else{
+    			child.delete();
+    		}
+    	}
     }
 }
