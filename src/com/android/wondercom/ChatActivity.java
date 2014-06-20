@@ -168,13 +168,12 @@ public class ChatActivity extends Activity {
 			case PICK_IMAGE:
 				if (resultCode == RESULT_OK && data.getData() != null) {
 					fileUri = data.getData();
-					sendMessage(Message.IMAGE_MESSAGE);					
+					sendMessage(Message.IMAGE_MESSAGE_PICKED);					
 				}
 				break;
 			case TAKE_PHOTO:
-				if (resultCode == RESULT_OK && data.getData() != null) {
-					fileUri = data.getData();
-					sendMessage(Message.IMAGE_MESSAGE);
+				if (resultCode == RESULT_OK) {	
+					sendMessage(Message.IMAGE_MESSAGE_TAKEN);
 				}
 				break;
 			case RECORD_AUDIO:
@@ -206,28 +205,34 @@ public class ChatActivity extends Activity {
 		Message mes = new Message(type, edit.getText().toString(), null, MainActivity.chatName);
 		
 		switch(type){
-			case Message.IMAGE_MESSAGE:
+			case Message.IMAGE_MESSAGE_TAKEN:
+				MediaFile imageFile = new MediaFile(this, fileURL);
+				mes.setByteArray(imageFile.fileToByteArray());
+				mes.setFileName(imageFile.getFileName());
+				mes.setFilePath(imageFile.getFilePath());
+				break;
+			case Message.IMAGE_MESSAGE_PICKED:				
 				Image image = new Image(this, fileUri);
 				Log.v(TAG, "Bitmap from url ok");
 				mes.setByteArray(image.bitmapToByteArray(image.getBitmapFromUri()));
 				mes.setFileName(image.getFileName());
 				mes.setFileSize(image.getFileSize());
-				Log.v(TAG, "Set byte array to image ok");
+				Log.v(TAG, "Set byte array to image ok");				
 				break;
 			case Message.AUDIO_MESSAGE:
-				MediaFile audioFile = new MediaFile(this, fileURL, Message.AUDIO_MESSAGE);
+				MediaFile audioFile = new MediaFile(this, fileURL);
 				mes.setByteArray(audioFile.fileToByteArray());
 				mes.setFileName(audioFile.getFileName());
 				mes.setFilePath(audioFile.getFilePath());
 				break;
 			case Message.VIDEO_MESSAGE:
-				MediaFile videoFile = new MediaFile(this, fileURL, Message.AUDIO_MESSAGE);
+				MediaFile videoFile = new MediaFile(this, fileURL);
 				mes.setByteArray(videoFile.fileToByteArray());
 				mes.setFileName(videoFile.getFileName());
 				mes.setFilePath(videoFile.getFilePath());
 				break;
 			case Message.FILE_MESSAGE:
-				MediaFile file = new MediaFile(this, fileURL, Message.FILE_MESSAGE);
+				MediaFile file = new MediaFile(this, fileURL);
 				mes.setByteArray(file.fileToByteArray());
 				mes.setFileName(file.getFileName());
 				break;
@@ -330,8 +335,14 @@ public class ChatActivity extends Activity {
 					break;
 				
 				case R.id.take_photo:
-					Log.v(TAG, "Take a photo");
+					Log.v(TAG, "Take a photo");				
 					Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+					fileURL = Environment.getExternalStorageDirectory().getAbsolutePath() + "/WonderCom/tmp/"  
+									+ RecordAudioActivity.fileName() + ".jpg";
+					File file = new File(fileURL);
+					if(!file.getParentFile().exists()) file.getParentFile().mkdirs();
+					Uri uri = Uri.fromFile(file);
+					intent2.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 					
 					if (intent2.resolveActivity(getPackageManager()) != null) {
 						startActivityForResult(intent2, TAKE_PHOTO);
@@ -359,7 +370,10 @@ public class ChatActivity extends Activity {
         
         int type = mes.getmType();
         switch(type){
-        	case Message.IMAGE_MESSAGE:
+        	case Message.IMAGE_MESSAGE_PICKED:
+        		menu.add(0, DOWNLOAD_IMAGE, Menu.NONE, "Download image");
+        		break;
+        	case Message.IMAGE_MESSAGE_TAKEN:
         		menu.add(0, DOWNLOAD_IMAGE, Menu.NONE, "Download image");
         		break;
         }
@@ -397,7 +411,10 @@ public class ChatActivity extends Activity {
 			bm.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
 	    	fOut.flush();
 	    	fOut.close();
+	    	
+	    	//Refresh the media library in order to Gallery app to show the download image
 	    	refreshMediaLibrary();
+	    	
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

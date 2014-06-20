@@ -15,7 +15,8 @@ import android.util.Log;
 public class Message implements Serializable{
 	private static final String TAG = "Message";
 	public static final int TEXT_MESSAGE = 1;
-	public static final int IMAGE_MESSAGE = 2;
+	public static final int IMAGE_MESSAGE_PICKED = 2;
+	public static final int IMAGE_MESSAGE_TAKEN = 6;
 	public static final int VIDEO_MESSAGE = 3;
 	public static final int AUDIO_MESSAGE = 4;
 	public static final int FILE_MESSAGE = 5;

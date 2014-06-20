@@ -20,7 +20,7 @@ public class MediaFile {
 	public String getFileName() { return fileName; 	}	
 	public String getFilePath() { return filePath; }
 
-	public MediaFile(Context context, String fileURL, int type){
+	public MediaFile(Context context, String fileURL){
 		file = new File(fileURL);
 		fileName = file.getName();
 		filePath = fileURL;

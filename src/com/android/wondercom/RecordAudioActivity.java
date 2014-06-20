@@ -94,7 +94,7 @@ public class RecordAudioActivity extends Activity {
     }
 	
 	// Create file name for the new record: composed of date and time of the record's beginning
-	public String fileName(){
+	public static String fileName(){
 		Calendar c = Calendar.getInstance();
 		String fileName = c.get(Calendar.YEAR) + ""
 				+ c.get(Calendar.MONTH)  + ""
