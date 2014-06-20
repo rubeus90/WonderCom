@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -57,6 +59,7 @@ public class ChatActivity extends Activity {
 	private static final int CHOOSE_FILE = 5;
 	private static final int DOWNLOAD_IMAGE = 100;
 	private static final int DELETE_MESSAGE = 101;
+	private static final int DOWNLOAD_FILE = 102;
 	
 	private WifiP2pManager mManager;
 	private Channel mChannel;
@@ -362,6 +365,9 @@ public class ChatActivity extends Activity {
         	case Message.IMAGE_MESSAGE:
         		menu.add(0, DOWNLOAD_IMAGE, Menu.NONE, "Download image");
         		break;
+        	case Message.FILE_MESSAGE:
+        		menu.add(0, DOWNLOAD_FILE, Menu.NONE, "Download file");
+        		break;
         }
     }
     
@@ -378,12 +384,17 @@ public class ChatActivity extends Activity {
             case DELETE_MESSAGE:
             	deleteMessage(info.id);
             	return true;
+            	
+            case DOWNLOAD_FILE:
+            	downloadFile(info.id);
+            	return true;
+            	
             default:
                 return super.onContextItemSelected(item);
         }
     }
     
-    //Download image and save it to the camera directory
+    //Download image and save it to Downloads
     public void downloadImage(long id){
     	Message mes = listMessage.get((int) id);
     	Bitmap bm = mes.byteArrayToBitmap(mes.getByteArray());
@@ -398,11 +409,32 @@ public class ChatActivity extends Activity {
 	    	fOut.flush();
 	    	fOut.close();
 	    	refreshMediaLibrary();
+	    	Toast.makeText(this, "Image downloaded to "+path+mes.getFileName(), Toast.LENGTH_SHORT).show();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    }
+    
+    //Download file and save it to Downloads
+    public void downloadFile(long id){
+    	Message mes = listMessage.get((int) id);
+    	String sourcePath = mes.getFilePath();
+        File source = new File(sourcePath);
+
+        String destinationPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+        destinationPath += "/" + mes.getFileName();
+        File destination = new File(destinationPath);
+        try 
+        {
+            FileUtils.copyFile(source, destination);
+            Toast.makeText(this, "File downloaded to "+destinationPath, Toast.LENGTH_SHORT).show();
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
     }
     
     public void refreshMediaLibrary(){
