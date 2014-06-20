@@ -368,6 +368,12 @@ public class ChatActivity extends Activity {
         	case Message.FILE_MESSAGE:
         		menu.add(0, DOWNLOAD_FILE, Menu.NONE, "Download file");
         		break;
+        	case Message.AUDIO_MESSAGE:
+        		menu.add(0, DOWNLOAD_FILE, Menu.NONE, "Download file");
+        		break;
+        	case Message.VIDEO_MESSAGE:
+        		menu.add(0, DOWNLOAD_FILE, Menu.NONE, "Download file");
+        		break;
         }
     }
     
