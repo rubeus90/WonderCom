@@ -75,6 +75,7 @@ public class ChatAdapter extends BaseAdapter {
             cache.videoPlayer = (ImageView) view.findViewById(R.id.playVideo);
             cache.fileSaved = (TextView) view.findViewById(R.id.fileSaved);
             cache.videoPlayerButton = (ImageView) view.findViewById(R.id.buttonPlayVideo);
+            cache.fileSavedIcon = (ImageView) view.findViewById(R.id.file_attached_icon);
 	            
 			view.setTag(cache);
 		}
@@ -207,15 +208,22 @@ public class ChatAdapter extends BaseAdapter {
 				}
 			});
 		}
+        
+        /***********************************************
+						File Message
+         ***********************************************/
 		else if(type == Message.FILE_MESSAGE){
 			if(!mes.getmText().equals("")){
+				cache.text.setVisibility(View.VISIBLE);
 				cache.text.setText(mes.getmText());
 			}
+			cache.fileSavedIcon.setVisibility(View.VISIBLE);
 			cache.fileSaved.setVisibility(View.VISIBLE);
-			if(mes.isMine())
-				cache.fileSaved.setText("File \"" + mes.getFileName() + "\" is sent succesfully");
-			else
-				cache.fileSaved.setText("File \"" + mes.getFileName() + "\" is saved succesfully in " + mes.getFilePath());
+			cache.fileSaved.setText(mes.getFileName());
+//			if(mes.isMine())
+//				cache.fileSaved.setText("File \"" + mes.getFileName() + "\" is sent succesfully");
+//			else
+//				cache.fileSaved.setText("File \"" + mes.getFileName() + "\" received");
 		}
         
 		return view;
@@ -228,6 +236,7 @@ public class ChatAdapter extends BaseAdapter {
 		cache.videoPlayer.setVisibility(View.GONE);
 		cache.fileSaved.setVisibility(View.GONE);
 		cache.videoPlayerButton.setVisibility(View.GONE);
+		cache.fileSavedIcon.setVisibility(View.GONE);
 	}
 
 	//Cache
@@ -239,6 +248,7 @@ public class ChatAdapter extends BaseAdapter {
 		public ImageView audioPlayer;
 		public ImageView videoPlayer;
 		public ImageView videoPlayerButton;
+		public ImageView fileSavedIcon;
 		public TextView fileSaved;
 	}
 }

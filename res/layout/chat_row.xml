@@ -53,8 +53,7 @@
 	        android:id="@+id/videoMessage"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/playAudio"
-	        android:layout_marginTop="10dp">
+	        android:layout_below="@id/playAudio">
 	        
 	        <com.android.wondercom.CustomViews.DynamicImageView 
 		        android:id="@+id/playVideo"
@@ -62,7 +61,8 @@
 		        android:layout_height="wrap_content"
 		        android:scaleType="fitCenter"
 		        android:contentDescription="@string/playback_button"	        
-		        android:longClickable="true" />
+		        android:longClickable="true"
+		        android:layout_marginTop="10dp" />
 	        
 	        <ImageView 
 	            android:id="@+id/buttonPlayVideo"
@@ -70,18 +70,34 @@
 	            android:layout_height="wrap_content"
 	            android:layout_centerInParent="true"
 	            android:src="@drawable/play_video_button"
-	            android:contentDescription="@string/playback_button"/>
+	            android:contentDescription="@string/playback_button"
+	            android:longClickable="true"/>
 	        
 	    </RelativeLayout>
 	    
-	    
-	    <TextView 
-	        android:id="@+id/fileSaved"
+	    <RelativeLayout
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/videoMessage"
-	        android:longClickable="true" />
-    
+	        android:layout_below="@id/videoMessage" >
+	        
+	        <ImageView
+	            android:id="@+id/file_attached_icon"
+	            android:layout_width="wrap_content"
+	            android:layout_height="80dp"
+	            android:longClickable="true"
+	            android:src="@drawable/file_attached"
+	            android:contentDescription="@string/file_icon"/>
+	        
+	        <TextView 
+		        android:id="@+id/fileSaved"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"	        
+		        android:longClickable="true"
+		        android:layout_centerVertical="true"
+		        android:layout_toRightOf="@id/file_attached_icon" />
+	        
+	    </RelativeLayout>
+	    
     </RelativeLayout>   
     
     <View

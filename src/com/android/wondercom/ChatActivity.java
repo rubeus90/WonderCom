@@ -383,10 +383,10 @@ public class ChatActivity extends Activity {
         		menu.add(0, DOWNLOAD_FILE, Menu.NONE, "Download file");
         		break;
         	case Message.AUDIO_MESSAGE:
-        		menu.add(0, DOWNLOAD_FILE, Menu.NONE, "Download file");
+        		menu.add(0, DOWNLOAD_FILE, Menu.NONE, "Download audio file");
         		break;
         	case Message.VIDEO_MESSAGE:
-        		menu.add(0, DOWNLOAD_FILE, Menu.NONE, "Download file");
+        		menu.add(0, DOWNLOAD_FILE, Menu.NONE, "Download video file");
         		break;
         }
     }
@@ -450,6 +450,7 @@ public class ChatActivity extends Activity {
         {
             FileUtils.copyFile(source, destination);
             Toast.makeText(this, "File downloaded to "+destinationPath, Toast.LENGTH_SHORT).show();
+            refreshMediaLibrary();
         } 
         catch (IOException e) 
         {
@@ -506,5 +507,6 @@ public class ChatActivity extends Activity {
     	for(Uri uri: tmpFilesUri){
     		getContentResolver().delete(uri, null, null);
     	}
+    	refreshMediaLibrary();
     }
 }
