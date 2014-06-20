@@ -83,7 +83,6 @@ public class Image {
 		return null;
 	}
 	
-	//Get file name from URI
 	public String getFileName(){
 		Cursor cursor = mContext.getContentResolver().query(mUri, null, null, null, null);
 		
@@ -100,7 +99,6 @@ public class Image {
 		return name;
 	}
 	
-	//Get file size from URI
 	public long getFileSize(){
 		Cursor cursor = mContext.getContentResolver().query(mUri, null, null, null, null);
 		
@@ -112,7 +110,6 @@ public class Image {
 	    return size;
 	}
 	
-	//Convert image to byte array
 	public byte[] bitmapToByteArray(Bitmap bitmap){
 		Log.v(TAG, "Convert image to byte array");
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();  

@@ -106,7 +106,7 @@ public class ChatAdapter extends BaseAdapter {
         /***********************************************
 			            Image Message
          ***********************************************/
-		else if(type == Message.IMAGE_MESSAGE_PICKED || type == Message.IMAGE_MESSAGE_TAKEN){
+		else if(type == Message.IMAGE_MESSAGE){
 			if(!mes.getmText().equals("")){
 				cache.text.setVisibility(View.VISIBLE);
 				cache.text.setText(mes.getmText());
