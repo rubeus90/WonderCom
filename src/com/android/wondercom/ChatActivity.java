@@ -71,6 +71,7 @@ public class ChatActivity extends Activity {
 	private static ChatAdapter chatAdapter;
 	private Uri fileUri;
 	private String fileURL;
+	private ArrayList<Uri> tmpFilesUri;
 	
 	
 	@Override
@@ -97,6 +98,9 @@ public class ChatActivity extends Activity {
         listMessage = new ArrayList<Message>();
         chatAdapter = new ChatAdapter(this, listMessage);
         listView.setAdapter(chatAdapter);
+        
+        //Initialize the list of temporary files URI
+        tmpFilesUri = new ArrayList<Uri>();
         
 		//Send a message
         Button button = (Button) findViewById(R.id.sendMessage);
@@ -156,7 +160,7 @@ public class ChatActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		clearTmpFolders(getExternalFilesDir(null));
+		clearTmpFiles(getExternalFilesDir(null));
 		if(MainActivity.server!=null){
 			MainActivity.server.interrupt();
 		}		
@@ -166,7 +170,7 @@ public class ChatActivity extends Activity {
     @Override
 	protected void onDestroy() {
 		super.onStop();
-		clearTmpFolders(getExternalFilesDir(null));
+		clearTmpFiles(getExternalFilesDir(null));
 	}
 
 	// Handle the data sent back by the 'for result' activities (pick/take image, record audio/video)
@@ -219,9 +223,10 @@ public class ChatActivity extends Activity {
 			case Message.IMAGE_MESSAGE:
 				Image image = new Image(this, fileUri);
 				Log.v(TAG, "Bitmap from url ok");
-				mes.setByteArray(image.bitmapToByteArray(image.getBitmapFromUri()));
+				mes.setByteArray(image.bitmapToByteArray(image.getBitmapFromUri()));				
 				mes.setFileName(image.getFileName());
 				mes.setFileSize(image.getFileSize());
+				tmpFilesUri.add(fileUri);
 				Log.v(TAG, "Set byte array to image ok");
 				break;
 			case Message.AUDIO_MESSAGE:
@@ -235,6 +240,7 @@ public class ChatActivity extends Activity {
 				mes.setByteArray(videoFile.fileToByteArray());
 				mes.setFileName(videoFile.getFileName());
 				mes.setFilePath(videoFile.getFilePath());
+				tmpFilesUri.add(fileUri);
 				break;
 			case Message.FILE_MESSAGE:
 				MediaFile file = new MediaFile(this, fileURL, Message.FILE_MESSAGE);
@@ -303,6 +309,7 @@ public class ChatActivity extends Activity {
 	        case R.id.send_video:
 	        	Log.v(TAG, "Start activity to record video");
 	        	Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+	        	takeVideoIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
 	        	if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
 	                startActivityForResult(takeVideoIntent, RECORD_VIDEO);
 	            }
@@ -486,16 +493,18 @@ public class ChatActivity extends Activity {
         }
     }
     
-    private void clearTmpFolders(File dir){
-    	//TODO
+    private void clearTmpFiles(File dir){
     	File[] childDirs = dir.listFiles();	
     	for(File child : childDirs){
     		if(child.isDirectory()){
-    			clearTmpFolders(child);
+    			clearTmpFiles(child);
     		}
     		else{
     			child.delete();
     		}
+    	}
+    	for(Uri uri: tmpFilesUri){
+    		getContentResolver().delete(uri, null, null);
     	}
     }
 }
