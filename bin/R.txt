@@ -418,6 +418,8 @@ int string app_name 0x7f0a000d
 int string back_button 0x7f0a001d
 int string disconnect 0x7f0a0013
 int string download_image 0x7f0a0015
+int string dummy_button 0x7f0a0028
+int string dummy_content 0x7f0a0029
 int string enter_text 0x7f0a0023
 int string file_icon 0x7f0a0025
 int string full_screen_image 0x7f0a0024
@@ -440,6 +442,7 @@ int string title_activity_play_video 0x7f0a0011
 int string title_activity_record_audio 0x7f0a0010
 int string title_activity_view_image 0x7f0a000e
 int string title_activity_web_view 0x7f0a0026
+int string title_activity_web_view_activity2 0x7f0a0027
 int style AppBaseTheme 0x7f0b008b
 int style AppTheme 0x7f0b008c
 int style ButtonBar 0x7f0b008e

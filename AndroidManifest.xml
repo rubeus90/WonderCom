@@ -41,7 +41,8 @@
         <activity
             android:name="com.android.wondercom.ChatActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_chat" >
+            android:label="@string/title_activity_chat"
+            android:launchMode="singleTop" >
         </activity>
         <activity
             android:name="com.android.wondercom.ViewImageActivity"
@@ -63,14 +64,22 @@
         </activity>
         <activity
             android:name="com.android.wondercom.WebViewActivity"
-            android:label="@string/title_activity_web_view" >
-            <intent-filter >
+            android:label="@string/title_activity_web_view"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullscreenTheme" >
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
-               	<data android:scheme="myweburl" />
-            </intent-filter>
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="myweburl" />
+            </intent-filter>            
+            <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="com.android.wondercom.ChatActivity" />
         </activity>
+    
     </application>
 
 </manifest> <!-- android:parentActivityName="com.android.wondercom.MainActivity" -->

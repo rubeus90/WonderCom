@@ -1332,6 +1332,8 @@ containing a value of this type.
          */
         public static final int disconnect=0x7f0a0013;
         public static final int download_image=0x7f0a0015;
+        public static final int dummy_button=0x7f0a0028;
+        public static final int dummy_content=0x7f0a0029;
         public static final int enter_text=0x7f0a0023;
         public static final int file_icon=0x7f0a0025;
         /**  Descriptions 
@@ -1362,6 +1364,7 @@ containing a value of this type.
         public static final int title_activity_record_audio=0x7f0a0010;
         public static final int title_activity_view_image=0x7f0a000e;
         public static final int title_activity_web_view=0x7f0a0026;
+        public static final int title_activity_web_view_activity2=0x7f0a0027;
     }
     public static final class style {
         /** 
