@@ -189,6 +189,7 @@ public class ChatActivity extends Activity {
 				if (resultCode == RESULT_OK && data.getData() != null) {
 					fileUri = data.getData();
 					sendMessage(Message.IMAGE_MESSAGE);
+					tmpFilesUri.add(fileUri);
 				}
 				break;
 			case RECORD_AUDIO:
@@ -225,8 +226,7 @@ public class ChatActivity extends Activity {
 				Log.v(TAG, "Bitmap from url ok");
 				mes.setByteArray(image.bitmapToByteArray(image.getBitmapFromUri()));				
 				mes.setFileName(image.getFileName());
-				mes.setFileSize(image.getFileSize());
-				tmpFilesUri.add(fileUri);
+				mes.setFileSize(image.getFileSize());				
 				Log.v(TAG, "Set byte array to image ok");
 				break;
 			case Message.AUDIO_MESSAGE:
