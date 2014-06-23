@@ -36,7 +36,7 @@ public class AbstractReceiver extends AsyncTask<Void, Message, Void>{
 		Notification mNotification = new Notification.Builder(context)
 			.setContentTitle(message.getChatName())
 			.setContentText(message.getmText())
-			.setSmallIcon(R.drawable.ic_launcher)
+			.setSmallIcon(R.drawable.icon_notification)
 			.setContentIntent(pIntent)
 			.setSound(notification)			
 			.build();

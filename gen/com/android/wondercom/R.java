@@ -1108,14 +1108,15 @@ containing a value of this type.
         public static final int folder_emtpy=0x7f02005d;
         public static final int folder_full=0x7f02005e;
         public static final int ic_launcher=0x7f02005f;
-        public static final int microphone_start=0x7f020060;
-        public static final int microphone_stop=0x7f020061;
-        public static final int ok=0x7f020062;
-        public static final int play=0x7f020063;
-        public static final int play_audio=0x7f020064;
-        public static final int play_audio_in_progress=0x7f020065;
-        public static final int play_video_button=0x7f020066;
-        public static final int up=0x7f020067;
+        public static final int icon_notification=0x7f020060;
+        public static final int microphone_start=0x7f020061;
+        public static final int microphone_stop=0x7f020062;
+        public static final int ok=0x7f020063;
+        public static final int play=0x7f020064;
+        public static final int play_audio=0x7f020065;
+        public static final int play_audio_in_progress=0x7f020066;
+        public static final int play_video_button=0x7f020067;
+        public static final int up=0x7f020068;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;

@@ -204,8 +204,8 @@ public class ChatAdapter extends BaseAdapter {
 			}
 			cache.videoPlayer.setImageBitmap(mapThumb.get(mes.getFilePath()));
 			
-			cache.videoPlayer.setTag(position);
-			cache.videoPlayer.setOnClickListener(new OnClickListener() {
+			cache.videoPlayerButton.setTag(position);
+			cache.videoPlayerButton.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
