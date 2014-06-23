@@ -61,6 +61,16 @@
             android:name="com.android.wondercom.FilePickerActivity"
             android:label="@string/title_activity_file_picker" >
         </activity>
+        <activity
+            android:name="com.android.wondercom.WebViewActivity"
+            android:label="@string/title_activity_web_view" >
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+               	<data android:scheme="myweburl" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest> <!-- android:parentActivityName="com.android.wondercom.MainActivity" -->

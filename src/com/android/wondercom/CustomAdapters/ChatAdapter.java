@@ -12,6 +12,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore.Images.Thumbnails;
 import android.text.util.Linkify;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -98,10 +99,8 @@ public class ChatAdapter extends BaseAdapter {
         /***********************************************
           				Text Message
          ***********************************************/
-        if(type == Message.TEXT_MESSAGE){           	
-        	cache.text.setVisibility(View.VISIBLE);
-            cache.text.setText(mes.getmText());
-            Linkify.addLinks(cache.text, Linkify.ALL);
+        if(type == Message.TEXT_MESSAGE){           
+        	enableTextView(cache, mes.getmText());
 		}
         
         /***********************************************
@@ -109,8 +108,7 @@ public class ChatAdapter extends BaseAdapter {
          ***********************************************/
 		else if(type == Message.IMAGE_MESSAGE){
 			if(!mes.getmText().equals("")){
-				cache.text.setVisibility(View.VISIBLE);
-				cache.text.setText(mes.getmText());
+				enableTextView(cache, mes.getmText());
 			}
 			cache.image.setVisibility(View.VISIBLE);
 			
@@ -142,8 +140,7 @@ public class ChatAdapter extends BaseAdapter {
          ***********************************************/
 		else if(type == Message.AUDIO_MESSAGE){
 			if(!mes.getmText().equals("")){
-				cache.text.setVisibility(View.VISIBLE);
-				cache.text.setText(mes.getmText());
+				enableTextView(cache, mes.getmText());
 			}
 			cache.audioPlayer.setVisibility(View.VISIBLE);
 			cache.audioPlayer.setTag(position);
@@ -184,8 +181,7 @@ public class ChatAdapter extends BaseAdapter {
          ***********************************************/
 		else if(type == Message.VIDEO_MESSAGE){
 			if(!mes.getmText().equals("")){
-				cache.text.setVisibility(View.VISIBLE);
-				cache.text.setText(mes.getmText());
+				enableTextView(cache, mes.getmText());
 			}
 			cache.videoPlayer.setVisibility(View.VISIBLE);
 			cache.videoPlayerButton.setVisibility(View.VISIBLE);
@@ -214,8 +210,7 @@ public class ChatAdapter extends BaseAdapter {
          ***********************************************/
 		else if(type == Message.FILE_MESSAGE){
 			if(!mes.getmText().equals("")){
-				cache.text.setVisibility(View.VISIBLE);
-				cache.text.setText(mes.getmText());
+				enableTextView(cache, mes.getmText());
 			}
 			cache.fileSavedIcon.setVisibility(View.VISIBLE);
 			cache.fileSaved.setVisibility(View.VISIBLE);
@@ -229,7 +224,7 @@ public class ChatAdapter extends BaseAdapter {
 		return view;
 	}
 	
-	public void disableAllMediaViews(CacheView cache){
+	private void disableAllMediaViews(CacheView cache){
 		cache.text.setVisibility(View.GONE);
 		cache.image.setVisibility(View.GONE);
 		cache.audioPlayer.setVisibility(View.GONE);
@@ -237,6 +232,13 @@ public class ChatAdapter extends BaseAdapter {
 		cache.fileSaved.setVisibility(View.GONE);
 		cache.videoPlayerButton.setVisibility(View.GONE);
 		cache.fileSavedIcon.setVisibility(View.GONE);
+	}
+	
+	private void enableTextView(CacheView cache, String text){
+		cache.text.setVisibility(View.VISIBLE);
+		cache.text.setText(text);
+		Linkify.addLinks(cache.text, Linkify.PHONE_NUMBERS);
+		Linkify.addLinks(cache.text, Patterns.WEB_URL, "myweburl:");
 	}
 
 	//Cache

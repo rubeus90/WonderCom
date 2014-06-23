@@ -35,7 +35,8 @@
     <string name="enter_text">Enter your message here</string>
 
     <!-- Descriptions -->
-    <string name="full_screen_image">Full screen image</string>    
+    <string name="full_screen_image">Full screen image</string>
     <string name="file_icon">File icon</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
 
 </resources>
