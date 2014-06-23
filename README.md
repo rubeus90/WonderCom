@@ -7,9 +7,9 @@ This application is developed during a 3-month-internship at Nanyang Polytechnic
 
 #Features
 * Text messaging
-* Image sending
-* Audio messaging
-* Video messaging
+* Image message
+* Audio message
+* Video message
 * File sending
 
 <p align="center">
