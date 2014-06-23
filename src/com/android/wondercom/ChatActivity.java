@@ -509,4 +509,9 @@ public class ChatActivity extends Activity {
     	}
     	refreshMediaLibrary();
     }
+    
+    public void talkTo(String destination){
+    	edit.setText("@" + destination + " : ");
+    	edit.setSelection(edit.getText().length());
+    }
 }

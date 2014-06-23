@@ -16,12 +16,14 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.wondercom.ChatActivity;
 import com.android.wondercom.PlayVideoActivity;
 import com.android.wondercom.R;
 import com.android.wondercom.ViewImageActivity;
@@ -84,6 +86,16 @@ public class ChatAdapter extends BaseAdapter {
 		//Retrive the items from cache
         CacheView cache = (CacheView) view.getTag();
         cache.chatName.setText(listMessage.get(position).getChatName());
+        cache.chatName.setTag(cache);
+        cache.chatName.setOnLongClickListener(new OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(View v) {
+				CacheView cache = (CacheView) v.getTag();
+				((ChatActivity)mContext).talkTo((String) cache.chatName.getText());
+				return true;
+			}
+		});
         
         //Colourise differently own message
         if((Boolean) listMessage.get(position).isMine()){
