@@ -8,6 +8,7 @@
     <string name="title_activity_record_audio">Record audio</string>
     <string name="title_activity_play_video">Play video</string>
     <string name="title_activity_file_picker">File chooser</string>
+    <string name="title_activity_web_view">Open link....</string>
 
     <!-- Menus -->
     <string name="disconnect">Disconnect</string>
@@ -37,9 +38,5 @@
     <!-- Descriptions -->
     <string name="full_screen_image">Full screen image</string>
     <string name="file_icon">File icon</string>
-    <string name="title_activity_web_view">WebViewActivity</string>
-    <string name="title_activity_web_view_activity2">WebViewActivity2</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

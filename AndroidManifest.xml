@@ -65,8 +65,7 @@
         <activity
             android:name="com.android.wondercom.WebViewActivity"
             android:label="@string/title_activity_web_view"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/FullscreenTheme" >
+            android:configChanges="orientation|keyboardHidden|screenSize" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
