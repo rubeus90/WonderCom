@@ -63,6 +63,7 @@ public class ChatActivity extends Activity {
 	private static final int DELETE_MESSAGE = 101;
 	private static final int DOWNLOAD_FILE = 102;
 	private static final int COPY_TEXT = 103;
+	private static final int SHARE_TEXT = 104;
 	
 	private WifiP2pManager mManager;
 	private Channel mChannel;
@@ -376,8 +377,13 @@ public class ChatActivity extends Activity {
         
         //Option to delete message independently of its type
         menu.add(0, DELETE_MESSAGE, Menu.NONE, "Delete message");
-        //Option to copy message's text to clipboard
-        menu.add(0, COPY_TEXT, Menu.NONE, "Copy text message");
+        
+        if(!mes.getmText().equals("")){
+        	//Option to copy message's text to clipboard
+            menu.add(0, COPY_TEXT, Menu.NONE, "Copy message text");
+            //Option to share message's text
+        	menu.add(0, SHARE_TEXT, Menu.NONE, "Share message text");
+        }        
         
         int type = mes.getmType();
         switch(type){
@@ -416,6 +422,10 @@ public class ChatActivity extends Activity {
             	
             case COPY_TEXT:
             	copyTextToClipboard(info.id);
+            	return true;
+            	
+            case SHARE_TEXT:
+            	shareMedia(info.id, Message.TEXT_MESSAGE);
             	return true;
             	
             default:
@@ -526,11 +536,22 @@ public class ChatActivity extends Activity {
     
     private void copyTextToClipboard(long id){
     	Message mes = listMessage.get((int) id);
-    	if(!mes.getmText().equals("")){
-    		ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE); 
-    		ClipData clip = ClipData.newPlainText("message", mes.getmText());
-    		clipboard.setPrimaryClip(clip);
-    		Toast.makeText(this, "Message copied to clipboard", Toast.LENGTH_SHORT).show();
-    	}
+		ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE); 
+		ClipData clip = ClipData.newPlainText("message", mes.getmText());
+		clipboard.setPrimaryClip(clip);
+		Toast.makeText(this, "Message copied to clipboard", Toast.LENGTH_SHORT).show();
+    }
+    
+    private void shareMedia(long id, int type){
+    	Message mes = listMessage.get((int) id);
+    	
+    	switch(type){
+    		case Message.TEXT_MESSAGE:
+				Intent sendIntent = new Intent();
+    	    	sendIntent.setAction(Intent.ACTION_SEND);
+    	    	sendIntent.putExtra(Intent.EXTRA_TEXT, mes.getmText());
+    	    	sendIntent.setType("text/plain");
+    	    	startActivity(sendIntent);
+    	}    	
     }
 }
