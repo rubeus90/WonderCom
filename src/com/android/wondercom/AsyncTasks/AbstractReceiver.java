@@ -55,34 +55,4 @@ public class AbstractReceiver extends AsyncTask<Void, Message, Void>{
 			mNotificationManager.notify(0, mNotification);
 		}
 	}
-//
-//	public void saveMediaFile(Context context, File audioFile){
-//		File f = new File(context.getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath());
-//
-//        File dirs = new File(f.getParent());
-//        if (!dirs.exists())
-//            dirs.mkdirs();
-//        
-//        try {
-//			f.createNewFile();			
-//			copyFile(audioFile, f);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//        
-//	}	
-//	
-//	public void copyFile(File src, File dst) throws IOException {
-//	    InputStream in = new FileInputStream(src);
-//	    OutputStream out = new FileOutputStream(dst);
-//
-//	    // Transfer bytes from in to out
-//	    byte[] buf = new byte[1024];
-//	    int len;
-//	    while ((len = in.read(buf)) > 0) {
-//	        out.write(buf, 0, len);
-//	    }
-//	    in.close();
-//	    out.close();
-//	}
 }

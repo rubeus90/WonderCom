@@ -11,6 +11,8 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -60,6 +62,7 @@ public class ChatActivity extends Activity {
 	private static final int DOWNLOAD_IMAGE = 100;
 	private static final int DELETE_MESSAGE = 101;
 	private static final int DOWNLOAD_FILE = 102;
+	private static final int COPY_TEXT = 103;
 	
 	private WifiP2pManager mManager;
 	private Channel mChannel;
@@ -373,6 +376,8 @@ public class ChatActivity extends Activity {
         
         //Option to delete message independently of its type
         menu.add(0, DELETE_MESSAGE, Menu.NONE, "Delete message");
+        //Option to copy message's text to clipboard
+        menu.add(0, COPY_TEXT, Menu.NONE, "Copy text message");
         
         int type = mes.getmType();
         switch(type){
@@ -407,6 +412,10 @@ public class ChatActivity extends Activity {
             	
             case DOWNLOAD_FILE:
             	downloadFile(info.id);
+            	return true;
+            	
+            case COPY_TEXT:
+            	copyTextToClipboard(info.id);
             	return true;
             	
             default:
@@ -513,5 +522,15 @@ public class ChatActivity extends Activity {
     public void talkTo(String destination){
     	edit.setText("@" + destination + " : ");
     	edit.setSelection(edit.getText().length());
+    }
+    
+    private void copyTextToClipboard(long id){
+    	Message mes = listMessage.get((int) id);
+    	if(!mes.getmText().equals("")){
+    		ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE); 
+    		ClipData clip = ClipData.newPlainText("message", mes.getmText());
+    		clipboard.setPrimaryClip(clip);
+    		Toast.makeText(this, "Message copied to clipboard", Toast.LENGTH_SHORT).show();
+    	}
     }
 }
