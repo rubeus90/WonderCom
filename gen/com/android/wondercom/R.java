@@ -1147,7 +1147,7 @@ containing a value of this type.
         public static final int default_activity_button=0x7f050028;
         public static final int dialog=0x7f05000e;
         public static final int disableHome=0x7f050008;
-        public static final int disconnect=0x7f050045;
+        public static final int disconnect=0x7f050043;
         public static final int dropdown=0x7f05000f;
         public static final int editMessage=0x7f05003e;
         public static final int edit_query=0x7f050030;
@@ -1162,7 +1162,7 @@ containing a value of this type.
         public static final int fullscreen_content=0x7f05004b;
         public static final int fullscreen_content_controls=0x7f05004c;
         public static final int goToChat=0x7f050046;
-        public static final int goToSettings=0x7f050043;
+        public static final int goToSettings=0x7f050041;
         public static final int home=0x7f050014;
         public static final int homeAsUp=0x7f050005;
         public static final int icon=0x7f05002a;
@@ -1201,8 +1201,8 @@ containing a value of this type.
         public static final int send_file=0x7f05005e;
         public static final int send_image=0x7f05005d;
         public static final int send_video=0x7f050060;
-        public static final int setChatName=0x7f050042;
-        public static final int setChatNameLabel=0x7f050041;
+        public static final int setChatName=0x7f050045;
+        public static final int setChatNameLabel=0x7f050044;
         public static final int shortcut=0x7f05002e;
         public static final int showCustom=0x7f050007;
         public static final int showHome=0x7f050004;
@@ -1212,7 +1212,7 @@ containing a value of this type.
         public static final int tabMode=0x7f050002;
         public static final int take_photo=0x7f050062;
         public static final int text=0x7f050052;
-        public static final int textGoToSettings=0x7f050044;
+        public static final int textGoToSettings=0x7f050042;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
         public static final int underline=0x7f050059;
