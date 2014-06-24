@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,9 +38,11 @@ public class MainActivity extends Activity{
 	private WifiDirectBroadcastReceiver mReceiver;
 	private IntentFilter mIntentFilter;
 	private Button goToChat;
-	private Button goToSettings;
+	private ImageView goToSettings;
+	private TextView goToSettingsText;
 	private TextView setChatNameLabel;
 	private EditText setChatName;
+	private ImageView disconnect;
 	public static String chatName;
 	public static ServerInit server;
 
@@ -50,8 +53,10 @@ public class MainActivity extends Activity{
 	public IntentFilter getmIntentFilter() { return mIntentFilter; }
 	public Button getGoToChat(){ return goToChat; }
 	public TextView getSetChatNameLabel() { return setChatNameLabel; }
-	public Button getGoToSettings() { return goToSettings; }
+	public ImageView getGoToSettings() { return goToSettings; }
 	public EditText getSetChatName() { return setChatName; }
+	public TextView getGoToSettingsText() { return goToSettingsText; }
+	public ImageView getDisconnect() { return disconnect; }
 	
 	
 	@Override
@@ -63,19 +68,24 @@ public class MainActivity extends Activity{
         init();
         
         //Button Go to Settings
-        goToSettings = (Button) findViewById(R.id.goToSettings);
+        goToSettings = (ImageView) findViewById(R.id.goToSettings);
         goToSettings();
         
+        //Go to Settings text
+        goToSettingsText = (TextView) findViewById(R.id.textGoToSettings);        
         
         //Button Go to Chat
         goToChat = (Button) findViewById(R.id.goToChat);
-        goToChat.setVisibility(View.GONE);
         goToChat();
         
         //Set the chat name
         setChatName = (EditText) findViewById(R.id.setChatName);
         setChatNameLabel = (TextView) findViewById(R.id.setChatNameLabel);
         setChatName.setText(loadChatName(this));
+        
+        //Button Disconnect
+        disconnect = (ImageView) findViewById(R.id.disconnect);
+        disconnect();
     }	
 
     @Override
@@ -118,12 +128,8 @@ public class MainActivity extends Activity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int idItem = item.getItemId();
-        if (idItem == R.id.disconnect) {
-        	mManager.removeGroup(mChannel, null);
-        	finish();
-            return true;
-        }
+//        int idItem = item.getItemId();
+        //TODO
         return super.onOptionsItemSelected(item);
     }	
     
@@ -171,6 +177,17 @@ public class MainActivity extends Activity{
 				else{
 					Toast.makeText(MainActivity.this, "Please enter a chat name", Toast.LENGTH_SHORT).show();
 				}					
+			}
+		});    	
+    }
+    
+    public void disconnect(){
+    	disconnect.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mManager.removeGroup(mChannel, null);
+		    	finish();
 			}
 		});    	
     }

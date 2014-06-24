@@ -13,9 +13,9 @@
         android:layout_above="@+id/setChatName"
         android:text="@string/set_chat_name"
         android:layout_centerHorizontal="true"
-        android:visibility="gone"
         android:textSize="18sp"
-        android:textColor="@color/app_text" />
+        android:textColor="@color/app_text"
+        android:visibility="gone" />
     
     <EditText 
         android:id="@id/setChatName"
@@ -25,18 +25,40 @@
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"
         android:background="@drawable/edit_text"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:visibility="gone" />
 
-    <Button 
+    <ImageView 
         android:id="@+id/goToSettings"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textGoToSettings"
+        android:contentDescription="@string/go_to_settings_button"
+        android:src="@drawable/wifi_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp" />
+    
+    <ImageView 
+        android:id="@+id/disconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/setChatNameLabel"
+        android:contentDescription="@string/disconnect"
+        android:src="@drawable/disconnect"
+        android:layout_marginBottom="15dp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"/>
+    
+    <TextView 
+        android:id="@id/textGoToSettings"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/go_to_settings_button"
-        android:background="@drawable/button"
-        android:textColor="@color/button_text" />
+        android:text="@string/go_to_settings_text"
+        android:textSize="16sp"
+        android:textColor="@color/app_text"
+        android:gravity="center"/>
         
     <Button         
         android:id="@+id/goToChat"
@@ -45,6 +67,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/button"
         android:textColor="@color/button_text"
-        android:layout_margin="20dp" />
+        android:layout_margin="20dp"
+        android:visibility="gone" />
 
 </RelativeLayout>

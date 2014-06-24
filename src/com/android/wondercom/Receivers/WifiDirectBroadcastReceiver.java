@@ -136,7 +136,9 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver{
 			((MainActivity)mActivity).getGoToChat().setVisibility(View.VISIBLE);
 			((MainActivity)mActivity).getSetChatName().setVisibility(View.VISIBLE);
 			((MainActivity)mActivity).getSetChatNameLabel().setVisibility(View.VISIBLE);
+			((MainActivity)mActivity).getDisconnect().setVisibility(View.VISIBLE);
 			((MainActivity)mActivity).getGoToSettings().setVisibility(View.GONE);
+			((MainActivity)mActivity).getGoToSettingsText().setVisibility(View.GONE);
 		}
 	}
 

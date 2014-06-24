@@ -3,9 +3,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.android.wondercom.MainActivity" >
 
-    <item
-        android:id="@+id/disconnect"
-        android:title="@string/disconnect"
-        app:showAsAction="ifRoom"/>
-
 </menu>
