@@ -1010,6 +1010,11 @@ containing a value of this type.
          (the screen is in portrait). This may be either a fraction or a dimension.
          */
         public static final int dialog_fixed_width_minor=0x7f080012;
+        public static final int large_brush=0x7f080019;
+        public static final int medium_brush=0x7f080018;
+        /**  Drawing: brush sizes 
+         */
+        public static final int small_brush=0x7f080017;
     }
     public static final class drawable {
         public static final int abc_ab_bottom_solid_dark_holo=0x7f020000;
@@ -1248,6 +1253,9 @@ containing a value of this type.
          showAsAction="ifRoom" items can fit. "always" items can override this. 
          */
         public static final int abc_max_action_buttons=0x7f090000;
+        public static final int large_size=0x7f090003;
+        public static final int medium_size=0x7f090002;
+        public static final int small_size=0x7f090001;
     }
     public static final class layout {
         public static final int abc_action_bar_decor=0x7f030000;
@@ -1275,15 +1283,16 @@ containing a value of this type.
         public static final int abc_search_view=0x7f030016;
         public static final int abc_simple_decor=0x7f030017;
         public static final int activity_chat=0x7f030018;
-        public static final int activity_file_picker=0x7f030019;
-        public static final int activity_main=0x7f03001a;
-        public static final int activity_play_video=0x7f03001b;
-        public static final int activity_record_audio=0x7f03001c;
-        public static final int activity_view_image=0x7f03001d;
-        public static final int activity_web_view=0x7f03001e;
-        public static final int chat_row=0x7f03001f;
-        public static final int file_row=0x7f030020;
-        public static final int support_simple_spinner_dropdown_item=0x7f030021;
+        public static final int activity_drawing=0x7f030019;
+        public static final int activity_file_picker=0x7f03001a;
+        public static final int activity_main=0x7f03001b;
+        public static final int activity_play_video=0x7f03001c;
+        public static final int activity_record_audio=0x7f03001d;
+        public static final int activity_view_image=0x7f03001e;
+        public static final int activity_web_view=0x7f03001f;
+        public static final int chat_row=0x7f030020;
+        public static final int file_row=0x7f030021;
+        public static final int support_simple_spinner_dropdown_item=0x7f030022;
     }
     public static final class menu {
         public static final int chat=0x7f0c0000;
@@ -1334,39 +1343,40 @@ containing a value of this type.
         /**  App and Activities 
          */
         public static final int app_name=0x7f0a000d;
-        public static final int back_button=0x7f0a001e;
+        public static final int back_button=0x7f0a001f;
         /**  Menus 
          */
-        public static final int disconnect=0x7f0a0014;
-        public static final int download_image=0x7f0a0016;
-        public static final int enter_text=0x7f0a0025;
-        public static final int file_icon=0x7f0a0027;
+        public static final int disconnect=0x7f0a0015;
+        public static final int download_image=0x7f0a0017;
+        public static final int enter_text=0x7f0a0026;
+        public static final int file_icon=0x7f0a0028;
         /**  Descriptions 
          */
-        public static final int full_screen_image=0x7f0a0026;
+        public static final int full_screen_image=0x7f0a0027;
         /**  Buttons 
          */
-        public static final int go_to_settings_button=0x7f0a001c;
+        public static final int go_to_settings_button=0x7f0a001d;
         /**  TextView 
          */
-        public static final int go_to_settings_text=0x7f0a0023;
-        public static final int ok=0x7f0a0022;
+        public static final int go_to_settings_text=0x7f0a0024;
+        public static final int ok=0x7f0a0023;
         /**  Popup menus 
          */
-        public static final int pick_image=0x7f0a001a;
-        public static final int playback_button=0x7f0a0020;
-        public static final int record_button=0x7f0a001f;
-        public static final int send_audio=0x7f0a0017;
-        public static final int send_button=0x7f0a001d;
-        public static final int send_file=0x7f0a0019;
-        public static final int send_image=0x7f0a0015;
-        public static final int send_video=0x7f0a0018;
+        public static final int pick_image=0x7f0a001b;
+        public static final int playback_button=0x7f0a0021;
+        public static final int record_button=0x7f0a0020;
+        public static final int send_audio=0x7f0a0018;
+        public static final int send_button=0x7f0a001e;
+        public static final int send_file=0x7f0a001a;
+        public static final int send_image=0x7f0a0016;
+        public static final int send_video=0x7f0a0019;
         /**  EditTexts 
          */
-        public static final int set_chat_name=0x7f0a0024;
-        public static final int stop_recording_button=0x7f0a0021;
-        public static final int take_photo=0x7f0a001b;
+        public static final int set_chat_name=0x7f0a0025;
+        public static final int stop_recording_button=0x7f0a0022;
+        public static final int take_photo=0x7f0a001c;
         public static final int title_activity_chat=0x7f0a000f;
+        public static final int title_activity_drawing=0x7f0a0014;
         public static final int title_activity_file_picker=0x7f0a0012;
         public static final int title_activity_play_video=0x7f0a0011;
         public static final int title_activity_record_audio=0x7f0a0010;
