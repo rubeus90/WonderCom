@@ -1118,17 +1118,20 @@ containing a value of this type.
         public static final int ic_action_mic=0x7f020062;
         public static final int ic_action_video=0x7f020063;
         public static final int icon_notification=0x7f020064;
-        public static final int microphone_start=0x7f020065;
-        public static final int microphone_stop=0x7f020066;
-        public static final int ok=0x7f020067;
-        public static final int paint=0x7f020068;
-        public static final int paint_selected=0x7f020069;
-        public static final int play=0x7f02006a;
-        public static final int play_audio=0x7f02006b;
-        public static final int play_audio_in_progress=0x7f02006c;
-        public static final int play_video_button=0x7f02006d;
-        public static final int up=0x7f02006e;
-        public static final int wifi_icon=0x7f02006f;
+        public static final int large=0x7f020065;
+        public static final int medium=0x7f020066;
+        public static final int microphone_start=0x7f020067;
+        public static final int microphone_stop=0x7f020068;
+        public static final int ok=0x7f020069;
+        public static final int paint=0x7f02006a;
+        public static final int paint_selected=0x7f02006b;
+        public static final int play=0x7f02006c;
+        public static final int play_audio=0x7f02006d;
+        public static final int play_audio_in_progress=0x7f02006e;
+        public static final int play_video_button=0x7f02006f;
+        public static final int small=0x7f020070;
+        public static final int up=0x7f020071;
+        public static final int wifi_icon=0x7f020072;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -1146,8 +1149,8 @@ containing a value of this type.
         public static final int always=0x7f05000b;
         public static final int back_button=0x7f050053;
         public static final int beginning=0x7f050011;
-        public static final int buttonPlayVideo=0x7f05005c;
-        public static final int chatName=0x7f050057;
+        public static final int buttonPlayVideo=0x7f05005f;
+        public static final int chatName=0x7f05005a;
         public static final int checkbox=0x7f05002d;
         public static final int chooseBrush=0x7f050041;
         public static final int chooseEraser=0x7f050042;
@@ -1165,11 +1168,11 @@ containing a value of this type.
         public static final int end=0x7f050013;
         public static final int expand_activities_button=0x7f050026;
         public static final int expanded_menu=0x7f05002c;
-        public static final int fileSaved=0x7f05005e;
-        public static final int file_attached_icon=0x7f05005d;
-        public static final int file_details=0x7f050062;
-        public static final int file_icon=0x7f050060;
-        public static final int file_name=0x7f050061;
+        public static final int fileSaved=0x7f050061;
+        public static final int file_attached_icon=0x7f050060;
+        public static final int file_details=0x7f050065;
+        public static final int file_icon=0x7f050063;
+        public static final int file_name=0x7f050064;
         public static final int fullscreen_content=0x7f050051;
         public static final int fullscreen_content_controls=0x7f050052;
         public static final int goToChat=0x7f05004c;
@@ -1179,8 +1182,10 @@ containing a value of this type.
         public static final int icon=0x7f05002a;
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050027;
+        public static final int large_brush=0x7f050058;
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
+        public static final int medium_brush=0x7f050057;
         public static final int messageList=0x7f05003c;
         public static final int middle=0x7f050012;
         public static final int never=0x7f050009;
@@ -1188,16 +1193,16 @@ containing a value of this type.
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
         public static final int ok=0x7f050050;
-        public static final int pick_image=0x7f050068;
-        public static final int playAudio=0x7f050059;
-        public static final int playVideo=0x7f05005b;
+        public static final int pick_image=0x7f05006b;
+        public static final int playAudio=0x7f05005c;
+        public static final int playVideo=0x7f05005e;
         public static final int play_audio=0x7f05004f;
         public static final int progressBar=0x7f050055;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
         public static final int record_audio=0x7f05004e;
-        public static final int relativeLayout=0x7f050056;
+        public static final int relativeLayout=0x7f050059;
         public static final int saveDrawing=0x7f050043;
         public static final int search_badge=0x7f050032;
         public static final int search_bar=0x7f050031;
@@ -1210,29 +1215,30 @@ containing a value of this type.
         public static final int search_src_text=0x7f050037;
         public static final int search_voice_btn=0x7f05003b;
         public static final int sendMessage=0x7f05003f;
-        public static final int send_audio=0x7f050065;
-        public static final int send_drawing=0x7f050067;
-        public static final int send_file=0x7f050064;
-        public static final int send_image=0x7f050063;
-        public static final int send_video=0x7f050066;
+        public static final int send_audio=0x7f050068;
+        public static final int send_drawing=0x7f05006a;
+        public static final int send_file=0x7f050067;
+        public static final int send_image=0x7f050066;
+        public static final int send_video=0x7f050069;
         public static final int setChatName=0x7f05004b;
         public static final int setChatNameLabel=0x7f05004a;
         public static final int shortcut=0x7f05002e;
         public static final int showCustom=0x7f050007;
         public static final int showHome=0x7f050004;
         public static final int showTitle=0x7f050006;
+        public static final int small_brush=0x7f050056;
         public static final int split_action_bar=0x7f05001e;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
-        public static final int take_photo=0x7f050069;
-        public static final int text=0x7f050058;
+        public static final int take_photo=0x7f05006c;
+        public static final int text=0x7f05005b;
         public static final int textGoToSettings=0x7f050048;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
-        public static final int underline=0x7f05005f;
+        public static final int underline=0x7f050062;
         public static final int up=0x7f050021;
         public static final int useLogo=0x7f050003;
-        public static final int videoMessage=0x7f05005a;
+        public static final int videoMessage=0x7f05005d;
         public static final int videoPlayer=0x7f05004d;
         public static final int webView=0x7f050054;
         public static final int withText=0x7f05000c;
@@ -1299,9 +1305,10 @@ containing a value of this type.
         public static final int activity_record_audio=0x7f03001d;
         public static final int activity_view_image=0x7f03001e;
         public static final int activity_web_view=0x7f03001f;
-        public static final int chat_row=0x7f030020;
-        public static final int file_row=0x7f030021;
-        public static final int support_simple_spinner_dropdown_item=0x7f030022;
+        public static final int brush_chooser=0x7f030020;
+        public static final int chat_row=0x7f030021;
+        public static final int file_row=0x7f030022;
+        public static final int support_simple_spinner_dropdown_item=0x7f030023;
     }
     public static final class menu {
         public static final int chat=0x7f0c0000;
@@ -1368,6 +1375,8 @@ containing a value of this type.
         /**  TextView 
          */
         public static final int go_to_settings_text=0x7f0a0025;
+        public static final int large=0x7f0a002d;
+        public static final int medium=0x7f0a002c;
         public static final int ok=0x7f0a0024;
         public static final int paint=0x7f0a002a;
         /**  Popup menus 
@@ -1384,6 +1393,7 @@ containing a value of this type.
         /**  EditTexts 
          */
         public static final int set_chat_name=0x7f0a0026;
+        public static final int small=0x7f0a002b;
         public static final int stop_recording_button=0x7f0a0023;
         public static final int take_photo=0x7f0a001d;
         public static final int title_activity_chat=0x7f0a000f;

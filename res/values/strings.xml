@@ -44,5 +44,8 @@
     <string name="full_screen_image">Full screen image</string>
     <string name="file_icon">File icon</string>    
     <string name="paint">Choose a color</string>    
+    <string name="small">Small</string>
+    <string name="medium">Medium</string>
+    <string name="large">Large</string>
 
 </resources>

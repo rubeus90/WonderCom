@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <ImageView
+	    android:id="@+id/small_brush"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="1"
+	    android:contentDescription="@string/small"
+	    android:background="@drawable/small"
+	    android:layout_gravity="center"
+	    android:layout_margin="15dp" />
+	 
+	<ImageView
+	    android:id="@+id/medium_brush"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="1"
+	    android:contentDescription="@string/medium"
+	    android:background="@drawable/medium"
+	    android:layout_gravity="center"
+	    android:layout_margin="15dp" />
+	 
+	<ImageView
+	    android:id="@+id/large_brush"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="1"
+	    android:contentDescription="@string/large"
+	    android:background="@drawable/large"
+	    android:layout_gravity="center"
+	    android:layout_margin="15dp" />
+
+</LinearLayout>
