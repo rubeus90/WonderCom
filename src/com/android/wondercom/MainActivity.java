@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -25,6 +24,7 @@ import android.widget.Toast;
 import com.android.wondercom.InitThreads.ClientInit;
 import com.android.wondercom.InitThreads.ServerInit;
 import com.android.wondercom.Receivers.WifiDirectBroadcastReceiver;
+import com.android.wondercom.util.ActivityUtilities;
 
 /*
  * This activity is the launcher activity. 
@@ -92,7 +92,7 @@ public class MainActivity extends Activity{
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		
-		customiseActionBar();
+		ActivityUtilities.customiseActionBar(this);
 	}
     
 	@Override
@@ -129,7 +129,6 @@ public class MainActivity extends Activity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 //        int idItem = item.getItemId();
-        //TODO
         return super.onOptionsItemSelected(item);
     }	
     
@@ -216,19 +215,4 @@ public class MainActivity extends Activity{
   		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
   		return prefs.getString("chatName", DEFAULT_CHAT_NAME);
   	}
-  	
-  	private void customiseActionBar()
-    {
-        int titleId = 0;
-
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
-            titleId = getResources().getIdentifier("action_bar_title", "id", "android");
-        else
-            titleId = R.id.action_bar_title;
-
-        if(titleId>0){
-            TextView titleView = (TextView)findViewById(titleId);
-            titleView.setTextSize(22);
-        }
-    }
 }

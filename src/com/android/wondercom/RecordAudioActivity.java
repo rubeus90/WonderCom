@@ -1,7 +1,6 @@
 package com.android.wondercom;
 
 import java.io.IOException;
-import java.util.Calendar;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+
+import com.android.wondercom.util.FileUtilities;
 
 public class RecordAudioActivity extends Activity {
 	private static final String TAG = "RecordAudioActivity";
@@ -30,7 +31,7 @@ public class RecordAudioActivity extends Activity {
 		setContentView(R.layout.activity_record_audio);
 		
 		mFileName = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath();
-        mFileName += "/" + fileName() + ".3gp";
+        mFileName += "/" + FileUtilities.fileName() + ".3gp";
         
         buttonRecord = (ImageView) findViewById(R.id.record_audio);
         buttonPlay = (ImageView) findViewById(R.id.play_audio);
@@ -93,17 +94,17 @@ public class RecordAudioActivity extends Activity {
         }
     }
 	
-	// Create file name for the new record: composed of date and time of the record's beginning
-	public String fileName(){
-		Calendar c = Calendar.getInstance();
-		String fileName = c.get(Calendar.YEAR) + ""
-				+ c.get(Calendar.MONTH)  + ""
-				+ c.get(Calendar.DATE) + "_"
-				+ c.get(Calendar.HOUR_OF_DAY)+ ""
-				+ c.get(Calendar.MINUTE)+ ""
-				+ c.get(Calendar.SECOND);
-		return fileName;
-	}
+//	// Create file name for the new record: composed of date and time of the record's beginning
+//	public String fileName(){
+//		Calendar c = Calendar.getInstance();
+//		String fileName = c.get(Calendar.YEAR) + ""
+//				+ c.get(Calendar.MONTH)  + ""
+//				+ c.get(Calendar.DATE) + "_"
+//				+ c.get(Calendar.HOUR_OF_DAY)+ ""
+//				+ c.get(Calendar.MINUTE)+ ""
+//				+ c.get(Calendar.SECOND);
+//		return fileName;
+//	}
 	
 	public void startRecording(){
 		mRecorder = new MediaRecorder();

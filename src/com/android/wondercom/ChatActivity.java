@@ -1,14 +1,8 @@
 package com.android.wondercom;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.io.FileUtils;
 
 import android.app.Activity;
 import android.content.ClipData;
@@ -23,7 +17,6 @@ import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -41,7 +34,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.wondercom.AsyncTasks.SendMessageClient;
@@ -51,6 +43,8 @@ import com.android.wondercom.Entities.Image;
 import com.android.wondercom.Entities.MediaFile;
 import com.android.wondercom.Entities.Message;
 import com.android.wondercom.Receivers.WifiDirectBroadcastReceiver;
+import com.android.wondercom.util.ActivityUtilities;
+import com.android.wondercom.util.FileUtilities;
 
 public class ChatActivity extends Activity {
 	private static final String TAG = "ChatActivity";	
@@ -132,7 +126,7 @@ public class ChatActivity extends Activity {
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		
-		customiseActionBar();
+		ActivityUtilities.customiseActionBar(this);
 	}
 	
 	@Override
@@ -441,83 +435,29 @@ public class ChatActivity extends Activity {
     }
     
     //Download image and save it to Downloads
-    public void downloadImage(long id){
+    public void downloadImage(long id){  
     	Message mes = listMessage.get((int) id);
-    	Bitmap bm = mes.byteArrayToBitmap(mes.getByteArray());
-//    	MediaStore.Images.Media.insertImage(getContentResolver(), bm , mes.getFileName(), mes.getFileName());    	
-    	
+    	Bitmap bm = mes.byteArrayToBitmap(mes.getByteArray());    	
     	String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
-    	OutputStream fOut = null;
-    	File file = new File(path, mes.getFileName());
-    	try {
-			fOut = new FileOutputStream(file);
-			bm.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
-	    	fOut.flush();
-	    	fOut.close();
-	    	refreshMediaLibrary();
-	    	Toast.makeText(this, "Image downloaded to "+path+mes.getFileName(), Toast.LENGTH_SHORT).show();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    	
+    	FileUtilities.saveImageFromBitmap(this, bm, path, mes.getFileName());
+    	FileUtilities.refreshMediaLibrary(this);
     }
     
     //Download file and save it to Downloads
     public void downloadFile(long id){
     	Message mes = listMessage.get((int) id);
     	String sourcePath = mes.getFilePath();
-        File source = new File(sourcePath);
-
         String destinationPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
-        destinationPath += "/" + mes.getFileName();
-        File destination = new File(destinationPath);
-        try 
-        {
-            FileUtils.copyFile(source, destination);
-            Toast.makeText(this, "File downloaded to "+destinationPath, Toast.LENGTH_SHORT).show();
-            refreshMediaLibrary();
-        } 
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
-    }
-    
-    public void refreshMediaLibrary(){
-    	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-    	{
-    	        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-    	        File f = new File("file://"+ Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
-    	        Uri contentUri = Uri.fromFile(f);
-    	        mediaScanIntent.setData(contentUri);
-    	        this.sendBroadcast(mediaScanIntent);
-    	}
-    	else
-    	{
-    	       sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
-    	} 
+        
+        FileUtilities.copyFile(this, sourcePath, destinationPath, mes.getFileName());
+        FileUtilities.refreshMediaLibrary(this);
     }
     
     //Delete a message from the message list (doesn't delete on other phones)
     public void deleteMessage(long id){
     	listMessage.remove((int) id);
     	chatAdapter.notifyDataSetChanged();
-    }
-    
-    private void customiseActionBar()
-    {
-        int titleId = 0;
-
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
-            titleId = getResources().getIdentifier("action_bar_title", "id", "android");
-        else
-            titleId = R.id.action_bar_title;
-
-        if(titleId>0){
-            TextView titleView = (TextView)findViewById(titleId);
-            titleView.setTextSize(22);
-        }
     }
     
     private void clearTmpFiles(File dir){
@@ -533,7 +473,7 @@ public class ChatActivity extends Activity {
     	for(Uri uri: tmpFilesUri){
     		getContentResolver().delete(uri, null, null);
     	}
-    	refreshMediaLibrary();
+    	FileUtilities.refreshMediaLibrary(this);
     }
     
     public void talkTo(String destination){

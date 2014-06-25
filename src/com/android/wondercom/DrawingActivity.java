@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.wondercom.CustomViews.DrawingView;
+import com.android.wondercom.util.FileUtilities;
 
 public class DrawingActivity extends Activity {
 	private static final String TAG = "DrawingActivity";
