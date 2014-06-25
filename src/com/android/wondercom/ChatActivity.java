@@ -59,6 +59,7 @@ public class ChatActivity extends Activity {
 	private static final int RECORD_AUDIO = 3;
 	private static final int RECORD_VIDEO = 4;
 	private static final int CHOOSE_FILE = 5;
+	private static final int DRAWING = 6;
 	private static final int DOWNLOAD_IMAGE = 100;
 	private static final int DELETE_MESSAGE = 101;
 	private static final int DOWNLOAD_FILE = 102;
@@ -323,6 +324,12 @@ public class ChatActivity extends Activity {
 	        	Log.v(TAG, "Start activity to choose file");
 	        	Intent chooseFileIntent = new Intent(this, FilePickerActivity.class);
 	        	startActivityForResult(chooseFileIntent, CHOOSE_FILE);
+	        	return true;
+	        	
+	        case R.id.send_drawing:
+	        	Log.v(TAG, "Start activity to draw");
+	        	Intent drawIntent = new Intent(this, DrawingActivity.class);
+	        	startActivityForResult(drawIntent, DRAWING);
 	        	return true;
 	        	
 	        default:

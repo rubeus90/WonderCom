@@ -9,6 +9,7 @@
     <string name="title_activity_play_video">Play video</string>
     <string name="title_activity_file_picker">File chooser</string>
     <string name="title_activity_web_view">Open link....</string>
+    <string name="title_activity_drawing">Draw</string>
 
     <!-- Menus -->
     <string name="disconnect">Disconnect</string>
@@ -17,6 +18,7 @@
     <string name="send_audio">Send audio message</string>
     <string name="send_video">Send video message</string>
     <string name="send_file">Send file</string>
+    <string name="send_drawing">Send drawing</string>
 
     <!-- Popup menus -->
     <string name="pick_image">Pick image</string>
@@ -30,7 +32,7 @@
     <string name="playback_button">Play</string>
     <string name="stop_recording_button">Stop recording</string>
     <string name="ok">OK</string>
-    
+
     <!-- TextView -->
     <string name="go_to_settings_text">Click the image above to go to Settings and connect your device to others by Wifi-Direct</string>
 
@@ -40,6 +42,7 @@
 
     <!-- Descriptions -->
     <string name="full_screen_image">Full screen image</string>
-    <string name="file_icon">File icon</string>
+    <string name="file_icon">File icon</string>    
+    <string name="paint">Choose a color</string>    
 
 </resources>

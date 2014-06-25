@@ -27,5 +27,10 @@
         android:title="@string/send_video"
         android:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_video" />
+	
+	<item 
+	    android:id="@+id/send_drawing"
+	    android:title="@string/send_drawing"
+	    android:showAsAction="ifRoom"/>
 
 </menu>
