@@ -116,4 +116,9 @@ public class DrawingView extends View {
 	public void setErase(boolean isEraser){
 		erase = isEraser;
 	}
+	
+	public void startNewDrawing(){
+	    drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+	    invalidate();
+	}
 }
