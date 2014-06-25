@@ -1,9 +1,12 @@
 package com.android.wondercom;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -22,7 +25,7 @@ public class DrawingActivity extends Activity {
 	private DrawingView drawView;
 	private ImageButton currentPaint;
 	private float smallBrush, mediumBrush, largeBrush;
-	private Button brushButton, eraserButton, newDrawing;
+	private Button brushButton, eraserButton, newDrawing, saveDrawing;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class DrawingActivity extends Activity {
 		brushButton = (Button) findViewById(R.id.chooseBrush);
 		eraserButton = (Button) findViewById(R.id.chooseEraser);
 		newDrawing = (Button) findViewById(R.id.newDrawing);
+		saveDrawing = (Button) findViewById(R.id.saveDrawing);
 		
 		//Retrieve brush sizes
 		smallBrush = getResources().getInteger(R.integer.small_size);
@@ -69,6 +73,14 @@ public class DrawingActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				newDrawing();
+			}
+		});
+		
+		saveDrawing.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				saveDrawing();
 			}
 		});
 	}
@@ -197,5 +209,18 @@ public class DrawingActivity extends Activity {
 		});
 		
 		newDialog.show();
+	}
+	
+	private void saveDrawing(){
+		drawView.setDrawingCacheEnabled(true);
+		String path = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath();
+		String fileName = FileUtilities.fileName() + ".jpg";
+		FileUtilities.saveImageFromBitmap(this, drawView.getDrawingCache(), path, fileName);
+		drawView.destroyDrawingCache();
+		
+		Intent intent = getIntent();
+		intent.putExtra("drawingPath", path + File.separator + fileName);
+		setResult(RESULT_OK, intent);
+		finish();
 	}
 }

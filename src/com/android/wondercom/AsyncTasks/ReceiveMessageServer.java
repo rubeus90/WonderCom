@@ -67,7 +67,7 @@ public class ReceiveMessageServer extends AbstractReceiver {
 		
 		//If the message contains a video or an audio, we saved this file to the external storage
 		int type = values[0].getmType();
-		if(type == Message.AUDIO_MESSAGE || type == Message.VIDEO_MESSAGE || type == Message.FILE_MESSAGE){
+		if(type==Message.AUDIO_MESSAGE || type==Message.VIDEO_MESSAGE || type==Message.FILE_MESSAGE || type==Message.DRAWING_MESSAGE){
 			values[0].saveByteArrayToFile(mContext);
 		}
 		

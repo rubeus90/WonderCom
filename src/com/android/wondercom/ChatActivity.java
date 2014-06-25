@@ -210,6 +210,12 @@ public class ChatActivity extends Activity {
 					sendMessage(Message.FILE_MESSAGE);
 				}
 				break;
+			case DRAWING:
+				if(resultCode == RESULT_OK){
+					fileURL = (String) data.getStringExtra("drawingPath");
+					sendMessage(Message.DRAWING_MESSAGE);
+				}
+				break;
 		}
 	}
 	
@@ -245,6 +251,11 @@ public class ChatActivity extends Activity {
 				MediaFile file = new MediaFile(this, fileURL, Message.FILE_MESSAGE);
 				mes.setByteArray(file.fileToByteArray());
 				mes.setFileName(file.getFileName());
+				break;
+			case Message.DRAWING_MESSAGE:
+				MediaFile drawingFile = new MediaFile(this, fileURL, Message.DRAWING_MESSAGE);
+				mes.setByteArray(drawingFile.fileToByteArray());
+				mes.setFileName(drawingFile.getFileName());
 				break;
 		}		
 		Log.v(TAG, "Message object hydrated");

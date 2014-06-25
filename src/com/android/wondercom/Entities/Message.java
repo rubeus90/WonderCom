@@ -19,6 +19,7 @@ public class Message implements Serializable{
 	public static final int VIDEO_MESSAGE = 3;
 	public static final int AUDIO_MESSAGE = 4;
 	public static final int FILE_MESSAGE = 5;
+	public static final int DRAWING_MESSAGE = 6;
 	
 	private int mType;
 	private String mText;
@@ -75,6 +76,9 @@ public class Message implements Serializable{
 				break;
 			case Message.FILE_MESSAGE:
 				filePath = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()+"/"+fileName;
+				break;
+			case Message.DRAWING_MESSAGE:
+				filePath = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath()+"/"+fileName;
 				break;
 		}
 		
