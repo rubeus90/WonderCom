@@ -63,11 +63,25 @@ public class DrawingView extends View {
 		
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
+				if(erase){
+					drawPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+				}
+				else{
+					drawPaint.setXfermode(null);					
+				}		
 				drawCanvas.drawPoint(touchX, touchY, drawPaint);
 			    drawPath.moveTo(touchX, touchY);
 			    break;
 			case MotionEvent.ACTION_MOVE:
-			    drawPath.lineTo(touchX, touchY);
+				if(erase){
+					drawPath.lineTo(touchX, touchY);
+					drawCanvas.drawPath(drawPath, drawPaint);
+					drawPath.reset();
+					drawPath.moveTo(touchX, touchY);
+				}
+				else{
+					drawPath.lineTo(touchX, touchY);
+				}			    
 			    break;
 			case MotionEvent.ACTION_UP:
 			    drawCanvas.drawPath(drawPath, drawPaint);
@@ -101,9 +115,5 @@ public class DrawingView extends View {
 	
 	public void setErase(boolean isEraser){
 		erase = isEraser;
-		if(erase) 
-			drawPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-		else 
-			drawPaint.setXfermode(null);
 	}
 }
