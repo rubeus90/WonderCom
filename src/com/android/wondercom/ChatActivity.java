@@ -412,6 +412,9 @@ public class ChatActivity extends Activity {
         	case Message.VIDEO_MESSAGE:
         		menu.add(0, DOWNLOAD_FILE, Menu.NONE, "Download video file");
         		break;
+        	case Message.DRAWING_MESSAGE:
+        		menu.add(0, DOWNLOAD_FILE, Menu.NONE, "Download drawing");
+        		break;
         }
     }
     
