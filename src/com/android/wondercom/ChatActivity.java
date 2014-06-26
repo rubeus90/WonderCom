@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -158,12 +160,35 @@ public class ChatActivity extends Activity {
     
 	@Override
 	public void onBackPressed() {
-		super.onBackPressed();
-		clearTmpFiles(getExternalFilesDir(null));
-		if(MainActivity.server!=null){
-			MainActivity.server.interrupt();
-		}		
-		android.os.Process.killProcess(android.os.Process.myPid());		
+		AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
+		newDialog.setTitle("Close chatroom");
+		newDialog.setMessage("Are you sure you want to close this chatroom?\n"
+				+ "Closing this chatroom will delete all photos/videos you've taken with the app, "
+				+ "as well as all received files that you've not downloaded.\n"
+				+ "If you act as the chatroom's server, all other users will need to reconnect again.");
+		
+		newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				clearTmpFiles(getExternalFilesDir(null));
+				if(MainActivity.server!=null){
+					MainActivity.server.interrupt();
+				}		
+				android.os.Process.killProcess(android.os.Process.myPid());	
+			}
+			
+		});
+		
+		newDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+		
+		newDialog.show();
 	}
     
     @Override
