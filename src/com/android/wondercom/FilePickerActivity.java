@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -91,11 +93,32 @@ public class FilePickerActivity extends ListActivity{
 		}
 	}
 	
-	public void chooseFile(Item item){
-		Intent intent = getIntent();
-		intent.putExtra("filePath", item.getAbsolutePath());
-		setResult(RESULT_OK, intent);
-		finish();
+	public void chooseFile(final Item item){
+		AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
+		newDialog.setTitle("Send file");
+		newDialog.setMessage("Are you sure you want to send this file?");
+		
+		newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = getIntent();
+				intent.putExtra("filePath", item.getAbsolutePath());
+				setResult(RESULT_OK, intent);
+				finish();
+			}
+			
+		});
+		
+		newDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+		
+		newDialog.show();
 	}
 	
 	@Override
