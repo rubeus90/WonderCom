@@ -28,6 +28,7 @@ import com.android.wondercom.PlayVideoActivity;
 import com.android.wondercom.R;
 import com.android.wondercom.ViewImageActivity;
 import com.android.wondercom.Entities.Message;
+import com.android.wondercom.util.FileUtilities;
 
 public class ChatAdapter extends BaseAdapter {
 	private List<Message> listMessage;
@@ -119,9 +120,7 @@ public class ChatAdapter extends BaseAdapter {
 			            Image Message
          ***********************************************/
 		else if(type == Message.IMAGE_MESSAGE){
-			if(!mes.getmText().equals("")){
-				enableTextView(cache, mes.getmText());
-			}
+			enableTextView(cache, mes.getmText());
 			cache.image.setVisibility(View.VISIBLE);
 			
 			if(!mapThumb.containsKey(mes.getFileName())){
@@ -151,9 +150,7 @@ public class ChatAdapter extends BaseAdapter {
         				Audio Message
          ***********************************************/
 		else if(type == Message.AUDIO_MESSAGE){
-			if(!mes.getmText().equals("")){
-				enableTextView(cache, mes.getmText());
-			}
+			enableTextView(cache, mes.getmText());
 			cache.audioPlayer.setVisibility(View.VISIBLE);
 			cache.audioPlayer.setTag(position);
 			cache.audioPlayer.setOnClickListener(new OnClickListener() {
@@ -192,9 +189,7 @@ public class ChatAdapter extends BaseAdapter {
         				Video Message
          ***********************************************/
 		else if(type == Message.VIDEO_MESSAGE){
-			if(!mes.getmText().equals("")){
-				enableTextView(cache, mes.getmText());
-			}
+			enableTextView(cache, mes.getmText());
 			cache.videoPlayer.setVisibility(View.VISIBLE);
 			cache.videoPlayerButton.setVisibility(View.VISIBLE);
 			
@@ -221,16 +216,40 @@ public class ChatAdapter extends BaseAdapter {
 						File Message
          ***********************************************/
 		else if(type == Message.FILE_MESSAGE){
-			if(!mes.getmText().equals("")){
-				enableTextView(cache, mes.getmText());
-			}
+			enableTextView(cache, mes.getmText());
 			cache.fileSavedIcon.setVisibility(View.VISIBLE);
 			cache.fileSaved.setVisibility(View.VISIBLE);
 			cache.fileSaved.setText(mes.getFileName());
-//			if(mes.isMine())
-//				cache.fileSaved.setText("File \"" + mes.getFileName() + "\" is sent succesfully");
-//			else
-//				cache.fileSaved.setText("File \"" + mes.getFileName() + "\" received");
+		}
+        
+        /***********************************************
+					Drawing Message
+		***********************************************/
+		else if(type == Message.DRAWING_MESSAGE){
+			enableTextView(cache, mes.getmText());			
+			cache.image.setVisibility(View.VISIBLE);
+			
+			if(!mapThumb.containsKey(mes.getFileName())){
+				Bitmap thumb = FileUtilities.getBitmapFromFile(mes.getFilePath());
+				mapThumb.put(mes.getFileName(), thumb);				
+			}
+			cache.image.setImageBitmap(mapThumb.get(mes.getFileName()));
+			cache.image.setTag(position);
+			
+			cache.image.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Message mes = listMessage.get((Integer) v.getTag());
+					bitmap = mes.byteArrayToBitmap(mes.getByteArray());
+					
+					Intent intent = new Intent(mContext, ViewImageActivity.class);
+					String fileName = mes.getFileName();
+					intent.putExtra("fileName", fileName);
+					
+					mContext.startActivity(intent);
+				}
+			});
 		}
         
 		return view;
@@ -247,10 +266,12 @@ public class ChatAdapter extends BaseAdapter {
 	}
 	
 	private void enableTextView(CacheView cache, String text){
-		cache.text.setVisibility(View.VISIBLE);
-		cache.text.setText(text);
-		Linkify.addLinks(cache.text, Linkify.PHONE_NUMBERS);
-		Linkify.addLinks(cache.text, Patterns.WEB_URL, "myweburl:");
+		if(!text.equals("")){
+			cache.text.setVisibility(View.VISIBLE);
+			cache.text.setText(text);
+			Linkify.addLinks(cache.text, Linkify.PHONE_NUMBERS);
+			Linkify.addLinks(cache.text, Patterns.WEB_URL, "myweburl:");
+		}		
 	}
 
 	//Cache

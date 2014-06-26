@@ -256,6 +256,7 @@ public class ChatActivity extends Activity {
 				MediaFile drawingFile = new MediaFile(this, fileURL, Message.DRAWING_MESSAGE);
 				mes.setByteArray(drawingFile.fileToByteArray());
 				mes.setFileName(drawingFile.getFileName());
+				mes.setFilePath(drawingFile.getFilePath());
 				break;
 		}		
 		Log.v(TAG, "Message object hydrated");

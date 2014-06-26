@@ -6,10 +6,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
+
 import org.apache.commons.io.FileUtils;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -76,5 +79,13 @@ public class FileUtilities {
 				+ c.get(Calendar.MINUTE)+ ""
 				+ c.get(Calendar.SECOND);
 		return fileName;
+	}
+	
+	public static Bitmap getBitmapFromFile(String path){
+		File imgFile = new  File(path);
+		if(imgFile.exists()){
+		    return BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+		}
+		return null;
 	}
 }
