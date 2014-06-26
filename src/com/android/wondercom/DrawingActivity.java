@@ -212,15 +212,36 @@ public class DrawingActivity extends Activity {
 	}
 	
 	private void saveDrawing(){
-		drawView.setDrawingCacheEnabled(true);
-		String path = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath();
-		String fileName = FileUtilities.fileName() + ".jpg";
-		FileUtilities.saveImageFromBitmap(this, drawView.getDrawingCache(), path, fileName);
-		drawView.destroyDrawingCache();
+		AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
+		newDialog.setTitle("Send drawing");
+		newDialog.setMessage("You want to save and send this drawing?");
 		
-		Intent intent = getIntent();
-		intent.putExtra("drawingPath", path + File.separator + fileName);
-		setResult(RESULT_OK, intent);
-		finish();
+		newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				drawView.setDrawingCacheEnabled(true);
+				String path = DrawingActivity.this.getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath();
+				String fileName = FileUtilities.fileName() + ".jpg";
+				FileUtilities.saveImageFromBitmap(DrawingActivity.this, drawView.getDrawingCache(), path, fileName);
+				drawView.destroyDrawingCache();
+				
+				Intent intent = getIntent();
+				intent.putExtra("drawingPath", path + File.separator + fileName);
+				setResult(RESULT_OK, intent);
+				finish();
+			}
+			
+		});
+		
+		newDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+		
+		newDialog.show();
 	}
 }
