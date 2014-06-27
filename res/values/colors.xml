@@ -18,6 +18,12 @@
     <!-- Generic colors -->
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="red">#F22613</color>
+    <color name="purple">#8E44AD</color>
+    <color name="yellow">#F4D03F</color>
+    <color name="green">#26C281</color>
+    <color name="blue">#22A7F0</color>
+    <color name="gray">#DADFE1</color>
     <color name="black_overlay">#66000000</color>
 
 </resources>
