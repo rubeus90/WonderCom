@@ -8,7 +8,7 @@
         android:id="@+id/send_image"
         android:title="@string/send_image"
         android:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_camera" />
+        android:icon="@drawable/ic_action_picture" />
     
     <item
         android:id="@+id/send_file"
@@ -31,6 +31,7 @@
 	<item 
 	    android:id="@+id/send_drawing"
 	    android:title="@string/send_drawing"
-	    android:showAsAction="ifRoom"/>
+	    android:showAsAction="ifRoom"
+	    android:icon="@drawable/ic_action_edit"/>
 
 </menu>
