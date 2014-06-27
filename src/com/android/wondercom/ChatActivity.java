@@ -163,9 +163,9 @@ public class ChatActivity extends Activity {
 		AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
 		newDialog.setTitle("Close chatroom");
 		newDialog.setMessage("Are you sure you want to close this chatroom?\n"
-				+ "Closing this chatroom will delete all photos/videos you've taken with the app, "
-				+ "as well as all received files that you've not downloaded.\n"
-				+ "If you act as the chatroom's server, all other users will need to reconnect again.");
+				+ "You will no longer be able to receive messages, and "
+				+ "all unsaved media files will be deleted.\n"
+				+ "If you are the server, all other users will be disconnected as well.");
 		
 		newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
 
