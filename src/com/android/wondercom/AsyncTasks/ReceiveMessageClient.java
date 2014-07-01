@@ -10,7 +10,6 @@ import java.util.List;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.widget.Toast;
 
 import com.android.wondercom.ChatActivity;
 import com.android.wondercom.MainActivity;
@@ -63,10 +62,7 @@ public class ReceiveMessageClient extends AbstractReceiver {
 	@Override
 	protected void onProgressUpdate(Message... values) {
 		super.onProgressUpdate(values);
-		playNotification(mContext, values[0]);
-		
-		String text = values[0].getmText();
-		Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();		
+		playNotification(mContext, values[0]);		
 		
 		//If the message contains a video or an audio, we saved this file to the external storage
 		int type = values[0].getmType();

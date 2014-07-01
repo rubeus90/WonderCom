@@ -7,14 +7,15 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.List;
-import com.android.wondercom.ChatActivity;
-import com.android.wondercom.MainActivity;
-import com.android.wondercom.Entities.Message;
+
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
+
+import com.android.wondercom.ChatActivity;
+import com.android.wondercom.MainActivity;
+import com.android.wondercom.Entities.Message;
 
 public class SendMessageClient extends AsyncTask<Message, Message, Message>{
 	private static final String TAG = "SendMessageClient";
@@ -77,7 +78,6 @@ public class SendMessageClient extends AsyncTask<Message, Message, Message>{
 	protected void onPostExecute(Message result) {
 		Log.v(TAG, "onPostExecute");
 		super.onPostExecute(result);
-		Toast.makeText(mContext, "Message sent", Toast.LENGTH_SHORT).show();
 	}
 	
 	@SuppressWarnings("rawtypes")

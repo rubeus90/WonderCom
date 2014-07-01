@@ -47,5 +47,11 @@
     <string name="small">Small</string>
     <string name="medium">Medium</string>
     <string name="large">Large</string>
+    
+    <!-- Drawing buttons -->
+    <string name="new_drawing">New</string>
+    <string name="brush">Brush</string>
+    <string name="eraser">Eraser</string>
+    <string name="save_and_send">Save and Send</string>
 
 </resources>

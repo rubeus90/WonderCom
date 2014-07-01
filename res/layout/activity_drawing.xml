@@ -17,28 +17,28 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="New"/>
+            android:text="@string/new_drawing"/>
         
         <Button 
             android:id="@+id/chooseBrush"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Brush"/>
+            android:text="@string/brush"/>
         
         <Button 
             android:id="@+id/chooseEraser"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Erase"/>
+            android:text="@string/eraser"/>
         
         <Button 
             android:id="@+id/saveDrawing"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Save"/>
+            android:text="@string/save_and_send"/>
     </LinearLayout>
     
     <com.android.wondercom.CustomViews.DrawingView

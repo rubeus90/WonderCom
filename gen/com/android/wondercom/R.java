@@ -1368,11 +1368,13 @@ containing a value of this type.
          */
         public static final int app_name=0x7f0a000d;
         public static final int back_button=0x7f0a0020;
+        public static final int brush=0x7f0a002f;
         /**  Menus 
          */
         public static final int disconnect=0x7f0a0015;
         public static final int download_image=0x7f0a0017;
         public static final int enter_text=0x7f0a0027;
+        public static final int eraser=0x7f0a0030;
         public static final int file_icon=0x7f0a0029;
         /**  Descriptions 
          */
@@ -1385,6 +1387,9 @@ containing a value of this type.
         public static final int go_to_settings_text=0x7f0a0025;
         public static final int large=0x7f0a002d;
         public static final int medium=0x7f0a002c;
+        /**  Drawing buttons 
+         */
+        public static final int new_drawing=0x7f0a002e;
         public static final int ok=0x7f0a0024;
         public static final int paint=0x7f0a002a;
         /**  Popup menus 
@@ -1392,6 +1397,7 @@ containing a value of this type.
         public static final int pick_image=0x7f0a001c;
         public static final int playback_button=0x7f0a0022;
         public static final int record_button=0x7f0a0021;
+        public static final int save_and_send=0x7f0a0031;
         public static final int send_audio=0x7f0a0018;
         public static final int send_button=0x7f0a001f;
         public static final int send_drawing=0x7f0a001b;
