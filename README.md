@@ -18,8 +18,10 @@ This application is developed during a 3-month-internship at Nanyang Polytechnic
 <img src="https://raw.githubusercontent.com/rubeus90/WonderCom/master/Screenshots/Screen2.png" width="250" />&nbsp;
 <img src="https://raw.githubusercontent.com/rubeus90/WonderCom/master/Screenshots/Screen4.png" width="250" />&nbsp;
 <img src="https://raw.githubusercontent.com/rubeus90/WonderCom/master/Screenshots/Screen5.png" width="250" />&nbsp;
-
 </p>
+
+#Youtube video presentation
+[![WonderCom](http://img.youtube.com/vi/ZLU1-AeLZdo/0.jpg)](http://www.youtube.com/watch?v=ZLU1-AeLZdo)
 
 #Author
 NGUYEN Hong Ngoc
