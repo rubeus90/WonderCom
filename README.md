@@ -21,7 +21,7 @@ This application is developed during a 3-month-internship at Nanyang Polytechnic
 </p>
 
 #Youtube video presentation
-[![WonderCom](http://img.youtube.com/vi/ZLU1-AeLZdo/0.jpg)](http://www.youtube.com/watch?v=ZLU1-AeLZdo)
+[![WonderCom](http://img.youtube.com/vi/ZLU1-AeLZdo/0.jpg)](https://www.youtube.com/watch?v=w98kjKharns)
 
 #Author
 NGUYEN Hong Ngoc
